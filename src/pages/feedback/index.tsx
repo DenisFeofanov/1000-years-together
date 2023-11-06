@@ -19,8 +19,8 @@ export default function Feedback() {
         onSubmit={e => handleSubmit(e)}
         className="flex flex-col gap-3 max-w-sm"
       >
-        <input type="text" />
-        <input type="text" />
+        <input className="border" type="text" />
+        <input className="border" type="text" />
 
         <button type="submit">Отправить</button>
       </form>
