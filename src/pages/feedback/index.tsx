@@ -13,7 +13,7 @@ export default function Feedback() {
   }
   return (
     <Layout>
-      <Heading>Feedback page</Heading>
+      <Heading>Обратная связь</Heading>
 
       <form
         onSubmit={e => handleSubmit(e)}
@@ -22,10 +22,10 @@ export default function Feedback() {
         <input type="text" />
         <input type="text" />
 
-        <button type="submit">Submit</button>
+        <button type="submit">Отправить</button>
       </form>
 
-      <AppLink href="/">to main page</AppLink>
+      <AppLink href="/">На главную</AppLink>
     </Layout>
   );
 }

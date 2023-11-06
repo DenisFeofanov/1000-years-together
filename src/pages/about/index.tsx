@@ -5,7 +5,7 @@ import Heading from "@/components/Heading";
 export default function About() {
   return (
     <Layout>
-      <Heading>About page</Heading>
+      <Heading>О проекте</Heading>
 
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit cum
@@ -14,7 +14,7 @@ export default function About() {
         accusamus eum deserunt numquam.
       </p>
 
-      <AppLink href="/">to main page</AppLink>
+      <AppLink href="/">На главную</AppLink>
     </Layout>
   );
 }

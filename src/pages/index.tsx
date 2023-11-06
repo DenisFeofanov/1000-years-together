@@ -6,12 +6,12 @@ import { ACTS, sharedSlug } from "@/shared/acts";
 export default function Home() {
   return (
     <Layout>
-      <Heading>Main page</Heading>
+      <Heading>1000 лет вместе</Heading>
 
       <nav className="flex gap-2">
-        <AppLink href="/feedback">To feedback page</AppLink>
-        <AppLink href="/tutorial">To tutorial page</AppLink>
-        <AppLink href="/about">To about page</AppLink>
+        <AppLink href="/feedback">Обратная связь</AppLink>
+        <AppLink href="/tutorial">Инструкция</AppLink>
+        <AppLink href="/about">О проекте</AppLink>
       </nav>
 
       <AppLink href={`/${sharedSlug}/${ACTS[0].slug}`}>

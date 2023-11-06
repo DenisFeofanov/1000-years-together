@@ -5,7 +5,7 @@ import Heading from "@/components/Heading";
 export default function Tutorial() {
   return (
     <Layout>
-      <Heading>Tutorial page</Heading>
+      <Heading>Инструкция</Heading>
 
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit cum
@@ -14,7 +14,7 @@ export default function Tutorial() {
         accusamus eum deserunt numquam.
       </p>
 
-      <AppLink href="/">to main page</AppLink>
+      <AppLink href="/">На главную</AppLink>
     </Layout>
   );
 }
