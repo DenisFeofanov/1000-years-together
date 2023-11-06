@@ -1,6 +1,6 @@
 import AppLink from "@/components/AppLink";
 import Heading from "@/components/Heading";
-import { ACTS, Act, sharedSlug } from "@/shared/acts";
+import { ACTS, Act } from "@/shared/acts";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Layout from "../Layout";
@@ -16,31 +16,23 @@ interface Params extends ParsedUrlQuery {
 }
 
 const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
+  const dummyStories = Array.from({ length: 8 }, (_, i) => i + 1);
+
+  const goBackHref = previousSlug || "/";
+  const goNextHref = nextSlug || "/afterwards";
+
   return (
     <Layout>
-      <AppLink href="/">Назад</AppLink>
-
+      <AppLink href={goBackHref}>Назад</AppLink>
       <Heading>{title}</Heading>
-
-      <div className="flex gap-3 w-full justify-between">
-        <div>
-          {previousSlug && (
-            <AppLink href={`/${sharedSlug}/${previousSlug}`}>
-              Предыдущая часть
-            </AppLink>
-          )}
-        </div>
-
-        <div>
-          {nextSlug && (
-            <AppLink href={`/${sharedSlug}/${nextSlug}`}>
-              Следующая часть
-            </AppLink>
-          )}
-        </div>
-      </div>
-
-      <AppLink href="/stories">Далее</AppLink>
+      <p>Слушать аудио</p>
+      <Heading>Истории</Heading>
+      <ul>
+        {dummyStories.map(item => (
+          <li key={item}>{item}-я история</li>
+        ))}
+      </ul>
+      <AppLink href={goNextHref}>Далее</AppLink>
     </Layout>
   );
 };

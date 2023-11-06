@@ -3,8 +3,6 @@ export interface Act {
   title: string;
 }
 
-export const sharedSlug = "act";
-
 export const ACTS: Act[] = [
   { slug: "prologue", title: "Пролог" },
   { slug: "beginning", title: "Завязка" },
