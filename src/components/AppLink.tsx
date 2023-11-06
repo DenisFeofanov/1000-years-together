@@ -6,7 +6,7 @@ interface Props extends LinkProps {
 
 function AppLink({ href, children, ...rest }: Props) {
   return (
-    <Link className="border-white border p-2 m-4" href={href} {...rest}>
+    <Link className="border-black border p-2 m-4" href={href} {...rest}>
       {children}
     </Link>
   );

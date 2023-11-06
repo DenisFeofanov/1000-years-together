@@ -1,9 +1,9 @@
+import AppLink from "@/components/AppLink";
+import Heading from "@/components/Heading";
 import { ACTS, Act, sharedSlug } from "@/shared/acts";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import Link from "next/link";
 import { ParsedUrlQuery } from "querystring";
 import Layout from "../Layout";
-import Heading from "@/components/Heading";
 
 type Props = {
   previousSlug: string | null;
@@ -18,25 +18,29 @@ interface Params extends ParsedUrlQuery {
 const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
   return (
     <Layout>
-      <Link href="/">Назад</Link>
+      <AppLink href="/">Назад</AppLink>
 
       <Heading>{title}</Heading>
 
       <div className="flex gap-3 w-full justify-between">
         <div>
           {previousSlug && (
-            <Link href={`/${sharedSlug}/${previousSlug}`}>
+            <AppLink href={`/${sharedSlug}/${previousSlug}`}>
               Предыдущая часть
-            </Link>
+            </AppLink>
           )}
         </div>
 
         <div>
           {nextSlug && (
-            <Link href={`/${sharedSlug}/${nextSlug}`}>Следующая часть</Link>
+            <AppLink href={`/${sharedSlug}/${nextSlug}`}>
+              Следующая часть
+            </AppLink>
           )}
         </div>
       </div>
+
+      <AppLink href="/stories">Далее</AppLink>
     </Layout>
   );
 };
