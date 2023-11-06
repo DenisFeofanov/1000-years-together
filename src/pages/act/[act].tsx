@@ -4,6 +4,7 @@ import { ACTS, Act } from "@/shared/acts";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Layout from "../Layout";
+import Head from "next/head";
 
 type Props = {
   previousSlug: string | null;
@@ -22,18 +23,24 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
   const goNextHref = nextSlug || "/afterwards";
 
   return (
-    <Layout>
-      <AppLink href={goBackHref}>Назад</AppLink>
-      <Heading>{title}</Heading>
-      <p>Слушать аудио</p>
-      <Heading>Истории</Heading>
-      <ul>
-        {dummyStories.map(item => (
-          <li key={item}>{item}-я история</li>
-        ))}
-      </ul>
-      <AppLink href={goNextHref}>Далее</AppLink>
-    </Layout>
+    <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+
+      <Layout>
+        <AppLink href={goBackHref}>Назад</AppLink>
+        <Heading>{title}</Heading>
+        <p>Слушать аудио</p>
+        <Heading>Истории</Heading>
+        <ul>
+          {dummyStories.map(item => (
+            <li key={item}>{item}-я история</li>
+          ))}
+        </ul>
+        <AppLink href={goNextHref}>Далее</AppLink>
+      </Layout>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import AppLink from "@/components/AppLink";
 import Heading from "@/components/Heading";
 import { useRouter } from "next/router";
 import { FormEvent } from "react";
+import Head from "next/head";
 
 export default function Feedback() {
   const router = useRouter();
@@ -12,20 +13,26 @@ export default function Feedback() {
     router.push("/");
   }
   return (
-    <Layout>
-      <Heading>Обратная связь</Heading>
+    <>
+      <Head>
+        <title>Обратная связь</title>
+      </Head>
 
-      <form
-        onSubmit={e => handleSubmit(e)}
-        className="flex flex-col gap-3 max-w-sm"
-      >
-        <input className="border" type="text" />
-        <input className="border" type="text" />
+      <Layout>
+        <Heading>Обратная связь</Heading>
 
-        <button type="submit">Отправить</button>
-      </form>
+        <form
+          onSubmit={e => handleSubmit(e)}
+          className="flex flex-col gap-3 max-w-sm"
+        >
+          <input className="border" type="text" />
+          <input className="border" type="text" />
 
-      <AppLink href="/">На главную</AppLink>
-    </Layout>
+          <button type="submit">Отправить</button>
+        </form>
+
+        <AppLink href="/">На главную</AppLink>
+      </Layout>
+    </>
   );
 }
