@@ -1,7 +1,7 @@
 import AppLink from "@/components/AppLink";
 import Heading from "@/components/Heading";
 import Layout from "@/pages/Layout";
-import { ACTS } from "@/shared/acts";
+import { ACTS } from "@/shared/Act";
 import Head from "next/head";
 
 export default function Home() {

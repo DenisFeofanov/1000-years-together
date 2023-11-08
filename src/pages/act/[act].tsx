@@ -1,10 +1,13 @@
+import audioSrc from "@/../public/stories/test.mp3";
 import AppLink from "@/components/AppLink";
 import Heading from "@/components/Heading";
-import { ACTS, Act } from "@/shared/acts";
+import { ACTS, Act } from "@/shared/Act";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import { ParsedUrlQuery } from "querystring";
-import Layout from "../Layout";
 import Head from "next/head";
+import { ParsedUrlQuery } from "querystring";
+import { useEffect, useRef, useState } from "react";
+import Layout from "../Layout";
+import Story from "@/components/Story";
 
 type Props = {
   previousSlug: string | null;
@@ -18,9 +21,28 @@ interface Params extends ParsedUrlQuery {
 
 const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
   const dummyStories = Array.from({ length: 8 }, (_, i) => i + 1);
-
   const goBackHref = previousSlug || "/";
   const goNextHref = nextSlug || "/afterwards";
+
+  const audioRef = useRef(null as any);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    audioRef.current = new Audio(audioSrc); // only call client
+    console.log(audioRef);
+  }, []);
+
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
+
+  function handleClick() {
+    setIsPlaying(!isPlaying);
+  }
 
   return (
     <>
@@ -31,10 +53,13 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
       <Layout>
         <AppLink href={goBackHref}>Назад</AppLink>
         <Heading>{title}</Heading>
-        <p>Слушать аудио</p>
+
+        <button onClick={handleClick}>Switch {String(isPlaying)}</button>
+
         <Heading>Истории</Heading>
         <ul>
           {dummyStories.map(item => (
+            // <Story story={item} key={item}/>
             <li key={item}>{item}-я история</li>
           ))}
         </ul>
