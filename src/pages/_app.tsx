@@ -6,9 +6,15 @@ import { useState } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [selectedStories, setSelectedStories] = useState<Story[]>([]);
+  const [isSelectingDone, setIsSelectingDone] = useState(false);
 
   function addSelectedStory(newAct: Story) {
-    if (selectedStories.length >= 5) return;
+    // adding last story
+    if (selectedStories.length === 4) {
+      setSelectedStories([...selectedStories, newAct]);
+      setIsSelectingDone(true);
+      return;
+    }
     setSelectedStories([...selectedStories, newAct]);
   }
 
@@ -19,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
         {...pageProps}
         selectedStories={selectedStories}
         addSelectedStory={addSelectedStory}
+        isSelectingDone={isSelectingDone}
       />
     </>
   );
