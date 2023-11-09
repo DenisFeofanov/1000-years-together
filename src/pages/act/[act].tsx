@@ -1,12 +1,13 @@
 import AppLink from "@/components/AppLink";
 import Heading from "@/components/Heading";
-import Story from "@/components/Story";
+import StoryPlayer from "@/components/StoryPlayer";
 import { Act } from "@/interfaces/Act";
 import { ACTS } from "@/shared/Act";
 import { stories } from "@/shared/Stories";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
+import { useState } from "react";
 import Layout from "../Layout";
 
 type Props = {
@@ -23,6 +24,13 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
   const goBackHref = previousSlug || "/";
   const goNextHref = nextSlug || "/afterwards";
 
+  const [selectedStory, setSelectedStory] = useState<string | null>(null);
+
+  function handleSelect(storyTitle: string) {
+    if (selectedStory) return;
+    setSelectedStory(storyTitle);
+  }
+
   return (
     <>
       <Head>
@@ -33,11 +41,17 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
         <AppLink href={goBackHref}>Назад</AppLink>
         <Heading>{title}</Heading>
 
-        <Heading>Истории</Heading>
+        <Heading>История</Heading>
         <ul>
           {stories.map(story => (
             <li key={story.title}>
-              <Story audioSrc={story.audioSrc} title={story.title} />
+              <StoryPlayer
+                audioSrc={story.audioSrc}
+                title={story.title}
+                handleSelect={handleSelect}
+                isDisabled={selectedStory === story.title ? false : true}
+                isAnyStorySelected={Boolean(selectedStory)}
+              />
             </li>
           ))}
         </ul>
