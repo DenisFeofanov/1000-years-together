@@ -24,13 +24,6 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
   const goBackHref = previousSlug || "/";
   const goNextHref = nextSlug || "/afterwards";
 
-  const [selectedStory, setSelectedStory] = useState<string | null>(null);
-
-  function handleSelect(storyTitle: string) {
-    if (selectedStory) return;
-    setSelectedStory(storyTitle);
-  }
-
   return (
     <>
       <Head>
@@ -41,20 +34,12 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
         <AppLink href={goBackHref}>Назад</AppLink>
         <Heading>{title}</Heading>
 
+        <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} />
+
         <Heading>История</Heading>
-        <ul>
-          {stories.map(story => (
-            <li key={story.title}>
-              <StoryPlayer
-                audioSrc={story.audioSrc}
-                title={story.title}
-                handleSelect={handleSelect}
-                isDisabled={selectedStory === story.title ? false : true}
-                isAnyStorySelected={Boolean(selectedStory)}
-              />
-            </li>
-          ))}
-        </ul>
+
+        <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} />
+
         <AppLink href={goNextHref}>Далее</AppLink>
       </Layout>
     </>

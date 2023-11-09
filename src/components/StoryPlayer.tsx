@@ -2,23 +2,16 @@ import { Story } from "@/interfaces/Story";
 import { useEffect, useRef, useState } from "react";
 
 interface Props extends Story {
-  handleSelect: (title: string) => void;
-  isDisabled: boolean;
-  isAnyStorySelected: boolean;
+  isDisabled?: boolean;
 }
 
-function StoryPlayer({
-  audioSrc,
-  title,
-  handleSelect,
-  isDisabled,
-  isAnyStorySelected,
-}: Props) {
+function StoryPlayer({ audioSrc, title, isDisabled = false }: Props) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     audioRef.current = new Audio(audioSrc); // define ref here (on client), otherwise it will be called on server. Audio API doesn't work on server
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -33,14 +26,10 @@ function StoryPlayer({
 
   function handleClick() {
     if (isDisabled) {
-      handleSelect(title);
       return;
     }
     setIsPlaying(!isPlaying);
   }
-
-  const stylesAfterSelection =
-    isAnyStorySelected && isDisabled && "cursor-default hover:border-inherit";
 
   return (
     <button
@@ -48,7 +37,7 @@ function StoryPlayer({
       onClick={handleClick}
       className={`flex gap-3 m-3 p-1 border hover:border-black  ${
         isDisabled ? "text-gray-300" : "text-black"
-      } ${stylesAfterSelection}`}
+      }`}
     >
       <h3>{title}</h3>
       {isPlaying ? "Пауза" : "Слушать"}
