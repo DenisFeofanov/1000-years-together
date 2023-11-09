@@ -1,7 +1,6 @@
 import AppLink from "@/components/AppLink";
 import Heading from "@/components/Heading";
 import Layout from "@/pages/Layout";
-import { ACTS } from "@/shared/Act";
 import Head from "next/head";
 
 export default function Home() {
@@ -20,7 +19,7 @@ export default function Home() {
           <AppLink href="/about">О проекте</AppLink>
         </nav>
 
-        <AppLink href={`/act/${ACTS[0].slug}`}>Начать спектакль</AppLink>
+        <AppLink href="/choose-stories">Начать спектакль</AppLink>
       </Layout>
     </>
   );

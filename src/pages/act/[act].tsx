@@ -21,7 +21,7 @@ interface Params extends ParsedUrlQuery {
 }
 
 const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
-  const goBackHref = previousSlug || "/";
+  const goBackHref = previousSlug || "/choose-stories";
   const goNextHref = nextSlug || "/afterwards";
 
   return (
