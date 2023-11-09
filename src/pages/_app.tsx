@@ -8,14 +8,22 @@ export default function App({ Component, pageProps }: AppProps) {
   const [selectedStories, setSelectedStories] = useState<Story[]>([]);
   const [isSelectingDone, setIsSelectingDone] = useState(false);
 
-  function addSelectedStory(newAct: Story) {
+  function addSelectedStory(newStory: Story) {
+    // avoiding duplicates and setting range
+    if (
+      selectedStories.length >= 5 ||
+      selectedStories.find(story => story.title === newStory.title)
+    ) {
+      return;
+    }
+
     // adding last story
     if (selectedStories.length === 4) {
-      setSelectedStories([...selectedStories, newAct]);
+      setSelectedStories([...selectedStories, newStory]);
       setIsSelectingDone(true);
       return;
     }
-    setSelectedStories([...selectedStories, newAct]);
+    setSelectedStories([...selectedStories, newStory]);
   }
 
   return (
