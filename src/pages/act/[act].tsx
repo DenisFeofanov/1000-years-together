@@ -34,11 +34,14 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
         <AppLink href={goBackHref}>Назад</AppLink>
         <Heading>{title}</Heading>
 
-        <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} />
+        {/* <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} /> */}
+        <audio controls src={stories[0].audioSrc}></audio>
 
         <Heading>История</Heading>
 
-        <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} />
+        {/* <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} /> */}
+
+        <audio controls src={stories[0].audioSrc}></audio>
 
         <AppLink href={goNextHref}>Далее</AppLink>
       </Layout>
