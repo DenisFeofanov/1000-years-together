@@ -13,13 +13,13 @@ export default function Home() {
       <Layout>
         <Heading>1000 лет вместе</Heading>
 
-        <nav className="flex gap-2">
+        <nav className="flex flex-col lg:flex-row lg:gap-2">
           <AppLink href="/feedback">Обратная связь</AppLink>
           <AppLink href="/tutorial">Инструкция</AppLink>
           <AppLink href="/about">О проекте</AppLink>
-        </nav>
 
-        <AppLink href="/choose-stories">Начать спектакль</AppLink>
+          <AppLink href="/choose-stories">Начать спектакль</AppLink>
+        </nav>
       </Layout>
     </>
   );

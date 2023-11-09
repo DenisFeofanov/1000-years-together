@@ -30,20 +30,19 @@ function ChooseStories({
           Выбранные истории:{" "}
           {selectedStories && selectedStories.map(act => <>{act.title} </>)}
         </p>
-        <div className="m-3 grid grid-cols-6 gap-4 w-full h-full justify-items-stretch items-stretch aspect-square">
+        <div className="m-3 grid grid-cols-6 gap-1 lg:gap-4 w-full h-full justify-items-stretch items-stretch aspect-square">
           {stories.map(story => {
             const selectedStoryStyle =
               selectedStories?.find(
                 selectedStory => selectedStory.title === story.title
-              ) && " border-black bg-gray-200";
+              ) && "border-black bg-gray-200 pointer-events-none";
 
-            const disabledStyles =
-              isSelectingDone && `pointer-events-none hover:bg-inherit`;
+            const disabledStyles = isSelectingDone && `pointer-events-none`;
 
             return (
               <button
                 type="button"
-                className={`flex justify-center items-center border-2 text-5xl hover:bg-gray-100 ${selectedStoryStyle} ${disabledStyles}`}
+                className={`flex justify-center items-center border-2 text-3xl lg:text-5xl ${selectedStoryStyle} ${disabledStyles}`}
                 key={story.title}
                 onClick={() => addSelectedStory(story)}
               >
