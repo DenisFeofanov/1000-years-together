@@ -8,16 +8,12 @@ import Head from "next/head";
 import Layout from "../Layout";
 
 interface Props {
-  selectedStories: Story[] | null;
+  selectedStories: Story[];
   handleClick: (story: Story) => void;
-  isSelectingDone: boolean;
 }
 
-function ChooseStories({
-  selectedStories,
-  handleClick,
-  isSelectingDone,
-}: Props) {
+function ChooseStories({ selectedStories, handleClick }: Props) {
+  const isSelectingDone = selectedStories.length === 5;
   return (
     <>
       <Head>
@@ -29,7 +25,7 @@ function ChooseStories({
           type="button"
           onClick={() => {
             localStorage.clear();
-            console.log("localStorage is cleared successfully");
+            alert("localStorage is cleared successfully");
           }}
         >
           Очистить Local Storage
@@ -50,10 +46,8 @@ function ChooseStories({
             return (
               <StoryTile
                 key={story.title}
-                isSelected={Boolean(
-                  selectedStories?.find(
-                    selectedStory => selectedStory.title === story.title
-                  )
+                isSelected={selectedStories.some(
+                  selectedStory => selectedStory.title === story.title
                 )}
                 isSelectingDone={isSelectingDone}
                 handleClick={handleClick}
@@ -63,7 +57,7 @@ function ChooseStories({
           })}
         </div>
 
-        <AppLink href={`/act/${ACTS[0].slug}`} isDisabled={false}>
+        <AppLink href={`/act/${ACTS[0].slug}`} isDisabled={!isSelectingDone}>
           Начать спектакль
         </AppLink>
       </Layout>

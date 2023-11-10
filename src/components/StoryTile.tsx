@@ -8,18 +8,15 @@ interface Props {
 }
 
 function StoryTile({ isSelected, isSelectingDone, handleClick, story }: Props) {
-  const selectedStoryStyles =
-    isSelected && "border-black bg-gray-200 pointer-events-none";
-
-  const disabledStyles = isSelectingDone && `pointer-events-none`;
+  const selectedStoryStyles = isSelected && "border-black bg-gray-200";
 
   return (
     <button
       type="button"
-      className={`flex justify-center items-center border-2 text-3xl lg:text-5xl ${selectedStoryStyles} ${disabledStyles}`}
+      className={`flex justify-center items-center border-2 text-3xl lg:text-5xl ${selectedStoryStyles}`}
       key={story.title}
       onClick={() => handleClick(story)}
-      disabled={isSelected || isSelectingDone}
+      disabled={!isSelected && isSelectingDone}
     >
       {story.title}
     </button>

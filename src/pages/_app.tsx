@@ -7,59 +7,54 @@ import { useEffect, useState } from "react";
 export default function App({ Component, pageProps }: AppProps) {
   const selectedStoriesKey = "selectedStories";
   const [selectedStories, setSelectedStories] = useState<Story[]>([]);
-  const [isSelectingDone, setIsSelectingDone] = useState(false);
-  const [keys, setKeys] = useState<string[]>([]);
-  const [length, setLength] = useState<number>(0);
 
-  // get existing values from localStorage on first render
+  // get existing values from local storage on first render
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
       let selectedStories = JSON.parse(
         localStorage.getItem(selectedStoriesKey) || "[]"
       );
-      let keys: string[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        keys.push(localStorage.key(i)!);
-      }
 
       setSelectedStories(selectedStories);
-      setKeys(keys);
-      setLength(localStorage.length);
     }
   }, []);
 
-  function handleSave(newStory: Story) {
-    // save to localStorage
+  function handleSave(updatedSelectedStories: Story[]) {
+    // save to local storage
     if (typeof window !== "undefined" && window.localStorage) {
       localStorage.setItem(
         selectedStoriesKey,
-        JSON.stringify([...selectedStories, newStory])
+        JSON.stringify(updatedSelectedStories)
       );
     }
 
-    // set state from localStorage
+    // set state from local storage
     setSelectedStories(
       JSON.parse(localStorage.getItem(selectedStoriesKey) || "[]")
     );
   }
 
-  function handleClick(newStory: Story) {
-    // avoiding duplicates and setting range
+  function removeSelectedStory(storyToRemove: Story) {
+    handleSave(
+      selectedStories.filter(story => story.title !== storyToRemove.title)
+    );
+  }
+
+  function addSelectedStory(newStory: Story) {
+    // setting range
+    if (selectedStories.length >= 5) return;
+
+    handleSave([...selectedStories, newStory]);
+  }
+
+  function handleClick(story: Story) {
     if (
-      selectedStories.length >= 5 ||
-      selectedStories.find(story => story.title === newStory.title)
+      selectedStories.some(selectedStory => selectedStory.title === story.title)
     ) {
-      return;
+      removeSelectedStory(story);
+    } else {
+      addSelectedStory(story);
     }
-
-    // adding last story
-    if (selectedStories.length === 4) {
-      handleSave(newStory);
-      setIsSelectingDone(true);
-      return;
-    }
-
-    handleSave(newStory);
   }
 
   return (
@@ -69,7 +64,6 @@ export default function App({ Component, pageProps }: AppProps) {
         {...pageProps}
         selectedStories={selectedStories}
         handleClick={handleClick}
-        isSelectingDone={isSelectingDone}
       />
     </>
   );
