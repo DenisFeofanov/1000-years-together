@@ -1,13 +1,15 @@
 import AppLink from "@/components/AppLink";
 import Heading from "@/components/Heading";
-import StoryPlayer from "@/components/StoryPlayer";
 import { Act } from "@/interfaces/Act";
+import { Story } from "@/interfaces/Story";
+import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
 import { ACTS } from "@/shared/Act";
 import { stories } from "@/shared/Stories";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../Layout";
 
 type Props = {
@@ -24,6 +26,18 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
   const goBackHref = previousSlug || "/choose-stories";
   const goNextHref = nextSlug || "/afterwards";
 
+  const router = useRouter();
+  const [currentStory, setCurrentStory] = useState<Story | null>(null);
+
+  useEffect(() => {
+    if (window !== undefined && window.localStorage) {
+      const storyIndex = ACTS.findIndex(act => act.title === title);
+
+      setCurrentStory(getSelectedStoriesFromLocalStorage()[storyIndex]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query.act]);
+
   return (
     <>
       <Head>
@@ -37,11 +51,18 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
         {/* <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} /> */}
         <audio controls src={stories[0].audioSrc}></audio>
 
-        <Heading>История</Heading>
+        {currentStory ? (
+          <>
+            <Heading>История #{currentStory.title}</Heading>
+            <audio controls src={currentStory.audioSrc}>
+              {currentStory.title}
+            </audio>
+          </>
+        ) : (
+          <p>Error: No story selected</p>
+        )}
 
         {/* <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} /> */}
-
-        <audio controls src={stories[0].audioSrc}></audio>
 
         <AppLink href={goNextHref}>Далее</AppLink>
       </Layout>

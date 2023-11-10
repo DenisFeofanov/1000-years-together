@@ -33,3 +33,5 @@ export const stories: Story[] = [
   { audioSrc: audio, title: "29" },
   { audioSrc: audio, title: "30" },
 ];
+
+export const selectedStoriesKey = "selectedStories";
