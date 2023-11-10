@@ -51,9 +51,16 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
         {/* <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} /> */}
         <audio controls src={stories[0].audioSrc}></audio>
 
-        <Heading>История</Heading>
+        {currentStory ? (
+          <>
+            <Heading>История #{currentStory.title}</Heading>
 
-        {/* <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} /> */}
+            {/* <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} /> */}
+            <audio controls src={currentStory.audioSrc}></audio>
+          </>
+        ) : (
+          <p>Error: No story selected</p>
+        )}
 
         <AppLink href={goNextHref}>Далее</AppLink>
       </Layout>
