@@ -9,7 +9,9 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
+import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
 import Layout from "../Layout";
 
 type Props = {
@@ -48,15 +50,35 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
         <AppLink href={goBackHref}>Назад</AppLink>
         <Heading>{title}</Heading>
 
-        {/* <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} /> */}
-        <audio controls src={stories[0].audioSrc}></audio>
+        <AudioPlayer
+          src={stories[0].audioSrc}
+          showJumpControls={false}
+          layout="horizontal-reverse"
+          customProgressBarSection={[
+            RHAP_UI.CURRENT_TIME,
+            <div key={1}>/</div>,
+            RHAP_UI.DURATION,
+            RHAP_UI.PROGRESS_BAR,
+          ]}
+          customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
+        />
 
         {currentStory ? (
           <>
             <Heading>История #{currentStory.title}</Heading>
 
-            {/* <StoryPlayer audioSrc={stories[0].audioSrc} title={stories[0].title} /> */}
-            <audio controls src={currentStory.audioSrc}></audio>
+            <AudioPlayer
+              src={currentStory.audioSrc}
+              showJumpControls={false}
+              layout="horizontal-reverse"
+              customProgressBarSection={[
+                RHAP_UI.CURRENT_TIME,
+                <div key={1}>/</div>,
+                RHAP_UI.DURATION,
+                RHAP_UI.PROGRESS_BAR,
+              ]}
+              customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
+            />
           </>
         ) : (
           <p>Error: No story selected</p>
@@ -64,6 +86,20 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
 
         <AppLink href={goNextHref}>Далее</AppLink>
       </Layout>
+
+      <style jsx>{`
+        :global(.rhap_controls-section) {
+          flex-grow: 0;
+        }
+
+        :global(.rhap_time) {
+          user-select: auto;
+        }
+
+        :global(.rhap_progress-section) {
+          gap: 0.5rem;
+        }
+      `}</style>
     </>
   );
 };
