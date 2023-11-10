@@ -1,21 +1,18 @@
 import { Story } from "@/interfaces/Story";
+import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
+import { selectedStoriesKey } from "@/shared/Stories";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import NextNProgress from "nextjs-progressbar";
 import { useEffect, useState } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const selectedStoriesKey = "selectedStories";
   const [selectedStories, setSelectedStories] = useState<Story[]>([]);
 
   // get existing values from local storage on first render
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
-      let selectedStories = JSON.parse(
-        localStorage.getItem(selectedStoriesKey) || "[]"
-      );
-
-      setSelectedStories(selectedStories);
+      setSelectedStories(getSelectedStoriesFromLocalStorage);
     }
   }, []);
 
@@ -29,9 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }
 
     // set state from local storage
-    setSelectedStories(
-      JSON.parse(localStorage.getItem(selectedStoriesKey) || "[]")
-    );
+    setSelectedStories(getSelectedStoriesFromLocalStorage());
   }
 
   function removeSelectedStory(storyToRemove: Story) {
