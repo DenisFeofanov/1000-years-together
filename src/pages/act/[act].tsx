@@ -38,7 +38,12 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
     if (window !== undefined && window.localStorage) {
       const storyIndex = ACTS.findIndex(act => act.title === title);
 
-      setCurrentStory(getSelectedStoriesFromLocalStorage()[storyIndex]);
+      const selectedStories = getSelectedStoriesFromLocalStorage();
+
+      // 301 redirect
+      if (selectedStories.length < 5) window.location.replace("/");
+
+      setCurrentStory(selectedStories[storyIndex]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.act]);
