@@ -30,6 +30,8 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
 
   const router = useRouter();
   const [currentStory, setCurrentStory] = useState<Story | null>(null);
+  const [renderClientSideComponent, setRenderClientSideComponent] =
+    useState(false);
 
   // load new stories on slug change
   useEffect(() => {
@@ -41,6 +43,11 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.act]);
 
+  useEffect(() => {
+    // audio API only works correctly on client, so I render player component only on client
+    setRenderClientSideComponent(true);
+  }, []);
+
   return (
     <>
       <Head>
@@ -51,13 +58,15 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
         <AppLink href={goBackHref}>Назад</AppLink>
         <Heading>{title}</Heading>
 
-        <AudioPlayer audioSrc={stories[0].audioSrc} />
-
+        {renderClientSideComponent && (
+          <AudioPlayer audioSrc={stories[0].audioSrc} />
+        )}
         {currentStory ? (
           <>
             <Heading>История #{currentStory.title}</Heading>
-
-            <AudioPlayer audioSrc={currentStory.audioSrc} />
+            {renderClientSideComponent && (
+              <AudioPlayer audioSrc={currentStory.audioSrc} />
+            )}
           </>
         ) : (
           <p>Error: No story selected</p>
