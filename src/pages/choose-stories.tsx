@@ -2,10 +2,10 @@ import AppLink from "@/components/AppLink";
 import Heading from "@/components/Heading";
 import StoryTile from "@/components/StoryTile";
 import { Story } from "@/interfaces/Story";
+import Layout from "@/pages/Layout";
 import { ACTS } from "@/shared/Act";
 import { stories } from "@/shared/Stories";
 import Head from "next/head";
-import Layout from "@/pages/Layout";
 
 interface Props {
   selectedStories: Story[];
@@ -50,8 +50,8 @@ function ChooseStories({ selectedStories, handleClick }: Props) {
                   selectedStory => selectedStory.title === story.title
                 )}
                 isSelectingDone={isSelectingDone}
-                handleClick={handleClick}
-                story={story}
+                onTileClick={() => handleClick(story)}
+                title={story.title}
               />
             );
           })}

@@ -3,22 +3,21 @@ import { Story } from "@/interfaces/Story";
 interface Props {
   isSelected: boolean;
   isSelectingDone: boolean;
-  handleClick: (story: Story) => void;
-  story: Story;
+  onTileClick: () => void;
+  title: string;
 }
 
-function StoryTile({ isSelected, isSelectingDone, handleClick, story }: Props) {
+function StoryTile({ isSelected, isSelectingDone, onTileClick, title }: Props) {
   const selectedStoryStyles = isSelected && "border-black bg-gray-200";
 
   return (
     <button
       type="button"
       className={`flex justify-center items-center border-2 text-3xl lg:text-5xl ${selectedStoryStyles}`}
-      key={story.title}
-      onClick={() => handleClick(story)}
+      onClick={onTileClick}
       disabled={!isSelected && isSelectingDone}
     >
-      {story.title}
+      {title}
     </button>
   );
 }
