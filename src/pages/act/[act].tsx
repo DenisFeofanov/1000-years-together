@@ -1,4 +1,5 @@
 import AppLink from "@/components/AppLink";
+import AudioPlayer from "@/components/AudioPlayer";
 import Heading from "@/components/Heading";
 import { Act } from "@/interfaces/Act";
 import { Story } from "@/interfaces/Story";
@@ -9,8 +10,7 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
-import { createRef, useEffect, useState } from "react";
-import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
+import { useEffect, useState } from "react";
 import "react-h5-audio-player/lib/styles.css";
 import Layout from "../Layout";
 
@@ -31,6 +31,7 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
   const router = useRouter();
   const [currentStory, setCurrentStory] = useState<Story | null>(null);
 
+  // load new stories on slug change
   useEffect(() => {
     if (window !== undefined && window.localStorage) {
       const storyIndex = ACTS.findIndex(act => act.title === title);
@@ -50,35 +51,13 @@ const Act: NextPage<Props> = ({ previousSlug, nextSlug, title }) => {
         <AppLink href={goBackHref}>Назад</AppLink>
         <Heading>{title}</Heading>
 
-        <AudioPlayer
-          src={stories[0].audioSrc}
-          showJumpControls={false}
-          layout="horizontal-reverse"
-          customProgressBarSection={[
-            RHAP_UI.CURRENT_TIME,
-            <div key={1}>/</div>,
-            RHAP_UI.DURATION,
-            RHAP_UI.PROGRESS_BAR,
-          ]}
-          customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
-        />
+        <AudioPlayer audioSrc={stories[0].audioSrc} />
 
         {currentStory ? (
           <>
             <Heading>История #{currentStory.title}</Heading>
 
-            <AudioPlayer
-              src={currentStory.audioSrc}
-              showJumpControls={false}
-              layout="horizontal-reverse"
-              customProgressBarSection={[
-                RHAP_UI.CURRENT_TIME,
-                <div key={1}>/</div>,
-                RHAP_UI.DURATION,
-                RHAP_UI.PROGRESS_BAR,
-              ]}
-              customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
-            />
+            <AudioPlayer audioSrc={currentStory.audioSrc} />
           </>
         ) : (
           <p>Error: No story selected</p>
