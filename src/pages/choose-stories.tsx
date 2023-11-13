@@ -5,7 +5,7 @@ import { Story } from "@/interfaces/Story";
 import { ACTS } from "@/shared/Act";
 import { stories } from "@/shared/Stories";
 import Head from "next/head";
-import Layout from "../Layout";
+import Layout from "@/pages/Layout";
 
 interface Props {
   selectedStories: Story[];

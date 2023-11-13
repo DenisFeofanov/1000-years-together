@@ -4,6 +4,7 @@ import Heading from "@/components/Heading";
 import { Act } from "@/interfaces/Act";
 import { Story } from "@/interfaces/Story";
 import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
+import Layout from "@/pages/Layout";
 import { ACTS } from "@/shared/Act";
 import { stories } from "@/shared/Stories";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
@@ -12,7 +13,6 @@ import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { useEffect, useState } from "react";
 import "react-h5-audio-player/lib/styles.css";
-import Layout from "../Layout";
 
 type Props = {
   previousSlug: string | null;

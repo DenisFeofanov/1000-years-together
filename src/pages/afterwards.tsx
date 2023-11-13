@@ -1,5 +1,5 @@
 import AppLink from "@/components/AppLink";
-import Layout from "../Layout";
+import Layout from "@/pages/Layout";
 import Head from "next/head";
 
 function Afterwards() {
