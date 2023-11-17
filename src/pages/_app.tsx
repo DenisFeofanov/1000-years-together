@@ -50,13 +50,11 @@ export default function App({ Component, pageProps }: AppProps) {
       return;
 
     // if there is a null story replace it with new story, otherwise add to the end
-    const nullStoryIndex = selectedStories.indexOf(null);
-    const updatedSelectedStories =
-      nullStoryIndex === -1
-        ? [...selectedStories, newStory]
-        : selectedStories.toSpliced(nullStoryIndex, 1, newStory);
-
-    handleSave(updatedSelectedStories);
+    handleSave(
+      selectedStories.includes(null)
+        ? selectedStories.map(story => (story === null ? newStory : story))
+        : [...selectedStories, newStory]
+    );
   }
 
   function handleClick(story: Story) {

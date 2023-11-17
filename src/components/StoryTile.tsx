@@ -1,5 +1,3 @@
-import { Story } from "@/interfaces/Story";
-
 interface Props {
   isSelected: boolean;
   isSelectingDone: boolean;
@@ -8,7 +6,7 @@ interface Props {
 }
 
 function StoryTile({ isSelected, isSelectingDone, onTileClick, title }: Props) {
-  const selectedStoryStyles = isSelected && "border-black bg-gray-200";
+  const selectedStoryStyles = isSelected ? "border-black bg-gray-200" : "";
 
   return (
     <button
