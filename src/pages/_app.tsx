@@ -77,7 +77,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Component
         {...pageProps}
         selectedStories={selectedStories}
-        handleClick={handleClick}
+        onClick={handleClick}
       />
     </>
   );

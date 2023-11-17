@@ -9,10 +9,10 @@ import Head from "next/head";
 
 interface Props {
   selectedStories: Story[];
-  handleClick: (story: Story) => void;
+  onClick: (story: Story) => void;
 }
 
-function ChooseStories({ selectedStories, handleClick }: Props) {
+function ChooseStories({ selectedStories, onClick }: Props) {
   const isSelectingDone =
     selectedStories.length !== 0 &&
     selectedStories.every(story => story !== null);
@@ -52,7 +52,7 @@ function ChooseStories({ selectedStories, handleClick }: Props) {
                   selectedStory => selectedStory?.title === story.title
                 )}
                 isSelectingDone={isSelectingDone}
-                onTileClick={() => handleClick(story)}
+                onTileClick={() => onClick(story)}
                 title={story.title}
               />
             );
