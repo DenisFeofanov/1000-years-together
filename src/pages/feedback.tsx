@@ -3,7 +3,7 @@ import Heading from "@/components/Heading";
 import Layout from "@/pages/Layout";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -11,6 +11,8 @@ interface FormData {
   fullName: string;
   email: string;
 }
+
+type Status = "idle" | "isLoading" | "succeeded" | "failed";
 
 const schema = yup
   .object({
@@ -26,13 +28,39 @@ export default function Feedback() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      fullName: "Боба",
+      email: "test@gmail.com",
+    },
   });
+  const [status, setStatus] = useState<Status>("idle");
 
-  const router = useRouter();
+  const onSubmit = async (data: FormData) => {
+    try {
+      // actual email sending code, specify target email on https://dashboard.emailjs.com/
+      // const response = await emailjs.send(
+      //   "service_ws26eam",
+      //   "template_zj9jqgv",
+      //   {
+      //     name: data.fullName,
+      //     email: data.email,
+      //   },
+      //   "zBNFKDMf6bBIOBwiX"
+      // );
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    router.push("/");
+      setStatus("isLoading");
+
+      // imitates delay in 1s and returns successful fakeResponse
+      const response: { status: number } = await new Promise(
+        (resolve, reject) => {
+          setTimeout(() => resolve({ status: 200 }), 3000);
+        }
+      );
+
+      setStatus("succeeded");
+    } catch (error) {
+      setStatus("failed");
+    }
   };
 
   return (
@@ -44,25 +72,33 @@ export default function Feedback() {
       <Layout>
         <Heading>Обратная связь</Heading>
 
-        <form
-          onSubmit={handleSubmit(data => onSubmit(data))}
-          className="flex flex-col gap-3 max-w-sm"
-        >
-          <input
-            {...register("fullName", { required: true })}
-            className="border"
-            type="text"
-          />
-          {errors.fullName && <p>ФИО обязательно</p>}
-          <input
-            {...register("email", { required: true })}
-            className="border"
-            type="text"
-          />
-          {errors.email && <p>Введите корректный email</p>}
+        {status === "idle" && (
+          <form
+            onSubmit={handleSubmit(data => onSubmit(data))}
+            className="flex flex-col gap-3 max-w-sm"
+          >
+            <input
+              {...register("fullName", { required: true })}
+              className="border p-2"
+              type="text"
+              placeholder="ФИО"
+            />
+            {errors.fullName && <p>ФИО обязательно</p>}
+            <input
+              {...register("email", { required: true })}
+              className="border p-2"
+              type="text"
+              placeholder="Email"
+            />
+            {errors.email && <p>Введите корректный email</p>}
 
-          <button type="submit">Отправить</button>
-        </form>
+            <button type="submit">Отправить</button>
+          </form>
+        )}
+
+        {status === "isLoading" && <p>Отправка...</p>}
+        {status === "succeeded" && <p>Успех!</p>}
+        {status === "failed" && <p>Что-то пошло не так...</p>}
 
         <AppLink href="/">На главную</AppLink>
       </Layout>
