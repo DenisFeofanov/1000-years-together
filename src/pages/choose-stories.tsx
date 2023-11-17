@@ -13,7 +13,9 @@ interface Props {
 }
 
 function ChooseStories({ selectedStories, handleClick }: Props) {
-  const isSelectingDone = selectedStories.length === 5;
+  const isSelectingDone =
+    selectedStories.length !== 0 &&
+    selectedStories.every(story => story !== null);
   return (
     <>
       <Head>
@@ -36,9 +38,9 @@ function ChooseStories({ selectedStories, handleClick }: Props) {
         <p>
           Выбранные истории:{" "}
           {selectedStories &&
-            selectedStories.map(act => (
-              <span key={act.title}>{act.title} </span>
-            ))}
+            selectedStories.map(act =>
+              act === null ? " _ " : <span key={act.title}>{act.title} </span>
+            )}
         </p>
 
         <div className="m-3 grid grid-cols-6 gap-1 lg:gap-4 w-full h-full justify-items-stretch items-stretch aspect-square">
@@ -47,7 +49,7 @@ function ChooseStories({ selectedStories, handleClick }: Props) {
               <StoryTile
                 key={story.title}
                 isSelected={selectedStories.some(
-                  selectedStory => selectedStory.title === story.title
+                  selectedStory => selectedStory?.title === story.title
                 )}
                 isSelectingDone={isSelectingDone}
                 onTileClick={() => handleClick(story)}
