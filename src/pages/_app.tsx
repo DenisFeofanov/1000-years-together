@@ -44,7 +44,7 @@ export default function App({ Component, pageProps }: AppProps) {
   function addSelectedStory(newStory: Story) {
     // allow no more than five non-null stories
     if (
-      selectedStories.length >= 5 &&
+      selectedStories.length === 5 &&
       selectedStories.every(story => story !== null)
     )
       return;

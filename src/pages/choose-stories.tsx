@@ -14,7 +14,7 @@ interface Props {
 
 function ChooseStories({ selectedStories, onClick }: Props) {
   const isSelectingDone =
-    selectedStories.length !== 0 &&
+    selectedStories.length === 5 &&
     selectedStories.every(story => story !== null);
   return (
     <>
