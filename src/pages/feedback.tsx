@@ -37,29 +37,26 @@ export default function Feedback() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      // actual email sending code, specify target email on https://dashboard.emailjs.com/
-      // const response = await emailjs.send(
-      //   "service_ws26eam",
-      //   "template_zj9jqgv",
-      //   {
-      //     name: data.fullName,
-      //     email: data.email,
-      //   },
-      //   "zBNFKDMf6bBIOBwiX"
-      // );
-
       setStatus("isLoading");
 
       // imitates delay in 1s and returns successful fakeResponse
       const response: { status: number } = await new Promise(
         (resolve, reject) => {
-          setTimeout(() => resolve({ status: 200 }), 3000);
+          setTimeout(() => resolve({ status: 200 }), 1000);
         }
       );
+
+      // actual email sending
+      // const { fullName, email } = data;
+      // await axios.post("/api/email", {
+      //   fullName,
+      //   email,
+      // });
 
       setStatus("succeeded");
     } catch (error) {
       setStatus("failed");
+      console.log(error);
     }
   };
 
