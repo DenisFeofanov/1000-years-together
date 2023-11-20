@@ -50,11 +50,15 @@ export default function App({ Component, pageProps }: AppProps) {
       return;
 
     // if there is a null story replace it with new story, otherwise add to the end
-    handleSave(
-      selectedStories.includes(null)
-        ? selectedStories.map(story => (story === null ? newStory : story))
-        : [...selectedStories, newStory]
-    );
+    let updatedSelectedStories;
+
+    if (selectedStories.includes(null)) {
+      updatedSelectedStories = [...selectedStories];
+      updatedSelectedStories[selectedStories.indexOf(null)] = newStory;
+    } else {
+      updatedSelectedStories = [...selectedStories, newStory];
+    }
+    handleSave(updatedSelectedStories);
   }
 
   function handleClick(story: Story) {
