@@ -14,6 +14,9 @@ function AppLink({ href, children, isDisabled = false, ...rest }: Props) {
       className={`border-black border p-1 m-1 text-center lg:p-2 lg:m-4 ${disabledStyles}`}
       href={href}
       {...rest}
+      // keeps focusable for accessibility, keeps prefetch, but prevents going further
+      onClick={e => isDisabled && e.preventDefault()}
+      aria-disabled={isDisabled}
     >
       {children}
     </Link>
