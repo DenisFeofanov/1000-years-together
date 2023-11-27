@@ -1,14 +1,19 @@
-import { Story } from "@/interfaces/Story";
-import { useRef } from "react";
+import { forwardRef } from "react";
 import {
   default as H5AudioPlayer,
   default as Player,
   RHAP_UI,
 } from "react-h5-audio-player";
 
-function AudioPlayer({ audioSrc }: Pick<Story, "audioSrc">) {
-  const audioRef = useRef<H5AudioPlayer>(null);
+interface Props {
+  audioSrc: string;
+  onCanPlay: () => void;
+}
 
+const AudioPlayer = forwardRef<H5AudioPlayer, Props>(function AudioPlayer(
+  { audioSrc, onCanPlay },
+  ref
+) {
   return (
     <Player
       src={audioSrc}
@@ -22,9 +27,10 @@ function AudioPlayer({ audioSrc }: Pick<Story, "audioSrc">) {
         RHAP_UI.PROGRESS_BAR,
       ]}
       customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
-      ref={audioRef}
+      ref={ref}
+      onCanPlay={onCanPlay}
     />
   );
-}
+});
 
 export default AudioPlayer;

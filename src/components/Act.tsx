@@ -3,7 +3,9 @@ import { Story } from "@/interfaces/Story";
 import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
 import Layout from "@/pages/Layout";
 import { ACTS } from "@/shared/Act";
-import { useEffect, useState } from "react";
+import { Wave } from "@foobar404/wave";
+import { useEffect, useRef, useState } from "react";
+import H5AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import AppLink from "./AppLink";
 import AudioPlayer from "./AudioPlayer";
@@ -22,6 +24,27 @@ function Act({
   act: { title, audioSrc: actAudioSrc },
 }: Props) {
   const [currentStory, setCurrentStory] = useState<Story | null>(null);
+  const audioRef = useRef<H5AudioPlayer>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<Wave | null>(null);
+
+  function createVizualization() {
+    // if canvas and audioRef are rendered, but no animation yet
+    if (
+      audioRef.current?.audio.current &&
+      canvasRef.current &&
+      !animationRef.current
+    ) {
+      animationRef.current = new Wave(
+        audioRef.current.audio.current,
+        canvasRef.current
+      );
+
+      animationRef.current.addAnimation(
+        new animationRef.current.animations.Lines()
+      );
+    }
+  }
 
   // on component mount load new stories from local storage
   useEffect(() => {
@@ -43,19 +66,26 @@ function Act({
       <AppLink href={goBackHref}>Назад</AppLink>
       <Heading>{title}</Heading>
 
-      {/* audio API only works correctly on client, so I render player component only on client */}
-      <ClientOnly>
+      {/* <ClientOnly>
         <AudioPlayer audioSrc={actAudioSrc} />
-      </ClientOnly>
+      </ClientOnly> */}
+
       {currentStory && (
         <>
           <Heading>История #{currentStory.title}</Heading>
 
+          {/* audio API only works correctly on client, so I render player component only on client */}
           <ClientOnly>
-            <AudioPlayer audioSrc={currentStory.audioSrc} />
+            <AudioPlayer
+              audioSrc={currentStory.audioSrc}
+              ref={audioRef}
+              onCanPlay={createVizualization}
+            />
           </ClientOnly>
         </>
       )}
+
+      <canvas ref={canvasRef}></canvas>
       <br />
       <AppLink href={goNextHref}>Далее</AppLink>
 
