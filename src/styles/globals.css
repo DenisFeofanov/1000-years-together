@@ -6,3 +6,7 @@ button {
   border-width: 1px;
   padding: 4px;
 }
+
+html {
+  line-height: normal;
+}

@@ -59,7 +59,7 @@ function ChooseStories({ selectedStories, onClick }: Props) {
           })}
         </div>
 
-        <AppLink href={`/act/${ACTS[0].slug}`} isDisabled={!isSelectingDone}>
+        <AppLink href={`/act/${ACTS[0].slug}`} disable={!isSelectingDone}>
           Начать спектакль
         </AppLink>
       </Layout>

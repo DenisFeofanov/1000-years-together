@@ -1,22 +1,27 @@
 import Link, { LinkProps } from "next/link";
+import { useRouter } from "next/router";
 
 interface Props extends LinkProps {
   children: React.ReactNode;
-  isDisabled?: boolean;
+  disable?: boolean;
 }
 
-function AppLink({ href, children, isDisabled = false, ...rest }: Props) {
+function AppLink({ href, children, disable = false, ...rest }: Props) {
+  const router = useRouter();
+
+  const isVisited = router.pathname === href;
+  const isDisabled = disable || isVisited;
+  const visitedStyles = isVisited && "text-grayReg";
   const disabledStyles =
-    isDisabled &&
-    "pointer-events-none cursor-default text-gray-300 border-gray-300";
+    isDisabled && "pointer-events-none cursor-default text-grayMiddle";
   return (
     <Link
-      className={`border-black border p-1 m-1 text-center lg:p-2 lg:m-4 ${disabledStyles}`}
+      className={`w-[184px] h-[54px] uppercase text-grayDark text-[1.125rem] font-semibold flex gap-2 justify-center items-center border-0 border-grayDark rounded-full [&:not(:hover)]:before:content-["("] before:font-normal before:text-[1.5rem] [&:not(:hover)]:after:content-[")"] after:font-normal after:text-[1.5rem] ${visitedStyles} fine-pointer:hover:border-2 active:border-2 active:bg-grayDark active:text-white ${disabledStyles}`}
       href={href}
-      {...rest}
-      // keeps focusable for accessibility, keeps prefetch, but prevents going further
+      // onClick check keeps link focusable for accessibility, keeps prefetch, but prevents going further
       onClick={e => isDisabled && e.preventDefault()}
       aria-disabled={isDisabled}
+      {...rest}
     >
       {children}
     </Link>
