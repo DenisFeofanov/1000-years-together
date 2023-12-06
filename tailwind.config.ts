@@ -7,6 +7,10 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      xsm: "375px",
+      md: "768px",
+    },
     extend: {
       screens: {
         "fine-pointer": {
@@ -25,6 +29,7 @@ const config: Config = {
       greenSoft: "#2EF896",
       redAccent: "#FF5151",
       redSoft: "#FF9898",
+      transparent: "transparent",
     },
   },
   plugins: [],

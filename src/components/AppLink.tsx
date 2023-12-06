@@ -26,7 +26,7 @@ function AppLink({
 
   return (
     <Link
-      className={`text-grayDark text-[length:var(--font-size)] font-semibold uppercase before:content-["("] before:font-normal before:text-[calc(1.33*var(--font-size))] after:content-[")"] after:font-normal after:text-[calc(1.33*var(--font-size))] flex gap-2 justify-center items-center px-2 h-full ${visitedStyles} fine-pointer:hover:border-2 fine-pointer:hover:border-grayDark fine-pointer:hover:rounded-full fine-pointer:hover:before:opacity-0 fine-pointer:hover:after:opacity-0 active:bg-grayDark active:text-white active:border-2 active:border-grayDark active:rounded-full active:before:opacity-0 active:after:opacity-0 ${disabledStyles} ${className}`}
+      className={`leading-none text-grayDark text-[0.82rem] font-semibold border-2 rounded-full border-transparent uppercase flex gap-2 justify-center items-center px-2 h-full xsm:text-[0.875rem] xsm:before:content-["("] xsm:before:font-normal xsm:before:text-[1.125rem] xsm:after:content-[")"] xsm:after:font-normal xsm:after:text-[1.125rem] md:text-[1.125rem] md:leading-[inherit] md:before:text-[1.5rem] md:before:leading-[inherit] md:after:text-[1.5rem] md:after:leading-[inherit] ${visitedStyles} fine-pointer:hover:border-2 fine-pointer:hover:border-grayDark fine-pointer:hover:rounded-full fine-pointer:hover:before:opacity-0 fine-pointer:hover:after:opacity-0 active:bg-grayDark active:text-white active:border-2 active:border-grayDark active:rounded-full active:before:opacity-0 active:after:opacity-0 ${disabledStyles}`}
       style={
         {
           "--font-size": fontSize,
