@@ -11,16 +11,18 @@ export default function Tutorial() {
       </Head>
 
       <Layout>
-        <Heading>Инструкция</Heading>
+        <section className="grow py-[75px] px-[15px]">
+          <Heading>Инструкция</Heading>
 
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit cum
-          mollitia suscipit ducimus unde eligendi sequi accusantium porro
-          explicabo voluptatibus necessitatibus modi facilis magnam, minima,
-          quia accusamus eum deserunt numquam.
-        </p>
-
-        <AppLink href="/">На главную</AppLink>
+          <p className="mt-[70px] text-[1rem] leading-[25px] max-w-[640px] mx-auto md:text-[1.25rem] font-normal md:leading-[30px]">
+            Команда лаборатории провела интервью и собрала более 20 историй. В
+            спектакле вы выберете и сможете услышать лишь 5 из них. Для выбора
+            историй нажмите любые 5 цифр в той последовательности, в которой
+            хотели бы их послушать.  После окончания спектакля вы сможете
+            послушать все оставшиеся истории в свободном режиме или пройти
+            спектакль заново, выбрав новые истории.
+          </p>
+        </section>
       </Layout>
     </>
   );

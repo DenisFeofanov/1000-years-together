@@ -1,5 +1,3 @@
-import { RFDewi } from "@/pages/fonts";
-
 interface Props {
   children: React.ReactNode;
 }
@@ -7,7 +5,7 @@ interface Props {
 function Heading({ children }: Props) {
   return (
     <h1
-      className={`${RFDewi.className} text-blackHeading text-[2.75rem] leading-[0.9] tracking-[-0.0825rem] uppercase`}
+      className={`text-blackHeading text-[3rem] tracking-[-2px] md:text-[6rem] not-italic font-semibold leading-none md:tracking-[-4.8px]`}
     >
       {children}
     </h1>

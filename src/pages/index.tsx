@@ -1,5 +1,5 @@
 import AppLink from "@/components/AppLink";
-import Mute from "@/components/Mute";
+import Footer from "@/components/Footer";
 import StickyAppLink from "@/components/StickyAppLink";
 import Layout from "@/pages/Layout";
 import Head from "next/head";
@@ -15,8 +15,8 @@ export default function Home() {
       </Head>
 
       <Layout>
-        <main className="grow flex flex-col justify-between">
-          <section className="pt-[76px] px-[15px] pb-[40px] xsm:pt-[50px] sm:pt-[37px] md:pt-0">
+        <main className="grow flex flex-col">
+          <section className="grow pt-[76px] px-[15px] pb-[370px] xsm:pb-[90px] xsm:pt-[50px] sm:pt-[37px] md:pt-0 lg:pb-[110px]">
             <div className="md:min-h-screen md:flex md:flex-col md:items-start md:pt-[30vh]">
               <h1
                 className={`${RFDewi.className} text-blackHeading text-[2.75rem] leading-[0.9] tracking-[-0.0825rem] uppercase xsm:text-[3.25rem] xsm:tracking-[-0.0975rem] sm:text-[3.5rem] sm:tracking-[-0.105rem] md:text-[6.625rem] md:tracking-[-0.19875rem] lg:text-[8.875rem] lg:tracking-[-0.26625rem] xlg:text-[10.5rem] xlg:tracking-[-0.315rem]`}
@@ -43,25 +43,7 @@ export default function Home() {
             </p>
           </section>
 
-          <footer className="px-[15px] pb-[40px] mt-[370px] flex flex-col items-center text-center text-grayDark text-[0.6875rem] font-normal leading-[1.5] xsm:mt-[90px] md:text-[0.8125rem] md:px-0 md:p-0 md:bg-[#F5F5F5] md:pt-[30px] md:pb-[65px] lg:mt-[110px]">
-            <AppLink href="/feedback" size="small">
-              Написать нам
-            </AppLink>
-
-            <p className="mt-[30px]">
-              Создан при поддержке
-              <br />
-              Уральского филиала Пушкинского музея
-            </p>
-
-            <address className="mt-[10px] md:mt-[30px] not-italic">
-              <a target="_blank" href="https://anatolyivanov.ru">
-                <span className="text-grayReg ">Дизайн:</span> Анатолий Иванов
-              </a>
-            </address>
-
-            <p className="mt-[50px]">© АНО «ЗА АРТ». Все права защищены.</p>
-          </footer>
+          <Footer />
         </main>
 
         <div className="h-[44px] sticky bottom-0 left-0 right-0 xsm:hidden">
