@@ -77,13 +77,13 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <main className={inter.className}>
+    <div className={inter.className}>
       <NextNProgress stopDelayMs={20} options={{ showSpinner: false }} />
       <Component
         {...pageProps}
         selectedStories={selectedStories}
         onClick={handleClick}
       />
-    </main>
+    </div>
   );
 }

@@ -2,11 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-button {
-  border-width: 1px;
-  padding: 4px;
-}
+@layer base {
+  body {
+    line-height: normal;
+  }
 
-html {
-  line-height: normal;
+  button {
+    border-width: 1px;
+    padding: 4px;
+  }
 }
