@@ -6,9 +6,9 @@ interface Props {
 
 export default function Layout({ children }: Props) {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header title="Бессмертие" />
-      {/* {children} */}
+      {children}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import AppLink from "./AppLink";
+import NavLink from "./NavLink";
 
 interface Props {
   title: string;
@@ -8,7 +8,7 @@ interface Props {
 
 export default function Header({ title }: Props) {
   return (
-    <header className="h-[44px] pr-2 flex items-center justify-between xsm:h-[40px] md:h-[48px] md:px-2">
+    <header className="sticky top-0 right-0 left-0 h-[44px] pr-2 flex items-center justify-between xsm:h-[40px] md:h-[48px] md:px-2">
       <Link
         href="/"
         className="flex items-center justify-center h-full py-2 px-4 md:hidden"
@@ -17,13 +17,17 @@ export default function Header({ title }: Props) {
       </Link>
 
       <div className="flex items-center justify-between h-4/5 gap-1 md:grow">
-        <AppLink href="/about">О проекте</AppLink>
+        <NavLink href="/about" className="h-full">
+          О проекте
+        </NavLink>
 
         <h2 className="hidden md:block md:text-blackHeading md:text-[1.125rem] md:font-medium md:tracking-[0.36px] md:uppercase">
           {title}
         </h2>
 
-        <AppLink href="/tutorial">Инструкция</AppLink>
+        <NavLink href="/tutorial" className="h-full">
+          Инструкция
+        </NavLink>
       </div>
     </header>
   );
