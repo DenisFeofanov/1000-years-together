@@ -1,21 +1,29 @@
 import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/router";
 
+interface textSizes {
+  normal: string;
+  small: string;
+}
+
 interface Props extends LinkProps {
   children: React.ReactNode;
   disable?: boolean;
-  className?: string;
-  fontSize?: string;
+  size?: keyof textSizes;
 }
 
 function AppLink({
   href,
   children,
   disable = false,
-  className,
-  fontSize = "1rem",
+  size = "normal",
   ...rest
 }: Props) {
+  const textSizeVariants: textSizes = {
+    small: "text-[0.75rem] md:text-[1rem]",
+    normal: "text-[1.125rem]",
+  };
+
   const router = useRouter();
 
   const isVisited = router.pathname === href;
@@ -26,12 +34,7 @@ function AppLink({
 
   return (
     <Link
-      className={`leading-none text-grayDark text-[0.82rem] font-semibold border-2 rounded-full border-transparent uppercase flex gap-2 justify-center items-center px-2 h-full xsm:text-[0.875rem] xsm:before:content-["("] xsm:before:font-normal xsm:before:text-[1.125rem] xsm:after:content-[")"] xsm:after:font-normal xsm:after:text-[1.125rem] md:text-[1.125rem] md:leading-[inherit] md:before:text-[1.5rem] md:before:leading-[inherit] md:after:text-[1.5rem] md:after:leading-[inherit] ${visitedStyles} fine-pointer:hover:border-2 fine-pointer:hover:border-grayDark fine-pointer:hover:rounded-full fine-pointer:hover:before:opacity-0 fine-pointer:hover:after:opacity-0 active:bg-grayDark active:text-white active:border-2 active:border-grayDark active:rounded-full active:before:opacity-0 active:after:opacity-0 ${disabledStyles}`}
-      style={
-        {
-          "--font-size": fontSize,
-        } as React.CSSProperties
-      }
+      className={`leading-[normal] py-1 px-2 text-grayDark ${textSizeVariants[size]} font-semibold border-2 rounded-full border-transparent uppercase flex gap-2 justify-center items-center before:content-["("] before:font-normal before:text-[1.33em] after:content-[")"] after:font-normal after:text-[1.33em] ${visitedStyles} fine-pointer:hover:border-2 fine-pointer:hover:border-grayDark fine-pointer:hover:rounded-full fine-pointer:hover:before:opacity-0 fine-pointer:hover:after:opacity-0 active:bg-grayDark active:text-white active:border-2 active:border-grayDark active:rounded-full active:before:opacity-0 active:after:opacity-0 ${disabledStyles}`}
       href={href}
       // onClick check keeps link focusable for accessibility, keeps prefetch, but prevents going further
       onClick={e => isDisabled && e.preventDefault()}

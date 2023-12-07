@@ -17,17 +17,13 @@ export default function Header({ title }: Props) {
       </Link>
 
       <div className="flex items-center justify-between h-4/5 gap-1 md:grow">
-        <NavLink href="/about" className="h-full">
-          О проекте
-        </NavLink>
+        <NavLink href="/about">О проекте</NavLink>
 
         <h2 className="hidden md:block md:text-blackHeading md:text-[1.125rem] md:font-medium md:tracking-[0.36px] md:uppercase">
           {title}
         </h2>
 
-        <NavLink href="/tutorial" className="h-full">
-          Инструкция
-        </NavLink>
+        <NavLink href="/tutorial">Инструкция</NavLink>
       </div>
     </header>
   );

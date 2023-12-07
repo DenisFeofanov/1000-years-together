@@ -1,5 +1,4 @@
 import AppLink from "@/components/AppLink";
-import Heading from "@/components/Heading";
 import Layout from "@/pages/Layout";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Head from "next/head";
@@ -67,8 +66,6 @@ export default function Feedback() {
       </Head>
 
       <Layout>
-        <Heading>Обратная связь</Heading>
-
         {status === "idle" && (
           <form
             onSubmit={handleSubmit(data => onSubmit(data))}
