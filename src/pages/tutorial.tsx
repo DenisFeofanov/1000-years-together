@@ -1,4 +1,5 @@
 import Heading from "@/components/Heading";
+import LinkHome from "@/components/LinkHome";
 import Paragraph from "@/components/Paragraph";
 import Layout from "@/pages/Layout";
 import Head from "next/head";
@@ -25,6 +26,8 @@ export default function Tutorial() {
             </Paragraph>
           </div>
         </main>
+
+        <LinkHome />
       </Layout>
     </>
   );

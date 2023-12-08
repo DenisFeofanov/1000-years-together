@@ -12,7 +12,7 @@ export default function Layout({ children }: Props) {
   const isMain = router.pathname === "/";
   let headerTitle;
   if (router.pathname === "/tutorial" || router.pathname === "/about") {
-    headerTitle = <NavLink href="/">тысяча лет вместе</NavLink>;
+    headerTitle = "тысяча лет вместе";
   } else {
     headerTitle = "Бессмертие";
   }

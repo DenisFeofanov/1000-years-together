@@ -19,7 +19,7 @@ export default function Header({ title }: Props) {
   }
 
   return (
-    <header className="sticky top-0 right-0 left-0 h-[44px] pr-2 flex items-center justify-between xsm:h-[40px] md:h-[48px] md:px-2">
+    <header className="sticky top-0 right-0 left-0 h-[44px] pr-2 flex items-center justify-between xsm:h-[40px] sm:h-[44px] md:h-[48px] md:px-2">
       <Link
         href="/"
         className="flex items-center justify-center h-full py-2 px-4 md:hidden"

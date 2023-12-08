@@ -1,11 +1,10 @@
 import AppLink from "@/components/AppLink";
 import Footer from "@/components/Footer";
+import LinkHome from "@/components/LinkHome";
 import StickyAppLink from "@/components/StickyAppLink";
 import { RFDewi } from "@/lib/fonts";
 import Layout from "@/pages/Layout";
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
 
 export default function Home() {
   return (
@@ -50,17 +49,7 @@ export default function Home() {
           <StickyAppLink href="/choose-stories">Начать спектакль</StickyAppLink>
         </div>
 
-        <Link
-          href="/"
-          className="hidden md:block md:fixed md:bottom-0 md:left-0 md:px-[18px] md:py-[13px]"
-        >
-          <Image
-            src="/biennial.svg"
-            width="24"
-            height="24"
-            alt="Biennial logo"
-          />
-        </Link>
+        <LinkHome />
         {/* <Mute className="hidden md:block md:fixed md:bottom-0 md:right-0" /> */}
       </Layout>
     </>
