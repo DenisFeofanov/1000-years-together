@@ -11,7 +11,7 @@ export default function Tutorial() {
       </Head>
 
       <Layout>
-        <section className="grow py-[75px] px-[15px]">
+        <main className="grow py-[75px] px-[15px]">
           <Heading>Инструкция</Heading>
 
           <p className="mt-[70px] text-[1rem] leading-[25px] max-w-[640px] mx-auto md:text-[1.25rem] font-normal md:leading-[30px]">
@@ -22,7 +22,7 @@ export default function Tutorial() {
             послушать все оставшиеся истории в свободном режиме или пройти
             спектакль заново, выбрав новые истории.
           </p>
-        </section>
+        </main>
       </Layout>
     </>
   );

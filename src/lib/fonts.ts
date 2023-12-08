@@ -6,6 +6,6 @@ export const inter = Inter({
 });
 
 export const RFDewi = localFont({
-  src: "./RFDewi-Bold.woff2",
+  src: "../../public/fonts/RFDewi-Bold.woff2",
   weight: "700",
 });
