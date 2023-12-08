@@ -1,11 +1,12 @@
 import { Story } from "@/interfaces/Story";
 import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
+import { RFDewi } from "@/lib/fonts";
 import { selectedStoriesKey } from "@/shared/Stories";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+import { Inter } from "next/font/google";
 import NextNProgress from "nextjs-progressbar";
 import { useEffect, useState } from "react";
-import { Inter } from "next/font/google";
 
 type selectedStoriesState = (Story | null)[];
 
@@ -77,7 +78,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <div className={inter.className}>
+    <div className={`${inter.className} ${RFDewi.variable}`}>
       <NextNProgress stopDelayMs={20} options={{ showSpinner: false }} />
       <Component
         {...pageProps}

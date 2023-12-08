@@ -20,6 +20,9 @@ const config: Config = {
           raw: "(pointer: fine)",
         },
       },
+      fontFamily: {
+        mainHeading: ["var(--font-rfdewi)"],
+      },
     },
     colors: {
       white: "#ffffff",
