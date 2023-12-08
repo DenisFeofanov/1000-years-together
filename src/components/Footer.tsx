@@ -11,6 +11,8 @@ export default function Footer() {
         Создан при поддержке
         <br />
         Уральского филиала Пушкинского музея
+        <br />
+        18+
       </p>
 
       <address className="mt-[10px] md:mt-[30px] not-italic">

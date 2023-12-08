@@ -10,7 +10,7 @@ export default function Header({ title }: Props) {
   let middleBlock;
   if (typeof title === "string") {
     middleBlock = (
-      <h2 className="hidden md:block md:text-blackHeading md:text-[1.125rem] md:font-medium md:tracking-[0.36px] md:uppercase">
+      <h2 className="md:text-blackHeading md:text-[1.125rem] md:font-medium md:tracking-[0.36px] md:uppercase">
         {title}
       </h2>
     );
@@ -30,7 +30,7 @@ export default function Header({ title }: Props) {
       <div className="flex items-center justify-between h-4/5 gap-1 md:grow">
         <NavLink href="/about">О проекте</NavLink>
 
-        {middleBlock}
+        <div className="hidden md:block">{middleBlock}</div>
 
         <NavLink href="/tutorial">Инструкция</NavLink>
       </div>
