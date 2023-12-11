@@ -6,9 +6,38 @@
   body {
     line-height: normal;
   }
+}
 
-  button {
-    border-width: 1px;
-    padding: 4px;
+@layer components {
+  .selected-btn-gradient {
+    background: linear-gradient(
+        162deg,
+        rgba(213, 231, 141, 0.12) 32.32%,
+        rgba(10, 129, 106, 0.12) 67.36%
+      ),
+      radial-gradient(
+        50% 50% at 50% 50%,
+        rgba(3, 228, 119, 0) 23.96%,
+        rgba(8, 221, 118, 0.83) 71.35%,
+        rgba(3, 228, 119, 0) 100%
+      ),
+      radial-gradient(
+        50% 50% at 50% 50%,
+        #0a816a 56.77%,
+        rgba(0, 90, 72, 0) 80.21%
+      );
+    filter: blur(18px);
+  }
+
+  .hover-btn-gradient {
+    background: var(
+      --5-b-gr-hover,
+      radial-gradient(
+        50% 50% at 50% 50%,
+        #03e477 0%,
+        rgba(255, 255, 255, 0) 100%
+      )
+    );
+    filter: blur(18px);
   }
 }

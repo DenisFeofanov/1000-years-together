@@ -41,8 +41,6 @@ export default function Home() {
               современного искусства.
             </p>
           </section>
-
-          <Footer />
         </main>
 
         <div className="h-[44px] sticky bottom-0 left-0 right-0 xsm:hidden">

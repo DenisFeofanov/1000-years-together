@@ -35,6 +35,7 @@ const config: Config = {
       greenSoft: "#2EF896",
       redAccent: "#FF5151",
       redSoft: "#FF9898",
+      grayNum: "#E0E0E0",
       transparent: "transparent",
     },
   },

@@ -23,7 +23,33 @@ function ChooseStories({ selectedStories, onClick }: Props) {
       </Head>
 
       <Layout>
-        <button
+        <main className="grow pt-[37px] px-[15px]">
+          <Heading>Выберете 5 историй</Heading>
+
+          <div className="mt-[40px] grid grid-cols-3 gap-[15px] md:grid-cols-5">
+            {stories.map((story, index) => {
+              return (
+                <StoryTile
+                  key={story.title}
+                  isSelected={selectedStories.some(
+                    selectedStory => selectedStory?.title === story.title
+                  )}
+                  isSelectingDone={isSelectingDone}
+                  onTileClick={() => onClick(story)}
+                  index={index + 1}
+                  duration={story.duration}
+                />
+              );
+            })}
+          </div>
+
+          {/* <div className="mt-[80px]">
+            <AppLink href={`/act/${ACTS[0].slug}`} disable={!isSelectingDone}>
+              Начать спектакль
+            </AppLink>
+          </div> */}
+        </main>
+        {/* <button
           type="button"
           onClick={() => {
             localStorage.clear();
@@ -61,7 +87,7 @@ function ChooseStories({ selectedStories, onClick }: Props) {
 
         <AppLink href={`/act/${ACTS[0].slug}`} disable={!isSelectingDone}>
           Начать спектакль
-        </AppLink>
+        </AppLink> */}
       </Layout>
     </>
   );

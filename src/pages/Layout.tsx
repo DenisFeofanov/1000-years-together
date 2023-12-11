@@ -8,7 +8,7 @@ interface Props {
 
 export default function Layout({ children }: Props) {
   const currPathname = usePathname();
-  const isMain = currPathname === "/";
+  const pagesWithCustomFooter = currPathname === "/choose-stories";
   let headerTitle;
   if (currPathname === "/tutorial" || currPathname === "/about") {
     headerTitle = "тысяча лет вместе";
@@ -21,7 +21,7 @@ export default function Layout({ children }: Props) {
       <Header title={headerTitle} />
       {children}
 
-      {!isMain && <Footer />}
+      {!pagesWithCustomFooter && <Footer />}
     </div>
   );
 }
