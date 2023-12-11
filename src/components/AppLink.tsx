@@ -1,5 +1,5 @@
 import Link, { LinkProps } from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 interface textSizes {
   normal: string;
@@ -24,9 +24,7 @@ function AppLink({
     normal: "text-[1.125rem]",
   };
 
-  const router = useRouter();
-
-  const isVisited = router.pathname === href;
+  const isVisited = usePathname() === href;
   const isDisabled = disable || isVisited;
   const visitedStyles = isVisited && "text-grayReg";
   const disabledStyles =

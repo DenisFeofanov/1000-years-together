@@ -1,17 +1,16 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import NavLink from "@/components/NavLink";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 interface Props {
   children: React.ReactNode;
 }
 
 export default function Layout({ children }: Props) {
-  const router = useRouter();
-  const isMain = router.pathname === "/";
+  const currPathname = usePathname();
+  const isMain = currPathname === "/";
   let headerTitle;
-  if (router.pathname === "/tutorial" || router.pathname === "/about") {
+  if (currPathname === "/tutorial" || currPathname === "/about") {
     headerTitle = "тысяча лет вместе";
   } else {
     headerTitle = "Бессмертие";

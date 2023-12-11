@@ -1,5 +1,5 @@
 import Link, { LinkProps } from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 interface Props extends LinkProps {
   children: React.ReactNode;
@@ -14,9 +14,7 @@ function NavLink({
   fontSize = "1rem",
   ...rest
 }: Props) {
-  const router = useRouter();
-
-  const isVisited = router.pathname === href;
+  const isVisited = usePathname() === href;
   const isDisabled = disable || isVisited;
   const visitedStyles = isVisited && "text-grayReg";
   const disabledStyles =
@@ -36,7 +34,7 @@ function NavLink({
       aria-disabled={isDisabled}
       {...rest}
     >
-      <span className="relative top-[1px]">{children}</span>
+      {children}
     </Link>
   );
 }
