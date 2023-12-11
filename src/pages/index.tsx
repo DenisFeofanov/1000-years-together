@@ -50,7 +50,6 @@ export default function Home() {
         </div>
 
         <LinkHome />
-        {/* <Mute className="hidden md:block md:fixed md:bottom-0 md:right-0" /> */}
       </Layout>
     </>
   );
