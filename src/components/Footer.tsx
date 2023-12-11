@@ -16,7 +16,11 @@ export default function Footer() {
       </p>
 
       <address className="mt-[10px] md:mt-[30px] not-italic">
-        <a target="_blank" href="https://anatolyivanov.ru">
+        <a
+          className="hover:underline"
+          target="_blank"
+          href="https://anatolyivanov.ru"
+        >
           <span className="text-grayReg ">Дизайн:</span> Анатолий Иванов
         </a>
       </address>
