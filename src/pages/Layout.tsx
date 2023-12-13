@@ -10,10 +10,10 @@ export default function Layout({ children }: Props) {
   const currPathname = usePathname();
   const pagesWithCustomFooter = currPathname === "/choose-stories";
   let headerTitle;
-  if (currPathname === "/tutorial" || currPathname === "/about") {
-    headerTitle = "тысяча лет вместе";
-  } else {
+  if (currPathname === "/") {
     headerTitle = "Бессмертие";
+  } else {
+    headerTitle = "тысяча лет вместе";
   }
 
   return (

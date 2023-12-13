@@ -16,13 +16,13 @@ function StoryTile({
   return (
     <button
       type="button"
-      className={`py-[20px] px-[10px] group`}
+      className={`relative py-[20px] px-[10px] group md:py-[35px]`}
       onClick={onTileClick}
       disabled={!isSelected && isSelectingDone}
     >
-      <div className={`relative flex flex-col justify-center items-center`}>
+      <div className={`flex flex-col justify-center items-center`}>
         <span
-          className={`text-grayNum text-[4.75rem] not-italic font-medium leading-[1] tracking-[-4.56px] ${
+          className={`text-grayNum text-[4.75rem] not-italic font-medium leading-[1] tracking-[-4.56px] ml-[-4.56px] lg:text-[9rem] lg:tracking-[-11.52px] lg:ml-[-11.52px] ${
             isSelected
               ? "text-white"
               : "group-hover:group-enabled:fine-pointer:text-grayDark"
@@ -31,7 +31,7 @@ function StoryTile({
           {index}
         </span>
         <span
-          className={`text-grayDark text-[1.125rem] not-italic font-medium leading-[normal] tracking-[-0.18px] ${
+          className={`text-grayDark text-[1.125rem] not-italic font-medium leading-[normal] tracking-[-0.18px]  ${
             isSelected
               ? "text-white"
               : "group-hover:group-enabled:fine-pointer:text-grayDark"
@@ -39,15 +39,15 @@ function StoryTile({
         >
           {duration}
         </span>
-
-        <div
-          className={`absolute top-0 bottom-0 left-0 right-0 -z-10 rounded-full max-w-[130px] ${
-            isSelected
-              ? "selected-btn-gradient"
-              : "group-hover:group-enabled:fine-pointer:hover-btn-gradient"
-          }`}
-        ></div>
       </div>
+
+      <div
+        className={`absolute top-[10px] bottom-[10px] left-[10px] right-[10px] -z-10 rounded-full ${
+          isSelected
+            ? "selected-btn-gradient"
+            : "group-hover:group-enabled:fine-pointer:hover-btn-gradient"
+        }`}
+      ></div>
     </button>
   );
 }
