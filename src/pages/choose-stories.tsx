@@ -16,7 +16,11 @@ function ChooseStories({ selectedStories, onClick }: Props) {
   const isSelectingDone =
     selectedStories.length === 5 &&
     selectedStories.every(story => story !== null);
+  const amountOfSelectedStories = selectedStories.filter(
+    story => story !== null
+  ).length;
 
+  // creating "selected stories" line
   const selectedStoriesNumbers = selectedStories.map(story =>
     story === null ? "_" : story.title
   );
@@ -24,6 +28,32 @@ function ChooseStories({ selectedStories, onClick }: Props) {
     selectedStories.length > 0
       ? "Вы выбрали: " + selectedStoriesNumbers.join(", ")
       : "Вы еще ничего не выбрали";
+
+  // creating heading tooltip text
+  let headingTooltip;
+  if (isSelectingDone) {
+    headingTooltip = `Отлично, вы выбрали все 5 историй. \nНажмите «Начать спектакль» и вкл. звук`;
+  } else {
+    switch (amountOfSelectedStories) {
+      case 0:
+        headingTooltip = `Выберете пять разных историй в любом \nпорядке. Ни больше, не меньше.`;
+        break;
+      case 1:
+        headingTooltip = `Хорошо, для начала необходимо \nвыбрать еще четыре истории`;
+        break;
+      case 2:
+        headingTooltip = `Хорошо, для начала необходимо \nвыбрать еще три истории`;
+        break;
+      case 3:
+        headingTooltip = `Хорошо, для начала необходимо \nвыбрать еще две истории`;
+        break;
+      case 4:
+        headingTooltip = `Хорошо, для начала необходимо \nвыбрать еще одну историю`;
+        break;
+      default:
+        break;
+    }
+  }
   return (
     <>
       <Head>
@@ -33,7 +63,17 @@ function ChooseStories({ selectedStories, onClick }: Props) {
       <Layout>
         <main className="grow flex flex-col justify-between">
           <div className="grow pt-[37px] px-[15px] md:pt-[75px]">
-            <Heading>Выберите 5 историй</Heading>
+            <div className="flex items-start gap-[31px]">
+              <div className="flex-none">
+                <Heading>Выберите 5 историй</Heading>
+              </div>
+
+              <p
+                className={`hidden lg:block lg:mt-[20px] lg:bg-greenSoft lg:rounded-[6px] lg:whitespace-pre lg:px-[10px] lg:py-[8px] lg:text-grayDark lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:relative lg:before:content-[url(../../public/tooltipArrow.svg)] lg:before:absolute lg:before:left-[-8px] lg:before:top-[50%] lg:before:h-[13px] lg:before:-translate-y-1/2`}
+              >
+                {headingTooltip}
+              </p>
+            </div>
 
             <div className="mt-[40px] grid grid-cols-3 gap-[15px] md:grid-cols-5 md:mt-[80px]">
               {stories.map((story, index) => {
