@@ -29,10 +29,10 @@ function ChooseStories({ selectedStories, onClick }: Props) {
       ? "Вы выбрали: " + selectedStoriesNumbers.join(", ")
       : "Вы еще ничего не выбрали";
 
-  // creating heading tooltip text
-  let headingTooltip;
+  // creating tooltips text
+  let headingTooltip, storiesTooltip;
   if (isSelectingDone) {
-    headingTooltip = `Отлично, вы выбрали все 5 историй. \nНажмите «Начать спектакль» и вкл. звук`;
+    headingTooltip = `Отлично, вы выбрали все 5 историй. \nНажмите «Начать спектакль» и включите звук`;
   } else {
     switch (amountOfSelectedStories) {
       case 0:
@@ -40,15 +40,19 @@ function ChooseStories({ selectedStories, onClick }: Props) {
         break;
       case 1:
         headingTooltip = `Хорошо, для начала необходимо \nвыбрать еще четыре истории`;
+        storiesTooltip = `Вам надо выбрать еще \nчетыре истории`;
         break;
       case 2:
         headingTooltip = `Хорошо, для начала необходимо \nвыбрать еще три истории`;
+        storiesTooltip = `Вам надо выбрать еще \nтри истории`;
         break;
       case 3:
         headingTooltip = `Хорошо, для начала необходимо \nвыбрать еще две истории`;
+        storiesTooltip = `Вам надо выбрать еще \nдве истории`;
         break;
       case 4:
         headingTooltip = `Хорошо, для начала необходимо \nвыбрать еще одну историю`;
+        storiesTooltip = `Вам надо выбрать еще \nодну историю`;
         break;
       default:
         break;
@@ -69,7 +73,7 @@ function ChooseStories({ selectedStories, onClick }: Props) {
               </div>
 
               <p
-                className={`hidden lg:block lg:mt-[20px] lg:bg-greenSoft lg:rounded-[6px] lg:whitespace-pre lg:px-[10px] lg:py-[8px] lg:text-grayDark lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:relative lg:before:content-[url(../../public/tooltipArrow.svg)] lg:before:absolute lg:before:left-[-8px] lg:before:top-[50%] lg:before:h-[13px] lg:before:-translate-y-1/2`}
+                className={`hidden lg:block lg:mt-[20px] lg:bg-greenSoft lg:rounded-[6px] lg:whitespace-pre lg:px-[10px] lg:py-[8px] lg:text-grayDark lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:relative lg:before:content-[url(../../public/headingTooltipArrow.svg)] lg:before:absolute lg:before:left-[-8px] lg:before:top-[50%] lg:before:h-[13px] lg:before:-translate-y-1/2`}
               >
                 {headingTooltip}
               </p>
@@ -98,9 +102,20 @@ function ChooseStories({ selectedStories, onClick }: Props) {
               isSelectingDone ? "bg-greenSoft" : "bg-grayNum md:bg-white"
             }`}
           >
-            <span className="hidden md:block md:uppercase md:text-blackText md:text-[1rem] md:not-italic md:font-semibold md:leading-[normal]">
-              {selectedStoriesText}
-            </span>
+            <div className="lg:relative">
+              <p className="hidden md:block md:uppercase md:text-blackText md:text-[1rem] md:not-italic md:font-semibold md:leading-[normal]">
+                {selectedStoriesText}
+              </p>
+              <p
+                className={`hidden ${
+                  isSelectingDone || amountOfSelectedStories === 0
+                    ? "lg:hidden"
+                    : "lg:block"
+                } lg:whitespace-pre lg:absolute lg:bottom-[calc(100%+12px)] lg:left-[43px] lg:px-[10px] lg:pt-[7px] lg:pb-[11px] lg:bg-grayDark lg:rounded-[6px] lg:text-white lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:before:content-[url(../../public/storiesTooltipArrow.svg)] lg:before:absolute lg:before:left-[9px] lg:before:bottom-[-8px] lg:before:h-[13px]`}
+              >
+                {storiesTooltip}
+              </p>
+            </div>
             <BigAppLink
               href={`/act/${ACTS[0].slug}`}
               disable={!isSelectingDone}
