@@ -1,4 +1,4 @@
-import BigAppLink from "@/components/ChooseStoriesLink";
+import ChooseStoriesLink from "@/components/ChooseStoriesLink";
 import Heading from "@/components/Heading";
 import StoryTile from "@/components/StoryTile";
 import { Story } from "@/interfaces/Story";
@@ -68,9 +68,7 @@ function ChooseStories({ selectedStories, onClick }: Props) {
         <main className="grow flex flex-col justify-between">
           <div className="grow pt-[37px] px-[15px] md:pt-[75px]">
             <div className="flex items-start gap-[31px]">
-              <div className="flex-none">
-                <Heading>Выберите 5 историй</Heading>
-              </div>
+              <Heading>Выберите 5 историй</Heading>
 
               <p
                 className={`hidden lg:block lg:mt-[20px] lg:bg-greenSoft lg:rounded-[6px] lg:whitespace-pre lg:px-[10px] lg:py-[8px] lg:text-grayDark lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:relative lg:before:content-[url(../../public/headingTooltipArrow.svg)] lg:before:absolute lg:before:left-[-8px] lg:before:top-[50%] lg:before:h-[13px] lg:before:-translate-y-1/2`}
@@ -116,12 +114,12 @@ function ChooseStories({ selectedStories, onClick }: Props) {
                 {storiesTooltip}
               </p>
             </div>
-            <BigAppLink
+            <ChooseStoriesLink
               href={`/act/${ACTS[0].slug}`}
               disable={!isSelectingDone}
             >
               Начать спектакль
-            </BigAppLink>
+            </ChooseStoriesLink>
           </div>
 
           {/* <footer

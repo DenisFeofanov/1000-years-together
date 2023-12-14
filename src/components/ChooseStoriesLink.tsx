@@ -6,7 +6,12 @@ interface Props extends LinkProps {
   disable?: boolean;
 }
 
-function BigAppLink({ href, children, disable = false, ...rest }: Props) {
+function ChooseStoriesLink({
+  href,
+  children,
+  disable = false,
+  ...rest
+}: Props) {
   const isVisited = usePathname() === href;
   const isDisabled = disable || isVisited;
   const visitedStyles = isVisited && "text-grayReg";
@@ -15,7 +20,7 @@ function BigAppLink({ href, children, disable = false, ...rest }: Props) {
 
   return (
     <Link
-      className={`w-full h-full leading-[normal] py-1 px-2 text-grayDark text-[1.5rem] font-semibold border-2 border-transparent uppercase flex gap-2 justify-center items-center before:content-["("] before:font-normal before:text-[1.33em] after:content-[")"] after:font-normal after:text-[1.33em] ${visitedStyles} fine-pointer:hover:bg-grayDark fine-pointer:hover:text-white fine-pointer:hover:border-2 fine-pointer:hover:border-grayDark active:bg-grayDark active:text-white active:border-2 active:border-grayDark md:text-[1rem] ${disabledStyles}`}
+      className={`w-full h-full leading-[normal] py-1 px-2 text-grayDark text-[1.5rem] font-semibold border-2 border-transparent uppercase flex gap-2 justify-center items-center before:content-["("] before:font-normal before:text-[1.33em] after:content-[")"] after:font-normal after:text-[1.33em] ${visitedStyles} max-md:fine-pointer:hover:bg-grayDark max-md:fine-pointer:hover:text-white max-md:fine-pointer:hover:border-2 max-md:fine-pointer:hover:border-grayDark max-md:active:bg-grayDark max-md:active:text-white max-md:active:border-2 max-md:active:border-grayDark md:text-[1rem] ${disabledStyles}`}
       href={href}
       // onClick check keeps link focusable for accessibility, keeps prefetch, but prevents going further
       onClick={e => isDisabled && e.preventDefault()}
@@ -27,4 +32,4 @@ function BigAppLink({ href, children, disable = false, ...rest }: Props) {
   );
 }
 
-export default BigAppLink;
+export default ChooseStoriesLink;
