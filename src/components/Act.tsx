@@ -29,6 +29,8 @@ function Act({
 }: Props) {
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const [currentStory, setCurrentStory] = useState<Story | null>(null);
+  const [isIntroFinished, setIsIntroFinished] = useState(false);
+  const [nextStory, setNextStory] = useState<Story | null>(null);
 
   // on component mount load new stories from local storage
   useEffect(() => {
@@ -41,6 +43,9 @@ function Act({
       if (selectedStories.length < 5) window.location.replace("/");
 
       setCurrentStory(selectedStories[storyIndex]);
+      setNextStory(
+        selectedStories[ACTS.findIndex(act => act.title === title) + 1] || null
+      );
     }
     // include title to silence error, although it shouldn't change through component's lifecycle
   }, [title]);
@@ -55,20 +60,22 @@ function Act({
           <div>
             <div className="flex justify-between items-start">
               <h1 className="whitespace-pre font-mainHeading text-blackText text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase">
-                {`история\n`}
+                {isIntroFinished ? `история\n` : `интро к истории\n`}
                 <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px]">
-                  23
+                  {currentStory?.title}
                 </span>
               </h1>
 
-              <div className="text-right">
-                <p className="whitespace-pre font-mainHeading text-blackText text-[0.6875rem] not-italic font-semibold leading-[normal] tracking-[0.22px] uppercase">
-                  далее
-                </p>
-                <p className="text-[1.5rem] font-bold leading-[1] tracking-[-0.24px] mt-[8px]">
-                  9
-                </p>
-              </div>
+              {nextStory && (
+                <div className="text-right">
+                  <p className="whitespace-pre font-mainHeading text-blackText text-[0.6875rem] not-italic font-semibold leading-[normal] tracking-[0.22px] uppercase">
+                    далее
+                  </p>
+                  <p className="text-[1.5rem] font-bold leading-[1] tracking-[-0.24px] mt-[8px]">
+                    {nextStory.title}
+                  </p>
+                </div>
+              )}
             </div>
 
             <button
@@ -87,7 +94,7 @@ function Act({
 
           <div>
             <button className="block mt-[82px] mx-auto" type="button">
-              <Image src={PlayIcon} width="144" alt="Play icon" />
+              <Image src={PlayIcon} width="144" alt="Play icon" priority />
             </button>
 
             <p className="mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase">
@@ -102,7 +109,18 @@ function Act({
 
             <div className="flex flex-wrap justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
               <ActLink href={""}>продолжить</ActLink>
-              <ActLink href={""}>следующая</ActLink>
+
+              {isIntroFinished ? (
+                <ActLink href={goNextHref}>следующая</ActLink>
+              ) : (
+                <button
+                  className={`leading-[normal] py-1 px-2 text-grayDark text-[0.9375rem] font-semibold border-2 rounded-full border-transparent uppercase flex gap-2 justify-center items-center before:content-["("] before:font-normal before:text-[1.33em] after:content-[")"] after:font-normal after:text-[1.33em] fine-pointer:hover:border-2 fine-pointer:hover:border-grayDark fine-pointer:hover:rounded-full fine-pointer:hover:before:opacity-0 fine-pointer:hover:after:opacity-0 active:bg-grayDark active:text-white active:border-2 active:border-grayDark active:rounded-full active:before:opacity-0 active:after:opacity-0`}
+                  type="button"
+                  onClick={() => setIsIntroFinished(true)}
+                >
+                  следующая
+                </button>
+              )}
             </div>
           </div>
 
@@ -188,7 +206,6 @@ function Act({
                 className="block mx-auto mt-[52px]"
                 src={logo}
                 width="24"
-                height="24"
                 alt="biennial logo"
               />
             </div>
