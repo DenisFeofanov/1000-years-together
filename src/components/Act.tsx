@@ -9,6 +9,11 @@ import AppLink from "./AppLink";
 import AudioPlayer from "./AudioPlayer";
 import ClientOnly from "./ClientOnly";
 import Heading from "./Heading";
+import Image from "next/image";
+import BookIcon from "@/Book.svg";
+import PlayIcon from "@/Play.svg";
+import ProgressBarIcon from "@/progressBar.png";
+import ActLink from "./ActLink";
 
 type Props = {
   goBackHref: string;
@@ -40,11 +45,65 @@ function Act({
 
   return (
     <Layout>
-      <AppLink href={goBackHref}>Назад</AppLink>
-      <Heading>{title}</Heading>
+      <main className="grid grid-rows-[1fr_auto] pt-[56px] px-[15px] pb-[30px]">
+        <div>
+          <div className="flex justify-between items-start">
+            <h1 className="whitespace-pre font-mainHeading text-blackText text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase">
+              {`история\n`}
+              <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px]">
+                23
+              </span>
+            </h1>
+
+            <div className="text-right">
+              <p className="whitespace-pre font-mainHeading text-blackText text-[0.6875rem] not-italic font-semibold leading-[normal] tracking-[0.22px] uppercase">
+                далее
+              </p>
+              <p className="text-[1.5rem] font-bold leading-[1] tracking-[-0.24px] mt-[8px]">
+                9
+              </p>
+            </div>
+          </div>
+
+          <button
+            className="flex items-center mt-[16px] gap-[8px]"
+            type="button"
+          >
+            <div className="w-max rounded-[40px] bg-[#ECECEC] p-[8px]">
+              <Image src={BookIcon} width="16" height="16" alt="Book icon" />
+            </div>
+            <p className="text-blackText font-mainHeading text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase">
+              текст
+            </p>
+          </button>
+        </div>
+
+        <div>
+          <button className="block mt-[82px] mx-auto" type="button">
+            <Image src={PlayIcon} width="144" alt="Play icon" />
+          </button>
+
+          <p className="mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase">
+            04:25 / 05:28
+          </p>
+
+          <Image
+            className="mt-[8px]"
+            src={ProgressBarIcon}
+            alt="placeholder for real progressBar"
+          />
+
+          <div className="flex flex-wrap justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
+            <ActLink href={""}>продолжить</ActLink>
+            <ActLink href={""}>следующая</ActLink>
+          </div>
+        </div>
+      </main>
+      {/* <AppLink href={goBackHref}>Назад</AppLink>
+      <Heading>{title}</Heading>*/}
 
       {/* audio API only works correctly on client, so I render player component only on client */}
-      <ClientOnly>
+      {/* <ClientOnly>
         <AudioPlayer audioSrc={actAudioSrc} />
       </ClientOnly>
       {currentStory && (
@@ -57,7 +116,7 @@ function Act({
         </>
       )}
       <br />
-      <AppLink href={goNextHref}>Далее</AppLink>
+      <AppLink href={goNextHref}>Далее</AppLink>  */}
 
       <style jsx>{`
         :global(.rhap_controls-section) {

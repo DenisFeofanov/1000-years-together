@@ -8,7 +8,8 @@ interface Props {
 
 export default function Layout({ children }: Props) {
   const currPathname = usePathname();
-  const pagesWithCustomFooter = currPathname === "/choose-stories";
+  const pagesWithCustomFooter =
+    currPathname === "/choose-stories" || currPathname?.split("/")[1] === "act";
   let headerTitle;
   if (currPathname === "/") {
     headerTitle = "Бессмертие";
@@ -17,7 +18,7 @@ export default function Layout({ children }: Props) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
       <Header title={headerTitle} />
       {children}
 
