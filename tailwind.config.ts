@@ -39,6 +39,7 @@ const config: Config = {
       redSoft: "#FF9898",
       grayNum: "#E0E0E0",
       transparent: "transparent",
+      iconGray: "#ECECEC",
     },
   },
   plugins: [],
