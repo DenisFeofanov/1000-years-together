@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 interface textSizes {
   normal: string;
   small: string;
+  medium: string;
 }
 
 interface Props extends LinkProps {
@@ -21,6 +22,7 @@ function AppLink({
 }: Props) {
   const textSizeVariants: textSizes = {
     small: "text-[0.75rem] md:text-[1rem]",
+    medium: "text-[1rem] md:text-[1.125rem]",
     normal: "text-[1.125rem]",
   };
 
