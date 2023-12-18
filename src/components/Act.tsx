@@ -7,7 +7,6 @@ import { Act } from "@/interfaces/Act";
 import { Story } from "@/interfaces/Story";
 import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
 import Layout from "@/pages/Layout";
-import ProgressBarIcon from "@/progressBar.png";
 import { ACTS } from "@/shared/Act";
 import Head from "next/head";
 import Image from "next/image";
@@ -18,6 +17,7 @@ import ActLink from "./ActLink";
 import ActModalSubheading from "./ActModalSubheading";
 import ActModalText from "./ActModalText";
 import ClientOnly from "./ClientOnly";
+import { formatTime } from "@/lib/formatTime";
 
 type Props = {
   goBackHref: string;
@@ -32,12 +32,15 @@ function Act({
 }: Props) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const modalRef = useRef<HTMLDialogElement | null>(null);
+  const progressBarRef = useRef<HTMLInputElement>(null);
 
   const [currentStory, setCurrentStory] = useState<Story | null>(null);
   const [isIntroFinished, setIsIntroFinished] = useState(false);
   const [nextStory, setNextStory] = useState<Story | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isCanPlay, setIsCanPlay] = useState(false);
+  const [timeProgress, setTimeProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   function togglePlayPause() {
     setIsPlaying(prev => !prev);
@@ -46,6 +49,18 @@ function Act({
   function handleNextAudio() {
     setIsPlaying(false);
     setIsIntroFinished(true);
+  }
+
+  function handleProgressBarChange() {
+    if (audioRef.current) {
+      audioRef.current.currentTime = Number(progressBarRef.current?.value);
+    }
+  }
+
+  function handleMetadataLoaded() {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
   }
 
   // on component mount load new stories from local storage
@@ -76,11 +91,6 @@ function Act({
     }
   }, [isPlaying]);
 
-  const playerDuration = (
-    <span className="mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter lg:mt-0">
-      04:25 / 05:28
-    </span>
-  );
   const storyTitle = (
     <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
       {currentStory?.title}
@@ -108,6 +118,7 @@ function Act({
         ref={audioRef}
         onEnded={() => setIsPlaying(false)}
         onCanPlay={() => setIsCanPlay(true)}
+        onLoadedMetadata={handleMetadataLoaded}
       ></audio>
     </ClientOnly>
   );
@@ -127,10 +138,13 @@ function Act({
     </button>
   );
   const progressBar = (
-    <Image
-      className="mt-[8px] w-full h-[7px] lg:mt-[42px]"
-      src={ProgressBarIcon}
-      alt="placeholder for real progressBar"
+    <input
+      className="mt-[8px] lg:mt-[42px] w-full"
+      type="range"
+      ref={progressBarRef}
+      defaultValue={0}
+      onChange={handleProgressBarChange}
+      max={duration}
     />
   );
   const nextButton = isIntroFinished ? (
@@ -138,6 +152,12 @@ function Act({
   ) : (
     <ActButton onClick={handleNextAudio}>следующая</ActButton>
   );
+  const playerDuration = (
+    <span className="mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter lg:mt-0">
+      {formatTime(timeProgress)} / {formatTime(duration)}
+    </span>
+  );
+
   return (
     <>
       <Head>
