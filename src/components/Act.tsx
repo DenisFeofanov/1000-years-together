@@ -1,4 +1,5 @@
 import BookIcon from "@/Book.svg";
+import PauseIcon from "@/Pause.svg";
 import PlayIcon from "@/Play.svg";
 import logo from "@/biennial.svg";
 import CrossIcon from "@/crossIcon.svg";
@@ -16,6 +17,7 @@ import ActButton from "./ActButton";
 import ActLink from "./ActLink";
 import ActModalSubheading from "./ActModalSubheading";
 import ActModalText from "./ActModalText";
+import ClientOnly from "./ClientOnly";
 
 type Props = {
   goBackHref: string;
@@ -28,10 +30,23 @@ function Act({
   goNextHref,
   act: { title, audioSrc: actAudioSrc },
 }: Props) {
+  const audioRef = useRef<HTMLAudioElement>(null);
   const modalRef = useRef<HTMLDialogElement | null>(null);
+
   const [currentStory, setCurrentStory] = useState<Story | null>(null);
   const [isIntroFinished, setIsIntroFinished] = useState(false);
   const [nextStory, setNextStory] = useState<Story | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isCanPlay, setIsCanPlay] = useState(false);
+
+  function togglePlayPause() {
+    setIsPlaying(prev => !prev);
+  }
+
+  function handleNextAudio() {
+    setIsPlaying(false);
+    setIsIntroFinished(true);
+  }
 
   // on component mount load new stories from local storage
   useEffect(() => {
@@ -50,6 +65,16 @@ function Act({
     }
     // include title to silence error, although it shouldn't change through component's lifecycle
   }, [title]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying]);
 
   const playerDuration = (
     <span className="mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter lg:mt-0">
@@ -76,25 +101,42 @@ function Act({
       {isIntroFinished ? `история\n` : `интро к истории\n`}
     </h1>
   );
-
-  // placeholders
-  const PlayButton = (
-    <button className="block mt-[82px] mx-auto lg:mt-0" type="button">
-      <Image src={PlayIcon} width="144" alt="Play icon" priority />
+  const audioPlayer = (
+    <ClientOnly>
+      <audio
+        src={isIntroFinished ? currentStory?.audioSrc : actAudioSrc}
+        ref={audioRef}
+        onEnded={() => setIsPlaying(false)}
+        onCanPlay={() => setIsCanPlay(true)}
+      ></audio>
+    </ClientOnly>
+  );
+  const playButton = (
+    <button
+      className="block mt-[82px] mx-auto lg:mt-0 disabled:opacity-50"
+      type="button"
+      onClick={togglePlayPause}
+      disabled={!isCanPlay}
+    >
+      <Image
+        src={isPlaying ? PauseIcon : PlayIcon}
+        height={144}
+        alt="Play icon"
+        priority
+      />
     </button>
   );
-  const ProgressBar = (
+  const progressBar = (
     <Image
       className="mt-[8px] w-full h-[7px] lg:mt-[42px]"
       src={ProgressBarIcon}
       alt="placeholder for real progressBar"
     />
   );
-
-  const ButtonNext = isIntroFinished ? (
+  const nextButton = isIntroFinished ? (
     <ActLink href={goNextHref}>следующая</ActLink>
   ) : (
-    <ActButton onClick={() => setIsIntroFinished(true)}>следующая</ActButton>
+    <ActButton onClick={handleNextAudio}>следующая</ActButton>
   );
   return (
     <>
@@ -114,6 +156,7 @@ function Act({
               {nextStoryText}
             </div>
 
+            {/* hide button if no text present */}
             <button
               className="flex items-center mt-[16px] gap-[8px]"
               type="button"
@@ -129,19 +172,18 @@ function Act({
           </div>
 
           <div>
-            {/* hide button if no text present */}
-            {PlayButton}
+            {playButton}
 
             {playerDuration}
 
-            {ProgressBar}
+            {progressBar}
 
             <div className="flex flex-wrap justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
               <ActButton onClick={() => console.log("log: audio play")}>
                 продолжить
               </ActButton>
 
-              {ButtonNext}
+              {nextButton}
             </div>
           </div>
         </main>
@@ -155,9 +197,11 @@ function Act({
 
           <div className="ml-[15px]">{heading}</div>
           <div>
-            {PlayButton}
+            {audioPlayer}
 
-            {ProgressBar}
+            {playButton}
+
+            {progressBar}
 
             <div className="mt-[42px] flex justify-center gap-[20px]">
               <ActButton onClick={() => console.log("log: audio pause")}>
@@ -168,7 +212,7 @@ function Act({
                 Текст
               </ActButton>
 
-              {ButtonNext}
+              {nextButton}
             </div>
           </div>
           <div className="mr-[15px]">{nextStoryText}</div>

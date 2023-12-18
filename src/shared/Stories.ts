@@ -1,11 +1,12 @@
 import { Story } from "@/interfaces/Story";
-import audio from "@/../public/stories/test.mp3";
+import audio from "@/stories/test.mp3";
+import audio2 from "@/stories/test2.mp3";
 
 const duration = "3:00";
 //  new Audio(audio).duration;
 
 export const stories: Story[] = [
-  { audioSrc: audio, title: "1", duration: String(duration) },
+  { audioSrc: audio2, title: "1", duration: String(duration) },
   { audioSrc: audio, title: "2", duration: "2:59" },
   { audioSrc: audio, title: "3", duration: "2:59" },
   { audioSrc: audio, title: "4", duration: "2:59" },
