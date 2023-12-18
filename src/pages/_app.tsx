@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 type selectedStoriesState = (Story | null)[];
 
-const inter = Inter({ subsets: ["cyrillic"] });
+const inter = Inter({ subsets: ["cyrillic"], variable: "--font-inter" });
 
 export default function App({ Component, pageProps }: AppProps) {
   const [selectedStories, setSelectedStories] = useState<selectedStoriesState>(
@@ -78,7 +78,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <div className={`${inter.className} ${RFDewi.variable}`}>
+    <div className={`${inter.className} ${inter.variable} ${RFDewi.variable}`}>
       <NextNProgress stopDelayMs={20} options={{ showSpinner: false }} />
       <Component
         {...pageProps}
