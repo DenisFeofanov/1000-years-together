@@ -6,18 +6,19 @@ import CrossIcon from "@/crossIcon.svg";
 import { Act } from "@/interfaces/Act";
 import { Story } from "@/interfaces/Story";
 import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
+import { formatTime } from "@/lib/formatTime";
 import Layout from "@/pages/Layout";
 import { ACTS } from "@/shared/Act";
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "react-h5-audio-player/lib/styles.css";
 import ActButton from "./ActButton";
 import ActLink from "./ActLink";
 import ActModalSubheading from "./ActModalSubheading";
 import ActModalText from "./ActModalText";
+import AudioPlayer from "./AudioPlayer";
 import ClientOnly from "./ClientOnly";
-import { formatTime } from "@/lib/formatTime";
 
 type Props = {
   goBackHref: string;
@@ -33,12 +34,14 @@ function Act({
   const audioRef = useRef<HTMLAudioElement>(null);
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const progressBarRef = useRef<HTMLInputElement>(null);
+  const playAnimationRef = useRef<number | null>(null);
+  const previousTimeStamp = useRef<number | null>(null);
 
   const [currentStory, setCurrentStory] = useState<Story | null>(null);
   const [isIntroFinished, setIsIntroFinished] = useState(false);
   const [nextStory, setNextStory] = useState<Story | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isCanPlay, setIsCanPlay] = useState(false);
+  const [isCanPlay, setIsCanPlay] = useState(true);
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -81,6 +84,20 @@ function Act({
     // include title to silence error, although it shouldn't change through component's lifecycle
   }, [title]);
 
+  const repeat = useCallback((timeStamp: DOMHighResTimeStamp) => {
+    if (previousTimeStamp.current === null) {
+      previousTimeStamp.current = timeStamp;
+    }
+
+    // update 10 times per second, feels smooth enough
+    if (timeStamp - previousTimeStamp.current >= 100 && audioRef.current) {
+      setTimeProgress(audioRef.current.currentTime);
+      previousTimeStamp.current = timeStamp;
+    }
+
+    playAnimationRef.current = requestAnimationFrame(repeat);
+  }, []);
+
   useEffect(() => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -89,7 +106,11 @@ function Act({
         audioRef.current.pause();
       }
     }
-  }, [isPlaying]);
+
+    playAnimationRef.current = requestAnimationFrame(repeat);
+
+    return () => cancelAnimationFrame(playAnimationRef.current!);
+  }, [isPlaying, repeat]);
 
   const storyTitle = (
     <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
@@ -119,6 +140,7 @@ function Act({
         onEnded={() => setIsPlaying(false)}
         onCanPlay={() => setIsCanPlay(true)}
         onLoadedMetadata={handleMetadataLoaded}
+        placeholder=""
       ></audio>
     </ClientOnly>
   );
@@ -142,7 +164,7 @@ function Act({
       className="mt-[8px] lg:mt-[42px] w-full"
       type="range"
       ref={progressBarRef}
-      defaultValue={0}
+      value={timeProgress}
       onChange={handleProgressBarChange}
       max={duration}
     />
