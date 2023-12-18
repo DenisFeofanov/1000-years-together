@@ -1,5 +1,5 @@
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Header, { TitleType } from "@/components/Header";
 import { usePathname } from "next/navigation";
 
 interface Props {
@@ -10,16 +10,18 @@ export default function Layout({ children }: Props) {
   const currPathname = usePathname();
   const pagesWithCustomFooter =
     currPathname === "/choose-stories" || currPathname?.split("/")[1] === "act";
-  let headerTitle;
+  let headerTitle,
+    titleType: TitleType = "link";
   if (currPathname === "/") {
     headerTitle = "Бессмертие";
+    titleType = "text";
   } else {
     headerTitle = "тысяча лет вместе";
   }
 
   return (
     <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
-      <Header title={headerTitle} />
+      <Header title={headerTitle} titleType={titleType} />
       {children}
 
       {!pagesWithCustomFooter && <Footer />}

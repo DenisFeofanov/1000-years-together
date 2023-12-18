@@ -2,20 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import NavLink from "./NavLink";
 
+export type TitleType = "text" | "link";
+
 interface Props {
-  title: string | React.ReactNode;
+  title: string;
+  titleType?: TitleType;
 }
 
-export default function Header({ title }: Props) {
+export default function Header({ title, titleType = "link" }: Props) {
   let middleBlock;
-  if (typeof title === "string") {
+  if (titleType === "link") {
+    middleBlock = <NavLink href={"/"}>{title}</NavLink>;
+  } else if (titleType === "text") {
     middleBlock = (
       <h2 className="md:text-blackHeading md:text-[1.125rem] md:font-medium md:tracking-[0.36px] md:uppercase">
         {title}
       </h2>
     );
-  } else {
-    middleBlock = title;
   }
 
   return (
@@ -30,7 +33,7 @@ export default function Header({ title }: Props) {
       <div className="flex items-center justify-between h-4/5 gap-1 md:grow">
         <NavLink href="/about">О проекте</NavLink>
 
-        <div className="hidden md:block">{middleBlock}</div>
+        <div className="hidden md:flex h-full items-center">{middleBlock}</div>
 
         <NavLink href="/tutorial">Инструкция</NavLink>
       </div>
