@@ -27,7 +27,7 @@ export default function About() {
 
           <section className="flex flex-col gap-[42px] mt-[40px] md:mt-[70px] md:grid md:grid-cols-2 md:gap-[40px]">
             <div>
-              <p className="text-[1.125rem] leading-[1.5] font-normal">
+              <p className="text-[1.125rem] leading-[1.5] font-normal text-blackText">
                 Проект в рамках 5-й Уральской
                 <br />
                 индустриальной биеннале
