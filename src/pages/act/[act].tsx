@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async context => {
   return {
     props: {
       goBackHref: previousSlug || "/choose-stories",
-      goNextHref: nextSlug || "/afterwards",
+      goNextHref: nextSlug || "/end",
       act: currentAct,
     },
   };

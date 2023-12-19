@@ -6,18 +6,19 @@ import CrossIcon from "@/crossIcon.svg";
 import { Act } from "@/interfaces/Act";
 import { Story } from "@/interfaces/Story";
 import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
-import { formatTime } from "@/lib/formatTime";
+import { formatTime } from "@/lib/utils";
 import Layout from "@/pages/Layout";
 import { ACTS } from "@/shared/Act";
 import Head from "next/head";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import H5AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import ActButton from "./ActButton";
 import ActLink from "./ActLink";
 import ActModalSubheading from "./ActModalSubheading";
 import ActModalText from "./ActModalText";
-import ClientOnly from "./ClientOnly";
+import AudioPlayer from "./AudioPlayer";
 
 type Props = {
   goBackHref: string;
@@ -30,9 +31,8 @@ function Act({
   goNextHref,
   act: { title, audioSrc: actAudioSrc },
 }: Props) {
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const playerRef = useRef<H5AudioPlayer>(null);
   const modalRef = useRef<HTMLDialogElement | null>(null);
-  const progressBarRef = useRef<HTMLInputElement>(null);
   const playAnimationRef = useRef<number | null>(null);
   const previousTimeStamp = useRef<number | null>(null);
 
@@ -53,15 +53,9 @@ function Act({
     setIsIntroFinished(true);
   }
 
-  function handleProgressBarChange() {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Number(progressBarRef.current?.value);
-    }
-  }
-
-  function handleMetadataLoaded() {
-    if (audioRef.current) {
-      setDuration(audioRef.current.duration);
+  function handleLoadedMetadata() {
+    if (playerRef.current?.audio.current) {
+      setDuration(playerRef.current.audio.current.duration);
     }
   }
 
@@ -89,8 +83,11 @@ function Act({
     }
 
     // update 10 times per second, feels smooth enough
-    if (timeStamp - previousTimeStamp.current >= 100 && audioRef.current) {
-      setTimeProgress(audioRef.current.currentTime);
+    if (
+      timeStamp - previousTimeStamp.current >= 100 &&
+      playerRef.current?.audio.current
+    ) {
+      setTimeProgress(playerRef.current.audio.current.currentTime);
       previousTimeStamp.current = timeStamp;
     }
 
@@ -98,11 +95,11 @@ function Act({
   }, []);
 
   useEffect(() => {
-    if (audioRef.current) {
+    if (playerRef.current?.audio.current) {
       if (isPlaying) {
-        audioRef.current.play();
+        playerRef.current.audio.current.play();
       } else {
-        audioRef.current.pause();
+        playerRef.current.audio.current.pause();
       }
     }
 
@@ -131,18 +128,6 @@ function Act({
       {isIntroFinished ? `история\n` : `интро к истории\n`}
     </h1>
   );
-  const audioPlayer = (
-    <ClientOnly>
-      <audio
-        src={isIntroFinished ? currentStory?.audioSrc : actAudioSrc}
-        ref={audioRef}
-        onEnded={() => setIsPlaying(false)}
-        onCanPlay={() => setIsCanPlay(true)}
-        onLoadedMetadata={handleMetadataLoaded}
-        placeholder=""
-      ></audio>
-    </ClientOnly>
-  );
   const playButton = (
     <button
       className="block mt-[82px] mx-auto lg:mt-0 disabled:opacity-50"
@@ -159,14 +144,17 @@ function Act({
     </button>
   );
   const progressBar = (
-    <input
-      className="mt-[8px] lg:mt-[42px] w-full"
-      type="range"
-      ref={progressBarRef}
-      value={timeProgress}
-      onChange={handleProgressBarChange}
-      max={duration}
-    />
+    <>
+      <div className="mt-[8px] lg:mt-[42px]">
+        <AudioPlayer
+          audioSrc={isIntroFinished ? currentStory?.audioSrc : actAudioSrc}
+          ref={playerRef}
+          onEnded={() => setIsPlaying(false)}
+          onCanPlay={() => setIsCanPlay(true)}
+          onLoadedMetadata={handleLoadedMetadata}
+        />
+      </div>
+    </>
   );
   const nextButton = isIntroFinished ? (
     <ActLink href={goNextHref}>следующая</ActLink>
@@ -327,8 +315,6 @@ function Act({
 
               <div className="ml-[15px]">{heading}</div>
               <div>
-                {audioPlayer}
-
                 {playButton}
 
                 {progressBar}
@@ -352,19 +338,6 @@ function Act({
                 {playerDuration}
               </div>
             </main>
-            <style jsx>{`
-              :global(.rhap_controls-section) {
-                flex-grow: 0;
-              }
-
-              :global(.rhap_time) {
-                user-select: auto;
-              }
-
-              :global(.rhap_progress-section) {
-                gap: 0.5rem;
-              }
-            `}</style>
           </Layout>
         </div>
       </>

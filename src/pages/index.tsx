@@ -1,8 +1,6 @@
 import AppLink from "@/components/AppLink";
-import Footer from "@/components/Footer";
 import LinkHome from "@/components/LinkHome";
 import StickyAppLink from "@/components/StickyAppLink";
-import { RFDewi } from "@/lib/fonts";
 import Layout from "@/pages/Layout";
 import Head from "next/head";
 
