@@ -108,9 +108,13 @@ function Act({
     return () => cancelAnimationFrame(playAnimationRef.current!);
   }, [isPlaying, repeat]);
 
-  const storyTitle = (
+  const storyTitle = isIntroFinished ? (
     <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
       {currentStory?.title}
+    </span>
+  ) : (
+    <span className="inline-block text-grayDark text-[2rem] mt-[10px] lg:mt-0 lg:text-[7.625rem] mb-[15px] not-italic font-bold leading-[1] lg:tracking-[-8.54px] uppercase">
+      {title}
     </span>
   );
   const nextStoryText = nextStory && (
@@ -162,7 +166,7 @@ function Act({
     <ActButton onClick={handleNextAudio}>следующая</ActButton>
   );
   const playerDuration = (
-    <span className="mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter lg:mt-0">
+    <span className="whitespace-nowrap mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter lg:mt-0">
       {formatTime(timeProgress)} / {formatTime(duration)}
     </span>
   );
@@ -333,7 +337,7 @@ function Act({
               </div>
               <div className="mr-[15px]">{nextStoryText}</div>
 
-              <div className="self-end overflow-hidden">
+              <div className="self-end overflow-hidden col-start-1 col-end-3">
                 {storyTitle}
                 {playerDuration}
               </div>
