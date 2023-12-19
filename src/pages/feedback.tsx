@@ -12,6 +12,8 @@ import * as yup from "yup";
 
 type Status = "idle" | "isLoading" | "succeeded" | "failed";
 
+const isBrowser = () => typeof window !== "undefined";
+
 const schema = yup
   .object({
     fullName: yup.string().required(),
@@ -35,7 +37,13 @@ export default function Feedback() {
   });
   const [status, setStatus] = useState<Status>("idle");
 
+  function scrollToTop() {
+    if (!isBrowser()) return;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   const onSubmit = async (data: FormData) => {
+    scrollToTop();
     try {
       setStatus("isLoading");
 
