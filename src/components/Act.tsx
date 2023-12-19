@@ -323,9 +323,9 @@ function Act({
 
                 {progressBar}
 
-                <div className="mt-[42px] flex justify-center gap-[20px]">
-                  <ActButton onClick={() => console.log("log: audio pause")}>
-                    пауза
+                <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
+                  <ActButton onClick={togglePlayPause}>
+                    {isPlaying ? "пауза" : "продолжить"}
                   </ActButton>
                   {/* display only if text present */}
                   <ActButton onClick={() => modalRef.current?.showModal()}>
