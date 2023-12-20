@@ -1,4 +1,5 @@
 import ChooseStoriesLink from "@/components/ChooseStoriesLink";
+import Header from "@/components/Header";
 import Heading from "@/components/Heading";
 import StoryTile from "@/components/StoryTile";
 import { Story } from "@/interfaces/Story";
@@ -65,64 +66,67 @@ function ChooseStories({ selectedStories, onClick }: Props) {
       </Head>
 
       <Layout>
-        <main className="grow flex flex-col justify-between">
-          <div className="grow pt-[37px] px-[15px] md:pt-[75px]">
-            <div className="flex items-start gap-[31px]">
-              <Heading>Выберите 5 историй</Heading>
+        <div className="min-h-screen grid grid-rows-[auto_1fr]">
+          <Header title="тысяча лет вместе" titleType="text" />
 
-              <p
-                className={`hidden lg:block lg:mt-[20px] lg:bg-greenSoft lg:rounded-[6px] lg:whitespace-pre lg:px-[10px] lg:py-[8px] lg:text-grayDark lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:relative lg:before:content-[url(../../public/headingTooltipArrow.svg)] lg:before:absolute lg:before:left-[-8px] lg:before:top-[50%] lg:before:h-[13px] lg:before:-translate-y-1/2`}
-              >
-                {headingTooltip}
-              </p>
+          <div className="flex flex-col justify-between">
+            <div className="grow pt-[37px] px-[15px] md:pt-[75px]">
+              <div className="flex items-start gap-[31px]">
+                <Heading>Выберите 5 историй</Heading>
+
+                <p
+                  className={`hidden lg:block lg:mt-[20px] lg:bg-greenSoft lg:rounded-[6px] lg:whitespace-pre lg:px-[10px] lg:py-[8px] lg:text-grayDark lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:relative lg:before:content-[url(../../public/headingTooltipArrow.svg)] lg:before:absolute lg:before:left-[-8px] lg:before:top-[50%] lg:before:h-[13px] lg:before:-translate-y-1/2`}
+                >
+                  {headingTooltip}
+                </p>
+              </div>
+
+              <div className="mt-[40px] grid grid-cols-3 gap-[15px] md:grid-cols-5 md:mt-[80px]">
+                {stories.map((story, index) => {
+                  return (
+                    <StoryTile
+                      key={story.title}
+                      isSelected={selectedStories.some(
+                        selectedStory => selectedStory?.title === story.title
+                      )}
+                      isSelectingDone={isSelectingDone}
+                      onTileClick={() => onClick(story)}
+                      index={index + 1}
+                      duration={story.duration}
+                    />
+                  );
+                })}
+              </div>
             </div>
 
-            <div className="mt-[40px] grid grid-cols-3 gap-[15px] md:grid-cols-5 md:mt-[80px]">
-              {stories.map((story, index) => {
-                return (
-                  <StoryTile
-                    key={story.title}
-                    isSelected={selectedStories.some(
-                      selectedStory => selectedStory?.title === story.title
-                    )}
-                    isSelectingDone={isSelectingDone}
-                    onTileClick={() => onClick(story)}
-                    index={index + 1}
-                    duration={story.duration}
-                  />
-                );
-              })}
-            </div>
-          </div>
-
-          <div
-            className={`mt-[80px] h-[300px] border-t border-t-grayDark flex justify-center items-center md:h-[50px] md:px-[12px] md:py-[7px] md:sticky md:bottom-0 md:left-0 md:right-0 md:mt-[119px] md:grid md:grid-cols-3 ${
-              isSelectingDone ? "bg-greenSoft" : "bg-grayNum md:bg-white"
-            }`}
-          >
-            <div className="lg:relative">
-              <p className="hidden md:block md:uppercase md:text-blackText md:text-[1rem] md:not-italic md:font-semibold md:leading-[normal]">
-                {selectedStoriesText}
-              </p>
-              <p
-                className={`hidden ${
-                  isSelectingDone || amountOfSelectedStories === 0
-                    ? "lg:hidden"
-                    : "lg:block"
-                } lg:whitespace-pre lg:absolute lg:bottom-[calc(100%+12px)] lg:left-[43px] lg:px-[10px] lg:pt-[7px] lg:pb-[11px] lg:bg-grayDark lg:rounded-[6px] lg:text-white lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:before:content-[url(../../public/storiesTooltipArrow.svg)] lg:before:absolute lg:before:left-[9px] lg:before:bottom-[-8px] lg:before:h-[13px]`}
-              >
-                {storiesTooltip}
-              </p>
-            </div>
-            <ChooseStoriesLink
-              href={`/act/${ACTS[0].slug}`}
-              disable={!isSelectingDone}
+            <div
+              className={`mt-[80px] h-[300px] border-t border-t-grayDark flex justify-center items-center md:h-[50px] md:px-[12px] md:py-[7px] md:sticky md:bottom-0 md:left-0 md:right-0 md:mt-[119px] md:grid md:grid-cols-3 ${
+                isSelectingDone ? "bg-greenSoft" : "bg-grayNum md:bg-white"
+              }`}
             >
-              Начать спектакль
-            </ChooseStoriesLink>
-          </div>
+              <div className="lg:relative">
+                <p className="hidden md:block md:uppercase md:text-blackText md:text-[1rem] md:not-italic md:font-semibold md:leading-[normal]">
+                  {selectedStoriesText}
+                </p>
+                <p
+                  className={`hidden ${
+                    isSelectingDone || amountOfSelectedStories === 0
+                      ? "lg:hidden"
+                      : "lg:block"
+                  } lg:whitespace-pre lg:absolute lg:bottom-[calc(100%+12px)] lg:left-[43px] lg:px-[10px] lg:pt-[7px] lg:pb-[11px] lg:bg-grayDark lg:rounded-[6px] lg:text-white lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:before:content-[url(../../public/storiesTooltipArrow.svg)] lg:before:absolute lg:before:left-[9px] lg:before:bottom-[-8px] lg:before:h-[13px]`}
+                >
+                  {storiesTooltip}
+                </p>
+              </div>
+              <ChooseStoriesLink
+                href={`/act/${ACTS[0].slug}`}
+                disable={!isSelectingDone}
+              >
+                Начать спектакль
+              </ChooseStoriesLink>
+            </div>
 
-          {/* <footer
+            {/* <footer
             className={`text-center flex flex-col items-center justify-center pt-[80px] pb-[38px] px-[15px] bg-gradient-to-b from-0% to-[rgba(255, 255, 255, 0.00)] to-[56%] ${
               isSelectingDone ? "from-[#2EF896]" : "from-grayNum"
             }`}
@@ -143,7 +147,8 @@ function ChooseStories({ selectedStories, onClick }: Props) {
               </a>
             </address>
           </footer> */}
-        </main>
+          </div>
+        </div>
       </Layout>
     </>
   );

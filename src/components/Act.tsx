@@ -19,6 +19,7 @@ import ActLink from "./ActLink";
 import ActModalSubheading from "./ActModalSubheading";
 import ActModalText from "./ActModalText";
 import AudioPlayer from "./AudioPlayer";
+import Header from "./Header";
 
 type Props = {
   goBackHref: string;
@@ -113,7 +114,7 @@ function Act({
       {currentStory?.title}
     </span>
   ) : (
-    <span className="inline-block text-grayDark text-[2rem] mt-[10px] lg:mt-0 lg:text-[7.625rem] mb-[15px] not-italic font-bold leading-[1] lg:tracking-[-8.54px] uppercase">
+    <span className="inline-block text-grayDark text-[2rem] mt-[10px] lg:text-[7.625rem] lg:mb-[15px] lg:mt-[30px] not-italic font-bold leading-[1] lg:tracking-[-8.54px] uppercase">
       {title}
     </span>
   );
@@ -261,87 +262,88 @@ function Act({
         </dialog>
         <div className="peer-open:lg:blur-[21px]">
           <Layout>
-            {/* mobile layout */}
-            <main className="grid grid-rows-[1fr_auto] pt-[56px] px-[15px] pb-[30px] lg:hidden">
+            <div className="min-h-screen grid grid-rows-[auto_1fr]">
+              <Header title="тысяча лет вместе" titleType="text" />
+
               <div>
-                <div className="flex justify-between items-start">
-                  <span>
-                    {heading}
-                    {storyTitle}
-                  </span>
+                {/* mobile layout */}
+                <div className="h-full grid grid-rows-[1fr_auto] pt-[56px] px-[15px] pb-[30px] lg:hidden">
+                  <div>
+                    <div className="flex justify-between items-start">
+                      <span>
+                        {heading}
+                        {storyTitle}
+                      </span>
 
-                  {nextStoryText}
-                </div>
+                      {nextStoryText}
+                    </div>
 
-                {/* hide button if no text present */}
-                <button
-                  className="flex items-center mt-[16px] gap-[8px]"
-                  type="button"
-                  onClick={() => modalRef.current?.showModal()}
-                >
-                  <div className="w-max rounded-[40px] bg-iconGray p-[8px]">
-                    <Image
-                      src={BookIcon}
-                      width="16"
-                      height="16"
-                      alt="Book icon"
-                    />
+                    {/* hide button if no text present */}
+                    <button
+                      className="flex items-center mt-[16px] gap-[8px]"
+                      type="button"
+                      onClick={() => modalRef.current?.showModal()}
+                    >
+                      <div className="w-max rounded-[40px] bg-iconGray p-[8px]">
+                        <Image
+                          src={BookIcon}
+                          width="16"
+                          height="16"
+                          alt="Book icon"
+                        />
+                      </div>
+                      <p className="text-blackText font-mainHeading text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase">
+                        текст
+                      </p>
+                    </button>
                   </div>
-                  <p className="text-blackText font-mainHeading text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase">
-                    текст
-                  </p>
-                </button>
-              </div>
 
-              <div>
-                {playButton}
+                  <div>
+                    {playButton}
 
-                {playerDuration}
+                    {playerDuration}
 
-                {progressBar}
+                    {progressBar}
 
-                <div className="flex flex-wrap justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
-                  <ActButton onClick={() => console.log("log: audio play")}>
-                    продолжить
-                  </ActButton>
+                    <div className="flex flex-wrap justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
+                      <ActButton onClick={() => console.log("log: audio play")}>
+                        продолжить
+                      </ActButton>
 
-                  {nextButton}
+                      {nextButton}
+                    </div>
+                  </div>
+                </div>
+
+                {/* desktop layout */}
+                <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-[auto,minmax(341px,1fr),auto] lg:items-center">
+                  <div className="ml-[15px] row-start-2">{heading}</div>
+                  <div className="row-start-2">
+                    {playButton}
+
+                    {progressBar}
+
+                    <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
+                      <ActButton onClick={togglePlayPause}>
+                        {isPlaying ? "пауза" : "продолжить"}
+                      </ActButton>
+                      {/* display only if text present */}
+                      <ActButton onClick={() => modalRef.current?.showModal()}>
+                        Текст
+                      </ActButton>
+
+                      {nextButton}
+                    </div>
+                  </div>
+                  <div className="mr-[15px] row-start-2">{nextStoryText}</div>
+
+                  <div className="self-end overflow-hidden col-start-1 col-end-4 row-start-3">
+                    {storyTitle}
+                    {playerDuration}
+                  </div>
                 </div>
               </div>
-            </main>
-
-            {/* desktop layout */}
-            <main className="hidden lg:grid lg:grid-cols-3 lg:grid-rows-[repeat(3,1fr)] lg:items-center">
-              {/* don't know how to create an empty row in grid */}
-              <div></div>
-              <div></div>
-              <div></div>
-
-              <div className="ml-[15px]">{heading}</div>
-              <div>
-                {playButton}
-
-                {progressBar}
-
-                <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
-                  <ActButton onClick={togglePlayPause}>
-                    {isPlaying ? "пауза" : "продолжить"}
-                  </ActButton>
-                  {/* display only if text present */}
-                  <ActButton onClick={() => modalRef.current?.showModal()}>
-                    Текст
-                  </ActButton>
-
-                  {nextButton}
-                </div>
-              </div>
-              <div className="mr-[15px]">{nextStoryText}</div>
-
-              <div className="self-end overflow-hidden col-start-1 col-end-3">
-                {storyTitle}
-                {playerDuration}
-              </div>
-            </main>
+            </div>
           </Layout>
         </div>
       </>

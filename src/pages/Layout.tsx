@@ -13,10 +13,10 @@ export default function Layout({ children }: Props) {
   let headerTitle, titleType: TitleType;
 
   switch (currPathname) {
-    case "/":
-      headerTitle = "Бессмертие";
-      titleType = "text";
-      break;
+    // case "/":
+    //   headerTitle = "Бессмертие";
+    //   titleType = "text";
+    //   break;
     case "/about":
     case "/feedback":
     case "/tutorial":
