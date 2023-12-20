@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import Header from "@/components/Header";
+import LinkHome from "@/components/LinkHome";
 
 type Status = "idle" | "isLoading" | "succeeded" | "failed";
 
@@ -77,77 +79,87 @@ export default function Feedback() {
       </Head>
 
       <Layout>
-        <main
-          className={`pt-[37px] px-[15px] pb-[120px] min-h-screen ${
-            status !== "idle" && "flex flex-col justify-center items-center"
-          }`}
-        >
-          {status === "idle" && (
-            <>
-              <p className="text-grayDark text-center text-[1.125rem] not-italic font-normal leading-[1.5]">
-                Если хотите оставить отзыв, заполните форму:{" "}
-              </p>
-              <form
-                onSubmit={handleSubmit(data => onSubmit(data))}
-                className="mt-[62px] flex flex-col gap-[24px] "
-              >
-                <FeedbackInput
-                  required
-                  type="text"
-                  placeholder="Ваше имя"
-                  label="fullName"
-                  register={register}
-                />
+        <div className="min-h-screen grid grid-rows-[auto_1fr]">
+          <Header title="тысяча лет вместе" titleType="link" />
 
-                <FeedbackInput
-                  required
-                  type="email"
-                  placeholder="Email"
-                  label="email"
-                  register={register}
-                />
-
-                <FeedbackInput
-                  register={register}
-                  label="feedback"
-                  required
-                  type="text"
-                  placeholder="Текст отзыва"
-                />
-
-                <button
-                  className={`mx-auto mt-[42px] leading-[normal] py-1 px-2 text-grayDark text-[1.125rem] font-semibold border-2 rounded-full border-transparent uppercase inline-flex gap-2 justify-center items-center before:content-["("] before:font-normal before:text-[1.33em] after:content-[")"] after:font-normal after:text-[1.33em] fine-pointer:hover:border-2 fine-pointer:hover:border-grayDark fine-pointer:hover:rounded-full fine-pointer:hover:before:opacity-0 fine-pointer:hover:after:opacity-0 active:bg-grayDark active:text-white active:border-2 active:border-grayDark active:rounded-full active:before:opacity-0 active:after:opacity-0 lg:text-[1.125rem]`}
-                  type="submit"
-                >
-                  Отправить
-                </button>
-
-                <p className="mt-[62px] text-grayDark text-center text-[0.8125rem] not-italic font-normal leading-[1.5]">
-                  Нажимая кнопку отправить вы соглашаетесь на <br />
-                  <Link href={"/privacy"}>
-                    <span className="text-greenAccent">
-                      обработку персональных данных
-                    </span>{" "}
-                  </Link>
+          <div
+            className={`pt-[37px] px-[15px] pb-[120px] md:pt-[118px] md:pb-[81px] ${
+              status === "idle"
+                ? "md:w-[640px] md:mx-auto"
+                : "flex flex-col justify-center items-center"
+            }`}
+          >
+            {status === "idle" && (
+              <div className="col-start-2">
+                <p className="text-grayDark text-center text-[1.125rem] not-italic font-normal leading-[1.5]">
+                  Если хотите оставить отзыв, заполните форму:{" "}
                 </p>
-              </form>
-            </>
-          )}
 
-          {status === "isLoading" && <InfoMessage>Отправка...</InfoMessage>}
-          {isSucceeded && (
-            <>
-              <InfoMessage>Спасибо за отзыв!</InfoMessage>
+                <form
+                  onSubmit={handleSubmit(data => onSubmit(data))}
+                  className="mt-[62px] flex flex-col gap-[24px] md:mt-[102px]"
+                >
+                  <FeedbackInput
+                    required
+                    type="text"
+                    placeholder="Ваше имя"
+                    label="fullName"
+                    register={register}
+                  />
 
-              <div className="mt-[56px]">
-                <AppLink href={"/choose-stories"}>Выбрать истории</AppLink>
+                  <FeedbackInput
+                    required
+                    type="email"
+                    placeholder="Email"
+                    label="email"
+                    register={register}
+                  />
+
+                  <FeedbackInput
+                    register={register}
+                    label="feedback"
+                    required
+                    type="text"
+                    placeholder="Текст отзыва"
+                  />
+
+                  <button
+                    className={`mx-auto mt-[42px] leading-[normal] py-1 px-2 text-grayDark text-[1.125rem] font-semibold border-2 rounded-full border-transparent uppercase inline-flex gap-2 justify-center items-center before:content-["("] before:font-normal before:text-[1.33em] after:content-[")"] after:font-normal after:text-[1.33em] fine-pointer:hover:border-2 fine-pointer:hover:border-grayDark fine-pointer:hover:rounded-full fine-pointer:hover:before:opacity-0 fine-pointer:hover:after:opacity-0 active:bg-grayDark active:text-white active:border-2 active:border-grayDark active:rounded-full active:before:opacity-0 active:after:opacity-0 lg:text-[1.125rem]`}
+                    type="submit"
+                  >
+                    Отправить
+                  </button>
+
+                  <p className="mt-[62px] text-grayDark text-center text-[0.8125rem] not-italic font-normal leading-[1.5] md:mt-[102px]">
+                    Нажимая кнопку отправить вы соглашаетесь на <br />
+                    <Link href={"/privacy"}>
+                      <span className="text-greenAccent">
+                        обработку персональных данных
+                      </span>{" "}
+                    </Link>
+                  </p>
+                </form>
               </div>
-            </>
-          )}
-          {status === "failed" && (
-            <InfoMessage>Что-то пошло не так...</InfoMessage>
-          )}
-        </main>
+            )}
+
+            {status === "isLoading" && <InfoMessage>Отправка...</InfoMessage>}
+            {isSucceeded && (
+              <>
+                <InfoMessage>Спасибо за отзыв!</InfoMessage>
+
+                <div className="mt-[56px] md:mt-[42px]">
+                  <AppLink href={"/choose-stories"}>Выбрать истории</AppLink>
+                </div>
+              </>
+            )}
+            {status === "failed" && (
+              <InfoMessage>Что-то пошло не так...</InfoMessage>
+            )}
+          </div>
+        </div>
+        <div className="hidden md:block md:h-[20px]"></div>
+
+        <LinkHome />
       </Layout>
     </>
   );
