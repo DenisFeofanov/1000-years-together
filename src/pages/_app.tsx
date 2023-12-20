@@ -28,7 +28,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
       // show age gate
       if (localStorage.getItem(ageGateKey) !== "true") {
-        modalRef.current?.showModal();
+        const modal = modalRef.current;
+        modal?.showModal();
+        return () => modal?.close();
       }
     }
   }, []);
