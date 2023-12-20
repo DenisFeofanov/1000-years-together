@@ -11,7 +11,7 @@ function NotFound() {
       <div className="min-h-screen grid grid-rows-[auto_1fr]">
         <Header title="тысяча лет вместе" titleType="text" />
 
-        <div className="grow min-h-[calc(100vh-44px)] md:min-h-[calc(100vh-41px)] flex flex-col items-center justify-center p-8 text-center">
+        <div className="flex flex-col items-center justify-center p-8 text-center">
           <Heading>
             Ошибка 404.
             <br />
