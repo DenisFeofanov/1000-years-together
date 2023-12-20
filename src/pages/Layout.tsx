@@ -1,5 +1,5 @@
 import Footer from "@/components/Footer";
-import Header, { TitleType } from "@/components/Header";
+import { TitleType } from "@/components/Header";
 import { usePathname } from "next/navigation";
 
 interface Props {
@@ -31,11 +31,10 @@ export default function Layout({ children }: Props) {
   }
 
   return (
-    <div className="min-h-screen grid grid-rows-[auto_1fr_auto]">
-      <Header title={headerTitle} titleType={titleType} />
-      {children}
+    <>
+      <main>{children}</main>
 
       {!pagesWithCustomFooter && <Footer />}
-    </div>
+    </>
   );
 }
