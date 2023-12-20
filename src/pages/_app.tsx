@@ -1,3 +1,4 @@
+import AgeGate from "@/components/AgeGate";
 import { Story } from "@/interfaces/Story";
 import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
 import { RFDewi } from "@/lib/fonts";
@@ -6,23 +7,38 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import NextNProgress from "nextjs-progressbar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type selectedStoriesState = (Story | null)[];
 
 const inter = Inter({ subsets: ["cyrillic"], variable: "--font-inter" });
 
+const ageGateKey = "isOldEnough";
+
 export default function App({ Component, pageProps }: AppProps) {
   const [selectedStories, setSelectedStories] = useState<selectedStoriesState>(
     []
   );
+  const modalRef = useRef<HTMLDialogElement>(null);
 
-  // get existing values from local storage on first render
   useEffect(() => {
+    // get selected stories from local storage on first render
     if (typeof window !== "undefined" && window.localStorage) {
       setSelectedStories(getSelectedStoriesFromLocalStorage);
+
+      // show age gate
+      if (localStorage.getItem(ageGateKey) !== "true") {
+        modalRef.current?.showModal();
+      }
     }
   }, []);
+
+  function handleAgeGateYes() {
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.setItem(ageGateKey, String(true));
+      modalRef.current?.close();
+    }
+  }
 
   function handleSave(updatedSelectedStories: selectedStoriesState) {
     // save to local storage
@@ -79,12 +95,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <div className={`${inter.className} ${inter.variable} ${RFDewi.variable}`}>
-      <NextNProgress stopDelayMs={20} options={{ showSpinner: false }} />
-      <Component
-        {...pageProps}
-        selectedStories={selectedStories}
-        onClick={handleClick}
-      />
+      <AgeGate ref={modalRef} onYes={handleAgeGateYes}>
+        <NextNProgress stopDelayMs={20} options={{ showSpinner: false }} />
+        <Component
+          {...pageProps}
+          selectedStories={selectedStories}
+          onClick={handleClick}
+        />
+      </AgeGate>
     </div>
   );
 }
