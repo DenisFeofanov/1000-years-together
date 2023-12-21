@@ -1,6 +1,4 @@
 import BookIcon from "@/Book.svg";
-import PauseIcon from "@/Pause.svg";
-import PlayIcon from "@/Play.svg";
 import logo from "@/biennial.svg";
 import CrossIcon from "@/crossIcon.svg";
 import { Act } from "@/interfaces/Act";
@@ -20,6 +18,7 @@ import ActModalSubheading from "./ActModalSubheading";
 import ActModalText from "./ActModalText";
 import AudioPlayer from "./AudioPlayer";
 import Header from "./Header";
+import PlayButton from "./PlayButton";
 
 type Props = {
   goBackHref: string;
@@ -133,20 +132,11 @@ function Act({
       {isIntroFinished ? `история\n` : `интро к истории\n`}
     </h1>
   );
-  const playButton = (
-    <button
-      className="block mt-[82px] mx-auto lg:mt-0 disabled:opacity-50"
-      type="button"
-      onClick={togglePlayPause}
-      disabled={!isCanPlay}
-    >
-      <Image
-        className="h-[144px] lg:h-[196px]"
-        src={isPlaying ? PauseIcon : PlayIcon}
-        alt="Play icon"
-        priority
-      />
-    </button>
+
+  const playerDuration = (
+    <span className="whitespace-nowrap mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter lg:mt-0">
+      {formatTime(timeProgress)} / {formatTime(duration)}
+    </span>
   );
   const progressBar = (
     <>
@@ -157,6 +147,7 @@ function Act({
           onEnded={() => setIsPlaying(false)}
           onCanPlay={() => setIsCanPlay(true)}
           onLoadedMetadata={handleLoadedMetadata}
+          time={playerDuration}
         />
       </div>
     </>
@@ -165,11 +156,6 @@ function Act({
     <ActLink href={goNextHref}>следующая</ActLink>
   ) : (
     <ActButton onClick={handleNextAudio}>следующая</ActButton>
-  );
-  const playerDuration = (
-    <span className="whitespace-nowrap mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter lg:mt-0">
-      {formatTime(timeProgress)} / {formatTime(duration)}
-    </span>
   );
 
   return (
@@ -299,7 +285,11 @@ function Act({
                   </div>
 
                   <div>
-                    {playButton}
+                    <PlayButton
+                      onClick={togglePlayPause}
+                      isCanPlay={isCanPlay}
+                      isPlaying={isPlaying}
+                    />
 
                     {playerDuration}
 
@@ -319,7 +309,11 @@ function Act({
                 <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-[auto,minmax(341px,1fr),auto] lg:items-center">
                   <div className="ml-[15px] row-start-2">{heading}</div>
                   <div className="row-start-2">
-                    {playButton}
+                    <PlayButton
+                      onClick={togglePlayPause}
+                      isCanPlay={isCanPlay}
+                      isPlaying={isPlaying}
+                    />
 
                     {progressBar}
 
