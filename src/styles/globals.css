@@ -5,6 +5,7 @@
 @layer base {
   body {
     line-height: normal;
+    --animated-btn-height: 500px;
   }
 }
 

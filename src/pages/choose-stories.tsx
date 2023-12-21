@@ -99,32 +99,15 @@ function ChooseStories({ selectedStories, onClick }: Props) {
               </div>
             </div>
 
-            <div
-              className={`mt-[80px] h-[300px] border-t border-t-grayDark flex justify-center items-center md:h-[50px] md:px-[12px] md:py-[7px] md:sticky md:bottom-0 md:left-0 md:right-0 md:mt-[119px] md:grid md:grid-cols-3 ${
-                isSelectingDone ? "bg-greenSoft" : "bg-grayNum md:bg-white"
-              }`}
-            >
-              <div className="lg:relative">
-                <p className="hidden md:block md:uppercase md:text-blackText md:text-[1rem] md:not-italic md:font-semibold md:leading-[normal]">
-                  {selectedStoriesText}
-                </p>
-                <p
-                  className={`hidden ${
-                    isSelectingDone || amountOfSelectedStories === 0
-                      ? "lg:hidden"
-                      : "lg:block"
-                  } lg:whitespace-pre lg:absolute lg:bottom-[calc(100%+12px)] lg:left-[43px] lg:px-[10px] lg:pt-[7px] lg:pb-[11px] lg:bg-grayDark lg:rounded-[6px] lg:text-white lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:before:content-[url(../../public/storiesTooltipArrow.svg)] lg:before:absolute lg:before:left-[9px] lg:before:bottom-[-8px] lg:before:h-[13px]`}
-                >
-                  {storiesTooltip}
-                </p>
-              </div>
-              <ChooseStoriesLink
-                href={`/act/${ACTS[0].slug}`}
-                disable={!isSelectingDone}
-              >
-                Начать спектакль
-              </ChooseStoriesLink>
-            </div>
+            <ChooseStoriesLink
+              href={`/act/${ACTS[0].slug}`}
+              {...{
+                isSelectingDone,
+                selectedStoriesText,
+                amountOfSelectedStories,
+                storiesTooltip,
+              }}
+            />
 
             {/* <footer
             className={`text-center flex flex-col items-center justify-center pt-[80px] pb-[38px] px-[15px] bg-gradient-to-b from-0% to-[rgba(255, 255, 255, 0.00)] to-[56%] ${
