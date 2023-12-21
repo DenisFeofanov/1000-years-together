@@ -253,7 +253,11 @@ function Act({
                         onEnded={() => setIsPlaying(false)}
                         onCanPlay={() => setIsCanPlay(true)}
                         onLoadedMetadata={handleLoadedMetadata}
-                        time={playerDuration}
+                        time={
+                          <span className="whitespace-nowrap mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:hidden">
+                            {formatTime(timeProgress)} / {formatTime(duration)}
+                          </span>
+                        }
                       />
 
                       <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
@@ -275,7 +279,9 @@ function Act({
 
                     <div className="self-end overflow-hidden col-start-1 col-end-4 row-start-3">
                       {storyTitle}
-                      {playerDuration}
+                      <span className="whitespace-nowrap lg:text-blackText not-italic font-medium leading-[normal] uppercase hidden lg:inline lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter">
+                        {formatTime(timeProgress)} / {formatTime(duration)}
+                      </span>
                     </div>
                   </div>
                 ) : (

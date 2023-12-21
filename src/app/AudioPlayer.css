@@ -1,5 +1,6 @@
 .rhap_container {
   box-shadow: none;
+  padding: 0;
 }
 
 .rhap_progress-container {
@@ -32,4 +33,15 @@
 
 .rhap_main-controls {
   align-self: center;
+}
+
+@media (min-width: 1280px) {
+  .rhap_play-pause-button {
+    width: 196px;
+    height: 196px;
+  }
+
+  .rhap_stacked-reverse .rhap_controls-section {
+    margin-bottom: 42px;
+  }
 }
