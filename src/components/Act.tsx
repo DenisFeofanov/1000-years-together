@@ -1,9 +1,11 @@
 import BookIcon from "@/Book.svg";
+import AudioPlayer from "@/app/AudioPlayer";
 import logo from "@/biennial.svg";
 import CrossIcon from "@/crossIcon.svg";
 import { Act } from "@/interfaces/Act";
 import { Story } from "@/interfaces/Story";
 import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
+import { useWindowSize } from "@/lib/hooks";
 import { formatTime } from "@/lib/utils";
 import Layout from "@/pages/Layout";
 import { ACTS } from "@/shared/Act";
@@ -11,14 +13,11 @@ import Head from "next/head";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import H5AudioPlayer from "react-h5-audio-player";
-import "react-h5-audio-player/lib/styles.css";
 import ActButton from "./ActButton";
 import ActLink from "./ActLink";
 import ActModalSubheading from "./ActModalSubheading";
 import ActModalText from "./ActModalText";
-import AudioPlayer from "./AudioPlayer";
 import Header from "./Header";
-import PlayButton from "./PlayButton";
 
 type Props = {
   goBackHref: string;
@@ -43,6 +42,9 @@ function Act({
   const [isCanPlay, setIsCanPlay] = useState(true);
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [width] = useWindowSize();
+
+  const isDesktop = width >= 1280;
 
   function togglePlayPause() {
     setIsPlaying(prev => !prev);
@@ -137,20 +139,6 @@ function Act({
     <span className="whitespace-nowrap mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter lg:mt-0">
       {formatTime(timeProgress)} / {formatTime(duration)}
     </span>
-  );
-  const progressBar = (
-    <>
-      <div className="mt-[8px] lg:mt-[42px]">
-        <AudioPlayer
-          audioSrc={isIntroFinished ? currentStory?.audioSrc : actAudioSrc}
-          ref={playerRef}
-          onEnded={() => setIsPlaying(false)}
-          onCanPlay={() => setIsCanPlay(true)}
-          onLoadedMetadata={handleLoadedMetadata}
-          time={playerDuration}
-        />
-      </div>
-    </>
   );
   const nextButton = isIntroFinished ? (
     <ActLink href={goNextHref}>следующая</ActLink>
@@ -252,90 +240,103 @@ function Act({
               <Header title="тысяча лет вместе" titleType="text" />
 
               <div>
-                {/* mobile layout */}
-                <div className="h-full grid grid-rows-[1fr_auto] pt-[56px] px-[15px] pb-[30px] lg:hidden">
-                  <div>
-                    <div className="flex justify-between items-start">
-                      <span>
-                        {heading}
-                        {storyTitle}
-                      </span>
+                {isDesktop ? (
+                  //  desktop layout
+                  <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-[auto,minmax(341px,1fr),auto] lg:items-center">
+                    <div className="ml-[15px] row-start-2">{heading}</div>
+                    <div className="row-start-2">
+                      <AudioPlayer
+                        audioSrc={
+                          isIntroFinished ? currentStory?.audioSrc : actAudioSrc
+                        }
+                        ref={playerRef}
+                        onEnded={() => setIsPlaying(false)}
+                        onCanPlay={() => setIsCanPlay(true)}
+                        onLoadedMetadata={handleLoadedMetadata}
+                        time={playerDuration}
+                      />
 
-                      {nextStoryText}
+                      <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
+                        <ActButton onClick={togglePlayPause}>
+                          {isPlaying ? "пауза" : "продолжить"}
+                        </ActButton>
+
+                        {/* display only if text present */}
+                        <ActButton
+                          onClick={() => modalRef.current?.showModal()}
+                        >
+                          Текст
+                        </ActButton>
+
+                        {nextButton}
+                      </div>
+                    </div>
+                    <div className="mr-[15px] row-start-2">{nextStoryText}</div>
+
+                    <div className="self-end overflow-hidden col-start-1 col-end-4 row-start-3">
+                      {storyTitle}
+                      {playerDuration}
+                    </div>
+                  </div>
+                ) : (
+                  // mobile layout
+                  <div className="h-full grid grid-rows-[1fr_auto] pt-[56px] px-[15px] pb-[30px] lg:hidden">
+                    <div>
+                      <div className="flex justify-between items-start">
+                        <span>
+                          {heading}
+                          {storyTitle}
+                        </span>
+
+                        {nextStoryText}
+                      </div>
+
+                      {/* hide button if no text present */}
+                      <button
+                        className="flex items-center mt-[16px] gap-[8px]"
+                        type="button"
+                        onClick={() => modalRef.current?.showModal()}
+                      >
+                        <div className="w-max rounded-[40px] bg-iconGray p-[8px]">
+                          <Image
+                            src={BookIcon}
+                            width="16"
+                            height="16"
+                            alt="Book icon"
+                          />
+                        </div>
+                        <p className="text-blackText font-mainHeading text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase">
+                          текст
+                        </p>
+                      </button>
                     </div>
 
-                    {/* hide button if no text present */}
-                    <button
-                      className="flex items-center mt-[16px] gap-[8px]"
-                      type="button"
-                      onClick={() => modalRef.current?.showModal()}
-                    >
-                      <div className="w-max rounded-[40px] bg-iconGray p-[8px]">
-                        <Image
-                          src={BookIcon}
-                          width="16"
-                          height="16"
-                          alt="Book icon"
+                    <div>
+                      <div className="mt-[82px]">
+                        <AudioPlayer
+                          audioSrc={
+                            isIntroFinished
+                              ? currentStory?.audioSrc
+                              : actAudioSrc
+                          }
+                          ref={playerRef}
+                          onEnded={() => setIsPlaying(false)}
+                          onCanPlay={() => setIsCanPlay(true)}
+                          onLoadedMetadata={handleLoadedMetadata}
+                          time={playerDuration}
                         />
                       </div>
-                      <p className="text-blackText font-mainHeading text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase">
-                        текст
-                      </p>
-                    </button>
-                  </div>
 
-                  <div>
-                    <PlayButton
-                      onClick={togglePlayPause}
-                      isCanPlay={isCanPlay}
-                      isPlaying={isPlaying}
-                    />
+                      <div className="flex justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
+                        <ActButton onClick={togglePlayPause}>
+                          {isPlaying ? "пауза" : "продолжить"}
+                        </ActButton>
 
-                    {playerDuration}
-
-                    {progressBar}
-
-                    <div className="flex flex-wrap justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
-                      <ActButton onClick={() => console.log("log: audio play")}>
-                        продолжить
-                      </ActButton>
-
-                      {nextButton}
+                        {nextButton}
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                {/* desktop layout */}
-                <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-[auto,minmax(341px,1fr),auto] lg:items-center">
-                  <div className="ml-[15px] row-start-2">{heading}</div>
-                  <div className="row-start-2">
-                    <PlayButton
-                      onClick={togglePlayPause}
-                      isCanPlay={isCanPlay}
-                      isPlaying={isPlaying}
-                    />
-
-                    {progressBar}
-
-                    <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
-                      <ActButton onClick={togglePlayPause}>
-                        {isPlaying ? "пауза" : "продолжить"}
-                      </ActButton>
-                      {/* display only if text present */}
-                      <ActButton onClick={() => modalRef.current?.showModal()}>
-                        Текст
-                      </ActButton>
-
-                      {nextButton}
-                    </div>
-                  </div>
-                  <div className="mr-[15px] row-start-2">{nextStoryText}</div>
-
-                  <div className="self-end overflow-hidden col-start-1 col-end-4 row-start-3">
-                    {storyTitle}
-                    {playerDuration}
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </Layout>

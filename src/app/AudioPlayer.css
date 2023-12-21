@@ -1,0 +1,35 @@
+.rhap_container {
+  box-shadow: none;
+}
+
+.rhap_progress-container {
+  margin: 0;
+  height: 7px;
+}
+
+.rhap_progress-indicator {
+  opacity: 0;
+}
+
+.rhap_progress-bar {
+  background-color: #f1f1f1;
+}
+
+.rhap_progress-filled {
+  background-color: #212626;
+}
+
+.rhap_controls-section {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.rhap_play-pause-button {
+  width: 144px;
+  height: 144px;
+}
+
+.rhap_main-controls {
+  align-self: center;
+}
