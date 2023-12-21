@@ -1,4 +1,4 @@
-import Act from "@/components/Act/Act";
+import Act from "@/components/Act";
 import { Act as ActInterface } from "@/interfaces/Act";
 import { ACTS } from "@/shared/Act";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";

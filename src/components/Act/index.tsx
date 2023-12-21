@@ -15,7 +15,7 @@ import H5AudioPlayer from "react-h5-audio-player";
 import Header from "../Header";
 import ActButton from "./ActButton";
 import ActLink from "./ActLink";
-import Transcription from "./Modal/Modal";
+import Transcription from "./Modal";
 
 type Props = {
   goBackHref: string;
@@ -62,10 +62,22 @@ function Act({
     playAnimationRef.current = requestAnimationFrame(repeat);
   }
 
+  function onPlay() {
+    playAnimationRef.current = requestAnimationFrame(repeat);
+    setIsPlaying(true);
+  }
+
+  function onPause() {
+    cancelAnimationFrame(playAnimationRef.current!);
+    setIsPlaying(false);
+  }
+
   function togglePlayPause() {
     if (isPlaying) {
+      playerRef.current?.audio.current?.pause();
       cancelAnimationFrame(playAnimationRef.current!);
     } else {
+      playerRef.current?.audio.current?.play();
       playAnimationRef.current = requestAnimationFrame(repeat);
     }
     setIsPlaying(prev => !prev);
@@ -138,9 +150,14 @@ function Act({
           {formatTime(timeProgress)} / {formatTime(duration)}
         </span>
       }
-      onPlay={togglePlayPause}
-      onPause={togglePlayPause}
+      onPlay={onPlay}
+      onPause={onPause}
     />
+  );
+  const textButtonPlay = (
+    <ActButton onClick={togglePlayPause}>
+      {isPlaying ? "пауза" : "продолжить"}
+    </ActButton>
   );
 
   return (
@@ -167,9 +184,7 @@ function Act({
                     {audioPlayer}
 
                     <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
-                      <ActButton onClick={togglePlayPause}>
-                        {isPlaying ? "пауза" : "продолжить"}
-                      </ActButton>
+                      {textButtonPlay}
 
                       {/* display only if text present */}
                       <ActButton onClick={() => setIsModalOpen(true)}>
@@ -225,9 +240,7 @@ function Act({
                     <div className="mt-[82px]">{audioPlayer}</div>
 
                     <div className="flex justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
-                      <ActButton onClick={togglePlayPause}>
-                        {isPlaying ? "пауза" : "продолжить"}
-                      </ActButton>
+                      {textButtonPlay}
 
                       {nextButton}
                     </div>
