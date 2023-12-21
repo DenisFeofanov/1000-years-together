@@ -11,7 +11,7 @@ import Layout from "@/pages/Layout";
 import { ACTS } from "@/shared/Act";
 import Head from "next/head";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import H5AudioPlayer from "react-h5-audio-player";
 import ActButton from "./ActButton";
 import ActLink from "./ActLink";
@@ -34,24 +34,45 @@ function Act({
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const playAnimationRef = useRef<number | null>(null);
   const previousTimeStamp = useRef<number | null>(null);
+  const currentStory = useRef<Story | null>(null);
 
-  const [currentStory, setCurrentStory] = useState<Story | null>(null);
   const [isIntroFinished, setIsIntroFinished] = useState(false);
   const [nextStory, setNextStory] = useState<Story | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isCanPlay, setIsCanPlay] = useState(true);
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [width] = useWindowSize();
 
   const isDesktop = width >= 1280;
 
+  // animation for player timer
+  function repeat(timeStamp: DOMHighResTimeStamp) {
+    if (previousTimeStamp.current === null) {
+      previousTimeStamp.current = timeStamp;
+    }
+
+    // update 10 times per second, feels smooth enough
+    if (
+      timeStamp - previousTimeStamp.current >= 100 &&
+      playerRef.current?.audio.current
+    ) {
+      setTimeProgress(playerRef.current.audio.current.currentTime);
+      previousTimeStamp.current = timeStamp;
+    }
+
+    playAnimationRef.current = requestAnimationFrame(repeat);
+  }
+
   function togglePlayPause() {
+    if (isPlaying) {
+      cancelAnimationFrame(playAnimationRef.current!);
+    } else {
+      playAnimationRef.current = requestAnimationFrame(repeat);
+    }
     setIsPlaying(prev => !prev);
   }
 
   function handleNextAudio() {
-    setIsPlaying(false);
     setIsIntroFinished(true);
   }
 
@@ -71,7 +92,7 @@ function Act({
       // 301 redirect
       if (selectedStories.length < 5) window.location.replace("/");
 
-      setCurrentStory(selectedStories[storyIndex]);
+      currentStory.current = selectedStories[storyIndex];
       setNextStory(
         selectedStories[ACTS.findIndex(act => act.title === title) + 1] || null
       );
@@ -79,40 +100,9 @@ function Act({
     // include title to silence error, although it shouldn't change through component's lifecycle
   }, [title]);
 
-  const repeat = useCallback((timeStamp: DOMHighResTimeStamp) => {
-    if (previousTimeStamp.current === null) {
-      previousTimeStamp.current = timeStamp;
-    }
-
-    // update 10 times per second, feels smooth enough
-    if (
-      timeStamp - previousTimeStamp.current >= 100 &&
-      playerRef.current?.audio.current
-    ) {
-      setTimeProgress(playerRef.current.audio.current.currentTime);
-      previousTimeStamp.current = timeStamp;
-    }
-
-    playAnimationRef.current = requestAnimationFrame(repeat);
-  }, []);
-
-  useEffect(() => {
-    if (playerRef.current?.audio.current) {
-      if (isPlaying) {
-        playerRef.current.audio.current.play();
-      } else {
-        playerRef.current.audio.current.pause();
-      }
-    }
-
-    playAnimationRef.current = requestAnimationFrame(repeat);
-
-    return () => cancelAnimationFrame(playAnimationRef.current!);
-  }, [isPlaying, repeat]);
-
   const storyTitle = isIntroFinished ? (
     <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
-      {currentStory?.title}
+      {currentStory.current?.title}
     </span>
   ) : (
     <span className="inline-block text-grayDark text-[2rem] mt-[10px] lg:text-[7.625rem] lg:mb-[15px] lg:mt-[30px] not-italic font-bold leading-[1] lg:tracking-[-8.54px] uppercase">
@@ -146,6 +136,21 @@ function Act({
     <ActButton onClick={handleNextAudio}>следующая</ActButton>
   );
 
+  const audioPlayer = (
+    <AudioPlayer
+      audioSrc={isIntroFinished ? currentStory.current?.audioSrc : actAudioSrc}
+      ref={playerRef}
+      onEnded={() => setIsPlaying(false)}
+      onLoadedMetadata={handleLoadedMetadata}
+      time={
+        <span className="whitespace-nowrap mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:hidden">
+          {formatTime(timeProgress)} / {formatTime(duration)}
+        </span>
+      }
+      onPlay={togglePlayPause}
+      onPause={togglePlayPause}
+    />
+  );
   return (
     <>
       <Head>
@@ -170,7 +175,7 @@ function Act({
               <Image src={CrossIcon} width={18} height={18} alt="close icon" />
             </button>
 
-            <h2 className="mt-[5px] text-blackHeading text-center text-[2.625rem] not-italic font-bold leading-[1] tracking-[-1.26px] lg:text-[1.875rem] lg:tracking-[-0.3]">{`#${currentStory?.title}`}</h2>
+            <h2 className="mt-[5px] text-blackHeading text-center text-[2.625rem] not-italic font-bold leading-[1] tracking-[-1.26px] lg:text-[1.875rem] lg:tracking-[-0.3]">{`#${currentStory.current?.title}`}</h2>
 
             <div className="mt-[30px]">
               <ActModalText>
@@ -245,20 +250,7 @@ function Act({
                   <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-[auto,minmax(341px,1fr),auto] lg:items-center">
                     <div className="ml-[15px] row-start-2">{heading}</div>
                     <div className="row-start-2">
-                      <AudioPlayer
-                        audioSrc={
-                          isIntroFinished ? currentStory?.audioSrc : actAudioSrc
-                        }
-                        ref={playerRef}
-                        onEnded={() => setIsPlaying(false)}
-                        onCanPlay={() => setIsCanPlay(true)}
-                        onLoadedMetadata={handleLoadedMetadata}
-                        time={
-                          <span className="whitespace-nowrap mt-[42px] text-blackText text-[1rem] not-italic font-medium leading-[normal] tracking-[0.32px] uppercase lg:hidden">
-                            {formatTime(timeProgress)} / {formatTime(duration)}
-                          </span>
-                        }
-                      />
+                      {audioPlayer}
 
                       <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
                         <ActButton onClick={togglePlayPause}>
@@ -318,20 +310,7 @@ function Act({
                     </div>
 
                     <div>
-                      <div className="mt-[82px]">
-                        <AudioPlayer
-                          audioSrc={
-                            isIntroFinished
-                              ? currentStory?.audioSrc
-                              : actAudioSrc
-                          }
-                          ref={playerRef}
-                          onEnded={() => setIsPlaying(false)}
-                          onCanPlay={() => setIsCanPlay(true)}
-                          onLoadedMetadata={handleLoadedMetadata}
-                          time={playerDuration}
-                        />
-                      </div>
+                      <div className="mt-[82px]">{audioPlayer}</div>
 
                       <div className="flex justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
                         <ActButton onClick={togglePlayPause}>

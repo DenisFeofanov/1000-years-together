@@ -13,14 +13,15 @@ import "./AudioPlayer.css";
 
 interface Props {
   audioSrc: string | undefined;
-  onEnded: () => void;
-  onLoadedMetadata: () => void;
-  onCanPlay: () => void;
+  onEnded?: () => void;
+  onLoadedMetadata?: () => void;
+  onPlay?: () => void;
+  onPause?: () => void;
   time: React.ReactElement;
 }
 
 const AudioPlayer = forwardRef<H5AudioPlayer, Props>(function AudioPlayer(
-  { audioSrc, onEnded, onCanPlay, onLoadedMetadata, time },
+  { audioSrc, onLoadedMetadata, time, onPlay, onPause, onEnded },
   ref
 ) {
   const playElem = (
@@ -45,7 +46,7 @@ const AudioPlayer = forwardRef<H5AudioPlayer, Props>(function AudioPlayer(
             play: playElem,
             pause: pauseElem,
           }}
-          {...{ ref, onCanPlay, onEnded }}
+          {...{ ref, onEnded, onPlay, onPause }}
         />
       </ClientOnly>
     </>
