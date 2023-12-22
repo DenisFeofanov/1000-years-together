@@ -173,7 +173,7 @@ function Act({
       >
         <Layout>
           <div className="min-h-screen grid grid-rows-[auto_1fr]">
-            <Header title="тысяча лет вместе" titleType="text" />
+            <Header />
 
             <div>
               {isDesktop ? (
