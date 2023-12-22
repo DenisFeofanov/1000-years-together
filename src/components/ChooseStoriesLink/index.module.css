@@ -21,7 +21,6 @@
     }
     to {
       height: var(--animated-btn-height);
-      /* transform: scaleY(0.1); */
     }
   }
 
