@@ -1,7 +1,7 @@
 interface Props {
-  isSelected: boolean;
-  isSelectingDone: boolean;
-  onTileClick: () => void;
+  isSelected?: boolean;
+  isSelectingDone?: boolean;
+  onTileClick?: () => void;
   index: number;
   duration: string;
 }

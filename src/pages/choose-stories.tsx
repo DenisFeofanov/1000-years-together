@@ -67,7 +67,7 @@ function ChooseStories({ selectedStories, onClick }: Props) {
 
       <Layout>
         <div className="min-h-screen grid grid-rows-[auto_1fr]">
-          <Header title="тысяча лет вместе" titleType="text" />
+          <Header />
 
           <div className="flex flex-col justify-between">
             <div className="grow pt-[37px] px-[15px] md:pt-[75px]">
