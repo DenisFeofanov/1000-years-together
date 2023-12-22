@@ -1,0 +1,43 @@
+@media (min-width: 768px) {
+  .animatedBtn {
+    animation: 1s linear 0s infinite alternate scale-button;
+    transform-origin: bottom;
+    animation-play-state: paused;
+    animation-delay: calc(var(--animated-btn-scroll) * -1s);
+
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+  }
+
+  /* TODO better property for perfomance */
+  @keyframes scale-button {
+    to {
+      height: var(--animated-btn-height);
+      /* transform: scaleY(0.1); */
+    }
+  }
+
+  .animatedBtnTitle {
+    animation: 1s linear 0s infinite alternate scale-text-size;
+    transform-origin: bottom;
+    animation-play-state: paused;
+    animation-delay: calc(var(--animated-btn-scroll) * -1s);
+
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+  }
+
+  @keyframes scale-text-size {
+    to {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media (min-width: 1280px) {
+  @keyframes scale-text-size {
+    to {
+      font-size: 3rem;
+    }
+  }
+}
