@@ -33,11 +33,7 @@ function Archive() {
               <div className="mt-[40px] grid grid-cols-3 gap-[15px] md:grid-cols-5 md:mt-[80px]">
                 {stories.map((story, index) => {
                   return (
-                    <Link
-                      className="text-center"
-                      href={`/archive/${story.title}`}
-                      key={story.title}
-                    >
+                    <Link href={`/archive/${story.title}`} key={story.title}>
                       <StoryTile index={index + 1} duration={story.duration} />
                     </Link>
                   );

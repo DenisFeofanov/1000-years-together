@@ -16,7 +16,7 @@ function StoryTile({
   return (
     <button
       type="button"
-      className={`relative py-[20px] px-[10px] group md:py-[35px]`}
+      className={`w-full h-full relative py-[20px] px-[10px] group md:py-[35px]`}
       onClick={onTileClick}
       disabled={!isSelected && isSelectingDone}
     >
