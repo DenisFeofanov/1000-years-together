@@ -15,7 +15,7 @@ interface Params extends ParsedUrlQuery {
   act: string;
 }
 
-const ActInterface: NextPage<Props> = ({ goBackHref, goNextHref, act }) => {
+const ActPage: NextPage<Props> = ({ goBackHref, goNextHref, act }) => {
   const router = useRouter();
 
   return (
@@ -74,4 +74,4 @@ function findAdjacentActSlugs(element: string, array: ActInterface[]) {
   };
 }
 
-export default ActInterface;
+export default ActPage;
