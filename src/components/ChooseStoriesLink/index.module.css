@@ -1,5 +1,10 @@
+.link {
+  --animated-btn-height: 500px;
+  --animated-btn-height-min: 50px;
+}
+
 @media (min-width: 768px) {
-  .animatedBtn {
+  .container {
     animation: 1s linear 0s infinite alternate scale-button;
     transform-origin: bottom;
     animation-play-state: paused;
@@ -11,13 +16,16 @@
 
   /* TODO better property for perfomance */
   @keyframes scale-button {
+    from {
+      height: var(--animated-btn-height-min);
+    }
     to {
       height: var(--animated-btn-height);
       /* transform: scaleY(0.1); */
     }
   }
 
-  .animatedBtnTitle {
+  .container__title {
     animation: 1s linear 0s infinite alternate scale-text-size;
     transform-origin: bottom;
     animation-play-state: paused;

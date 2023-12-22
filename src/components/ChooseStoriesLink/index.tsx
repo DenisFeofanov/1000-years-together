@@ -17,23 +17,38 @@ function ChooseStoriesLink({
   storiesTooltip,
   ...rest
 }: Props) {
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
   useEffect(() => {
     const handleScroll = () => {
-      const PX_FOR_ANIMATION = 450;
+      if (linkRef.current) {
+        const PX_FOR_ANIMATION =
+          Number.parseInt(
+            getComputedStyle(linkRef.current).getPropertyValue(
+              "--animated-btn-height"
+            )
+          ) -
+          Number.parseInt(
+            getComputedStyle(linkRef.current).getPropertyValue(
+              "--animated-btn-height-min"
+            )
+          );
 
-      const scrollStart =
-        window.scrollY -
-        (document.body.offsetHeight - window.innerHeight - PX_FOR_ANIMATION);
+        const scrollStart =
+          window.scrollY -
+          (document.body.offsetHeight - window.innerHeight - PX_FOR_ANIMATION);
 
-      const scrollProportion = scrollStart / PX_FOR_ANIMATION;
+        const scrollProportion = scrollStart / PX_FOR_ANIMATION;
 
-      document.body.style.setProperty(
-        "--animated-btn-scroll",
-        scrollProportion > 0 ? String(scrollProportion) : "0"
-      );
+        linkRef.current.style.setProperty(
+          "--animated-btn-scroll",
+          scrollProportion > 0 ? String(scrollProportion) : "0"
+        );
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -42,21 +57,22 @@ function ChooseStoriesLink({
 
   return (
     <Link
-      className={`${
+      className={`${styles.link} ${
         isDisabled && "pointer-events-none cursor-default text-grayMiddle"
       }`}
       href={href}
       // onClick check keeps link focusable for accessibility, keeps prefetch, but prevents going further
       onClick={e => isDisabled && e.preventDefault()}
       aria-disabled={isDisabled}
+      ref={linkRef}
       {...rest}
     >
       <div className="hidden md:block md:h-[calc(var(--animated-btn-height)+119px)]"></div>
 
       <div
         className={`${
-          styles.animatedBtn
-        } mt-[80px] h-[300px] border-t border-t-grayDark flex justify-center items-center md:h-[50px] md:px-[12px] md:fixed md:bottom-0 md:left-0 md:right-0 md:grid md:grid-cols-[minmax(0,1fr),minmax(0,1fr),minmax(0,1fr)] ${
+          styles.container
+        } mt-[80px] h-[300px] border-t border-t-grayDark flex justify-center items-center md:px-[12px] md:fixed md:bottom-0 md:left-0 md:right-0 md:grid md:grid-cols-[minmax(0,1fr),minmax(0,1fr),minmax(0,1fr)] ${
           isSelectingDone ? "bg-greenSoft" : "bg-grayNum md:bg-white"
         }`}
       >
@@ -78,7 +94,7 @@ function ChooseStoriesLink({
 
         <button
           className={`${
-            styles.animatedBtnTitle
+            styles.container__title
           } whitespace-nowrap leading-[normal] py-1 px-2 text-grayDark text-[1.25rem] xsm:text-[1.5rem] font-semibold border-2 border-transparent uppercase flex gap-2 justify-center items-center before:content-["("] before:font-normal before:text-[1.33em] after:content-[")"] after:font-normal after:text-[1.33em] max-md:fine-pointer:hover:bg-grayDark max-md:fine-pointer:hover:text-white max-md:fine-pointer:hover:border-2 max-md:fine-pointer:hover:border-grayDark max-md:active:bg-grayDark max-md:active:text-white max-md:active:border-2 max-md:active:border-grayDark md:text-[1rem] ${
             isDisabled && "pointer-events-none cursor-default text-grayMiddle"
           }`}
