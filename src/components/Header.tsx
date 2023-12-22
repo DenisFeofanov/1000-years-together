@@ -42,7 +42,11 @@ export default function Header({ title, titleType = "link" }: Props) {
         <NavLink href="/about">О проекте</NavLink>
 
         <div className="flex h-full items-center gap-4">
-          {title && <div className="hidden md:block">{middleBlock}</div>}
+          {title && (
+            <div className="hidden md:flex h-full items-center">
+              {middleBlock}
+            </div>
+          )}
           <NavLink href="/archive">Архив</NavLink>
         </div>
 
