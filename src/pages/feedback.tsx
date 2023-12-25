@@ -1,6 +1,9 @@
 import AppLink from "@/components/AppLink";
-import InfoMessage from "@/components/InfoMessage";
+import AutoGrowTextArea from "@/components/AutoGrowTextArea";
 import FeedbackInput from "@/components/FeedbackInput";
+import Header from "@/components/Header";
+import InfoMessage from "@/components/InfoMessage";
+import LinkHome from "@/components/LinkHome";
 import { FormData } from "@/interfaces/Form";
 import Layout from "@/pages/Layout";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,8 +12,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import Header from "@/components/Header";
-import LinkHome from "@/components/LinkHome";
 
 type Status = "idle" | "isLoading" | "succeeded" | "failed";
 
@@ -55,6 +56,8 @@ export default function Feedback() {
           setTimeout(() => resolve({ status: 200 }), 1000);
         }
       );
+
+      // console.log(data);
 
       // actual email sending
       // const { fullName, email } = data;
@@ -115,12 +118,10 @@ export default function Feedback() {
                     register={register}
                   />
 
-                  <FeedbackInput
-                    register={register}
-                    label="feedback"
-                    required
-                    type="text"
+                  <AutoGrowTextArea
+                    {...register("feedback", { required: true })}
                     placeholder="Текст отзыва"
+                    label="feedback"
                   />
 
                   <button
