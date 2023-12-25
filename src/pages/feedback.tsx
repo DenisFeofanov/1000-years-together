@@ -33,9 +33,9 @@ export default function Feedback() {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {
-      fullName: "Боба",
-      email: "test@gmail.com",
-      feedback: "Круто!",
+      // fullName: "Боба",
+      // email: "test@gmail.com",
+      // feedback: "Круто!",
     },
   });
   const [status, setStatus] = useState<Status>("idle");
