@@ -1,4 +1,5 @@
 import Act from "@/components/Act";
+import ClientOnly from "@/components/ClientOnly";
 import { Act as ActInterface } from "@/interfaces/Act";
 import { ACTS } from "@/shared/Act";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
@@ -19,12 +20,14 @@ const ActPage: NextPage<Props> = ({ goBackHref, goNextHref, act }) => {
   const router = useRouter();
 
   return (
-    <Act
-      goBackHref={goBackHref}
-      goNextHref={goNextHref}
-      act={act}
-      key={router.asPath}
-    />
+    <ClientOnly>
+      <Act
+        goBackHref={goBackHref}
+        goNextHref={goNextHref}
+        act={act}
+        key={router.asPath}
+      />
+    </ClientOnly>
   );
 };
 
