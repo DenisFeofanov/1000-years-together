@@ -1,6 +1,5 @@
 import AppLink from "@/components/AppLink";
 import Header from "@/components/Header";
-import Heading from "@/components/Heading";
 import Layout from "@/pages/Layout";
 import Head from "next/head";
 

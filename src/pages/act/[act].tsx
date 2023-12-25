@@ -16,7 +16,7 @@ interface Params extends ParsedUrlQuery {
   act: string;
 }
 
-const ActPage: NextPage<Props> = ({ goBackHref, goNextHref, act }) => {
+const ActPage: NextPage<Props> = ({ goBackHref, goNextHref, act, ...rest }) => {
   const router = useRouter();
 
   return (
@@ -26,6 +26,7 @@ const ActPage: NextPage<Props> = ({ goBackHref, goNextHref, act }) => {
         goNextHref={goNextHref}
         act={act}
         key={router.asPath}
+        {...rest}
       />
     </ClientOnly>
   );

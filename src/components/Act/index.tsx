@@ -10,26 +10,29 @@ import Layout from "@/pages/Layout";
 import { ACTS } from "@/shared/Act";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import H5AudioPlayer from "react-h5-audio-player";
 import Header from "../Header";
 import ActButton from "./ActButton";
-import ActLink from "./ActLink";
 import Transcription from "./Modal";
 
 type Props = {
   goBackHref: string;
   goNextHref: string;
   act: Act;
+  clearAllStories?: () => void;
 };
 
 function Act({
   goBackHref,
   goNextHref,
   act: { title, audioSrc: actAudioSrc },
+  clearAllStories,
 }: Props) {
-  const playerRef = useRef<H5AudioPlayer>(null);
+  const router = useRouter();
 
+  const playerRef = useRef<H5AudioPlayer>(null);
   const playAnimationRef = useRef<number | null>(null);
   const previousTimeStamp = useRef<number | null>(null);
   const currentStory = useRef<Story | null>(null);
@@ -83,13 +86,20 @@ function Act({
     setIsPlaying(prev => !prev);
   }
 
-  function handleNextAudio() {
-    setIsIntroFinished(true);
-  }
-
   function handleLoadedMetadata() {
     if (playerRef.current?.audio.current) {
       setDuration(playerRef.current.audio.current.duration);
+    }
+  }
+
+  function handleNext() {
+    if (isIntroFinished) {
+      if (goNextHref === "/end") {
+        clearAllStories && clearAllStories();
+      }
+      router.push(goNextHref);
+    } else {
+      setIsIntroFinished(true);
     }
   }
 
@@ -107,8 +117,9 @@ function Act({
       nextStory.current =
         selectedStories[ACTS.findIndex(act => act.title === title) + 1] || null;
     }
-    // include title to silence error, although it shouldn't change through component's lifecycle
-  }, [title]);
+
+    router.prefetch(goNextHref);
+  }, [title, goNextHref, router]);
 
   const storyTitle = isIntroFinished ? (
     <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
@@ -134,11 +145,7 @@ function Act({
       {isIntroFinished ? `история\n` : `интро к истории\n`}
     </h1>
   );
-  const nextButton = isIntroFinished ? (
-    <ActLink href={goNextHref}>следующая</ActLink>
-  ) : (
-    <ActButton onClick={handleNextAudio}>следующая</ActButton>
-  );
+  const nextButton = <ActButton onClick={handleNext}>следующая</ActButton>;
   const audioPlayer = (
     <AudioPlayer
       audioSrc={isIntroFinished ? currentStory.current?.audioSrc : actAudioSrc}

@@ -95,13 +95,22 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }
 
+  function clearAllStories() {
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.setItem(selectedStoriesKey, "");
+    }
+
+    // set state from local storage
+    setSelectedStories([]);
+  }
+
   return (
     <div className={`${inter.className} ${inter.variable} ${RFDewi.variable}`}>
       <AgeGate ref={modalRef} onYes={handleAgeGateYes}>
         <NextNProgress stopDelayMs={20} options={{ showSpinner: false }} />
         <Component
           {...pageProps}
-          selectedStories={selectedStories}
+          {...{ selectedStories, clearAllStories }}
           onClick={handleClick}
         />
       </AgeGate>
