@@ -38,10 +38,9 @@ const AutoGrowTextArea = forwardRef<
       <textarea
         className={`resize-none overflow-hidden row-start-1 col-start-1 row-end-2 col-end-2 ${inputStyles}`}
         onChange={handleChange}
+        rows={1}
         {...{ ref, onBlur, name, placeholder }}
-      >
-        {value}
-      </textarea>
+      ></textarea>
     </div>
   );
 });
