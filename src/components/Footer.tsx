@@ -5,7 +5,7 @@ export default function Footer() {
   const currPathname = usePathname();
 
   return (
-    <footer className="px-[15px] pb-[40px] flex flex-col items-center text-center text-grayDark text-[0.6875rem] font-normal leading-[1.5] md:text-[0.8125rem] md:px-0 md:p-0 md:bg-[#F5F5F5] md:pt-[30px] md:pb-[65px]">
+    <footer className="px-[15px] pb-[85px] flex flex-col items-center text-center text-grayDark text-[0.6875rem] font-normal leading-[1.5] md:text-[0.8125rem] md:px-0 md:p-0 md:bg-[#F5F5F5] md:pt-[30px] md:pb-[65px]">
       {currPathname !== "/feedback" && (
         <div className="mb-[30px]">
           <AppLink href="/feedback" size="small">

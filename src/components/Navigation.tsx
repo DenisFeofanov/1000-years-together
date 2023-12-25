@@ -8,7 +8,7 @@ interface Props {
 function Navigation({ middleBlock }: Props) {
   let [width] = useWindowSize();
 
-  const isDesktop = width > 768;
+  const isDesktop = width >= 768;
 
   return (
     <nav className="flex items-center justify-between h-4/5 gap-1 md:grow">

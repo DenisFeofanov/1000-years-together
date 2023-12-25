@@ -94,10 +94,10 @@ function Act({
 
   function handleNext() {
     if (isIntroFinished) {
+      router.push(goNextHref);
       if (goNextHref === "/end") {
         clearAllStories && clearAllStories();
       }
-      router.push(goNextHref);
     } else {
       setIsIntroFinished(true);
     }
@@ -111,7 +111,8 @@ function Act({
       const storyIndex = ACTS.findIndex(act => act.title === title);
 
       // 301 redirect
-      if (selectedStories.length < 5) window.location.replace("/");
+      if (selectedStories.length < 5)
+        window.location.replace("/choose-stories");
 
       currentStory.current = selectedStories[storyIndex];
       nextStory.current =

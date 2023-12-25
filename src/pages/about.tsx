@@ -26,7 +26,7 @@ export default function About() {
             <Heading>
               Научно-театральная
               <br />
-              лаборатория «1&nbsp;000 лет вместе»
+              лаборатория «1&nbsp;000&nbsp;лет вместе»
             </Heading>
 
             <section className="flex flex-col gap-[42px] mt-[40px] md:mt-[70px] md:grid md:grid-cols-2 md:gap-[40px]">
@@ -139,8 +139,8 @@ export default function About() {
             <section className="mt-[80px] md:mt-[100px] md:grid grid-cols-2 gap-[40px]">
               <div>
                 <SubHeading>
-                  Рецензия на спектакль «1000 лет вместе», кинотеатр «Колизей»,
-                  2019
+                  Рецензия на спектакль «1000&nbsp;лет вместе», кинотеатр
+                  «Колизей», 2019
                 </SubHeading>
 
                 <div className="mt-[10px]">

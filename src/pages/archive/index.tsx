@@ -25,8 +25,8 @@ function Archive() {
                 <p
                   className={`hidden lg:block lg:mt-[20px] lg:bg-greenSoft lg:rounded-[6px] lg:whitespace-pre lg:px-[10px] lg:py-[8px] lg:text-grayDark lg:text-[0.8125rem] lg:not-italic lg:font-medium lg:leading-[1.2] lg:tracking-[-0.13px] lg:relative lg:before:content-[url(../../public/headingTooltipArrow.svg)] lg:before:absolute lg:before:left-[-8px] lg:before:top-[50%] lg:before:h-[13px] lg:before:-translate-y-1/2`}
                 >
-                  Все истории доступны
-                  <br /> в любом порядке
+                  Все истории доступны&nbsp;
+                  <br />в любом порядке
                 </p>
               </div>
 
