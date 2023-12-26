@@ -42,14 +42,6 @@ export default function Home() {
           </div>
         </div>
 
-        <p className="hidden sm:block sm:px-[15px] sm:mx-auto sm:mb-[90px] sm:max-w-[640px] sm:text-center sm:text-blackText sm:text-[1.125rem] sm:font-normal sm:leading-[1.5] sm:mt-[100px] lg:[1.125rem] lg:mt-[110px]">
-          Спектакль стал результатом научно-театральной лаборатории
-          «1000&nbsp;лет вместе», исследующей отношение к смерти людей разных
-          поколений, социального положения и опыта. Премьера состоялась в
-          2019&nbsp;году в рамках <NoWrap>5-й</NoWrap>&nbsp;Уральской
-          индустриальной биеннале современного искусства.
-        </p>
-
         <div className="h-[44px] fixed bottom-0 left-0 right-0 xsm:hidden">
           <StickyAppLink href="/choose-stories">Начать спектакль</StickyAppLink>
         </div>
