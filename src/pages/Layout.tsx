@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import NavLink from "@/components/NavLink";
 import { usePathname } from "next/navigation";
 
 interface Props {
@@ -12,9 +13,12 @@ export default function Layout({ children }: Props) {
 
   return (
     <>
-      <main>{children}</main>
+      <div className="p-4 text-center">
+        <NavLink href="/archive">Архив</NavLink>
+      </div>
+      {/* <main>{children}</main>
 
-      {!pagesWithCustomFooter && <Footer />}
+      {!pagesWithCustomFooter && <Footer />} */}
     </>
   );
 }
