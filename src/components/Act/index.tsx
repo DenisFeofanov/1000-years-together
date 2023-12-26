@@ -160,7 +160,7 @@ function Act({
       onPause={onPause}
     />
   );
-  const textButtonPlay = (
+  const PlayButtonAsText = (
     <ActButton onClick={togglePlayPause}>
       {isPlaying ? "пауза" : "продолжить"}
     </ActButton>
@@ -178,19 +178,19 @@ function Act({
         closeModal={() => setIsModalOpen(false)}
       >
         <Layout>
-          <div className="min-h-screen grid grid-rows-[auto_1fr]">
+          <div className="relative min-h-screen grid grid-rows-[auto_1fr]">
             <Header />
 
             <div>
               {isDesktop ? (
                 //  desktop layout
-                <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-[auto,minmax(341px,1fr),auto] lg:items-center">
+                <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-3 lg:items-center">
                   <div className="ml-[15px] row-start-2">{heading}</div>
-                  <div className="row-start-2">
+                  <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
                     {audioPlayer}
 
                     <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
-                      {textButtonPlay}
+                      {PlayButtonAsText}
 
                       {/* display only if text present */}
                       <ActButton onClick={() => setIsModalOpen(true)}>
@@ -201,7 +201,7 @@ function Act({
                     </div>
                   </div>
 
-                  <div className="mr-[15px] row-start-2">
+                  <div className="mr-[15px] row-start-2 col-start-3">
                     {nextLinkWithInfo}
                   </div>
 
@@ -249,7 +249,7 @@ function Act({
                     <div className="mt-[82px]">{audioPlayer}</div>
 
                     <div className="flex justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
-                      {textButtonPlay}
+                      {PlayButtonAsText}
 
                       {nextLink}
                     </div>
