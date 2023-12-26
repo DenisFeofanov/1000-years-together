@@ -186,7 +186,7 @@ function Act({
                 //  desktop layout
                 <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-3 lg:items-center">
                   <div className="ml-[15px] row-start-2">{heading}</div>
-                  <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
+                  <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 max-w-[32rem]">
                     {audioPlayer}
 
                     <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
@@ -205,7 +205,7 @@ function Act({
                     {nextLinkWithInfo}
                   </div>
 
-                  <div className="self-end overflow-hidden col-start-1 col-end-4 row-start-3">
+                  <div className="overflow-hidden absolute bottom-0 left-0">
                     {storyTitle}
                     <span className="whitespace-nowrap lg:text-blackText not-italic font-medium leading-[normal] uppercase hidden lg:inline lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter">
                       {formatTime(timeProgress)} / {formatTime(duration)}
