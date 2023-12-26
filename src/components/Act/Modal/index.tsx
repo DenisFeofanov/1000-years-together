@@ -25,7 +25,7 @@ function Modal({ children, title, isOpen, closeModal }: Props) {
   return (
     <>
       <dialog
-        className="peer backdrop:bg-[black]/80 bg-transparent w-full max-w-none h-full max-h-none mx-0 my-0 lg:max-w-[600px] lg:mx-auto hide-scrollbar"
+        className="peer backdrop:bg-[black]/80 bg-transparent w-full max-w-none h-full max-h-none mx-0 my-0 lg:max-w-[38rem] lg:mx-auto hide-scrollbar"
         ref={modalRef}
         onClick={e => e.target === modalRef.current && closeModal()}
       >

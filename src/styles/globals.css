@@ -7,6 +7,10 @@
     line-height: normal;
     hyphens: none;
   }
+
+  html {
+    @apply text-base xl:text-xl;
+  }
 }
 
 @layer components {

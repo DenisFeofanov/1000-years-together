@@ -15,6 +15,7 @@ const config: Config = {
       "max-md": { max: "768px" },
       lg: "1280px",
       xlg: "1600px",
+      xl: "2000px",
     },
     extend: {
       screens: {

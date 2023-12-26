@@ -24,7 +24,7 @@ function Privacy() {
           <div className="pt-[37px] px-[15px] pb-[120px] md:pt-[75px] md:pb-[244px]">
             <Heading>Политика конфиденциальности</Heading>
 
-            <section className="flex flex-col gap-[42px] mt-[40px] md:mt-[70px] lg:grid lg:grid-cols-[minmax(0,1fr),minmax(640px,1fr),minmax(0,1fr)] lg:gap-[40px]">
+            <section className="flex flex-col gap-[42px] mt-[40px] md:mt-[70px] lg:grid lg:grid-cols-[minmax(0,1fr),minmax(40rem,1fr),minmax(0,1fr)] lg:gap-[40px]">
               <div>
                 <p className="text-[1.125rem] leading-[1.5] font-normal text-blackText">
                   19 июля 2022 <br />

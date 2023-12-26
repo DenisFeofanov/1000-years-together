@@ -87,13 +87,11 @@ export default function Feedback() {
 
           <div
             className={`pt-[37px] px-[15px] pb-[120px] md:pt-[118px] md:pb-[81px] ${
-              status === "idle"
-                ? "md:w-[640px] md:mx-auto"
-                : "flex flex-col justify-center items-center"
+              status !== "idle" && "flex flex-col justify-center items-center"
             }`}
           >
             {status === "idle" && (
-              <div className="col-start-2">
+              <div className="col-start-2 md:w-[40rem] md:mx-auto">
                 <p className="text-grayDark text-center text-[1.125rem] not-italic font-normal leading-[1.5]">
                   Если хотите оставить отзыв, заполните форму:{" "}
                 </p>

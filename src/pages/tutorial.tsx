@@ -23,7 +23,7 @@ export default function Tutorial() {
               Инструкция
             </h1>
 
-            <div className="mt-[40px] md:mt-[70px] max-w-[640px] mx-auto text-center">
+            <div className="mt-[40px] md:mt-[70px] max-w-[40rem] mx-auto text-center">
               <Paragraph>
                 Команда лаборатории провела интервью и собрала более
                 20&nbsp;историй. В спектакле вы выберете и сможете услышать лишь
