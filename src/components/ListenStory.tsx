@@ -114,14 +114,14 @@ function ListenStory({ story }: Props) {
         closeModal={() => setIsModalOpen(false)}
       >
         <Layout>
-          <div className="min-h-screen grid grid-rows-[auto_1fr]">
+          <div className="relative min-h-screen grid grid-rows-[auto_1fr]">
             <Header />
 
             <div>
               {isDesktop ? (
                 //  desktop layout
-                <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-[auto,minmax(341px,1fr),auto] lg:items-center">
-                  <div className="row-start-2 col-start-2">
+                <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-3 lg:items-center">
+                  <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
                     {audioPlayer}
 
                     <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
@@ -136,7 +136,7 @@ function ListenStory({ story }: Props) {
                     </div>
                   </div>
 
-                  <div className="self-end overflow-hidden col-start-1 col-end-4 row-start-3">
+                  <div className="absolute bottom-0 left-0">
                     {storyTitle}
                     <span className="whitespace-nowrap lg:text-blackText not-italic font-medium leading-[normal] uppercase hidden lg:inline lg:text-[1.125rem] lg:tracking-[0.36px] lg:ml-[30px] lg:font-inter">
                       {formatTime(timeProgress)} / {formatTime(duration)}
