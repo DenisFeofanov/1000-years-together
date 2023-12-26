@@ -16,6 +16,7 @@ import H5AudioPlayer from "react-h5-audio-player";
 import Header from "../Header";
 import ActButton from "./ActButton";
 import Transcription from "./Modal";
+import NextLink from "../NextLink";
 
 type Props = {
   goBackHref: string;
@@ -36,7 +37,7 @@ function Act({
   const playAnimationRef = useRef<number | null>(null);
   const previousTimeStamp = useRef<number | null>(null);
   const currentStory = useRef<Story | null>(null);
-  const nextStory = useRef<Story | null>(null);
+  const nextAct = useRef<string | null>(null);
 
   const [isIntroFinished, setIsIntroFinished] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -115,8 +116,7 @@ function Act({
         window.location.replace("/choose-stories");
 
       currentStory.current = selectedStories[storyIndex];
-      nextStory.current =
-        selectedStories[ACTS.findIndex(act => act.title === title) + 1] || null;
+      nextAct.current = ACTS[storyIndex + 1]?.title || null;
     }
 
     router.prefetch(goNextHref);
@@ -131,22 +131,20 @@ function Act({
       {title}
     </span>
   );
-  const nextStoryText = nextStory.current && (
-    <div className="text-right">
-      <p className="whitespace-pre font-mainHeading text-blackText text-[0.6875rem] not-italic font-semibold leading-[normal] tracking-[0.22px] uppercase lg:font-inter lg:text-[0.8125rem] lg:tracking-[0.26px]">
-        далее
-      </p>
-      <p className="text-grayDark text-[1.5rem] font-bold leading-[1] tracking-[-0.24px] mt-[8px] lg:text-[1.875rem] lg:tracking-[-0.9px]">
-        {nextStory.current.title}
-      </p>
-    </div>
+  const nextLinkWithInfo = (
+    <NextLink
+      next={
+        isIntroFinished ? nextAct.current : currentStory.current?.title || null
+      }
+      onNext={handleNext}
+    />
   );
   const heading = (
     <h1 className="whitespace-pre font-mainHeading text-blackText text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase lg:text-[1rem]">
       {isIntroFinished ? `история\n` : `интро к истории\n`}
     </h1>
   );
-  const nextButton = <ActButton onClick={handleNext}>следующая</ActButton>;
+  const nextLink = <ActButton onClick={handleNext}>следующая</ActButton>;
   const audioPlayer = (
     <AudioPlayer
       audioSrc={isIntroFinished ? currentStory.current?.audioSrc : actAudioSrc}
@@ -199,10 +197,13 @@ function Act({
                         Текст
                       </ActButton>
 
-                      {nextButton}
+                      {nextLink}
                     </div>
                   </div>
-                  <div className="mr-[15px] row-start-2">{nextStoryText}</div>
+
+                  <div className="mr-[15px] row-start-2">
+                    {nextLinkWithInfo}
+                  </div>
 
                   <div className="self-end overflow-hidden col-start-1 col-end-4 row-start-3">
                     {storyTitle}
@@ -221,7 +222,7 @@ function Act({
                         {storyTitle}
                       </span>
 
-                      {nextStoryText}
+                      {nextLinkWithInfo}
                     </div>
 
                     {/* hide button if no text present */}
@@ -250,7 +251,7 @@ function Act({
                     <div className="flex justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
                       {textButtonPlay}
 
-                      {nextButton}
+                      {nextLink}
                     </div>
                   </div>
                 </div>
