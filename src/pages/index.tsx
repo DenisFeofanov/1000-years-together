@@ -17,7 +17,7 @@ export default function Home() {
         <div className="min-h-screen grid grid-rows-[auto_1fr] xsm:mb-[70px] sm:mb-[0px]">
           <Header title="Бессмертие" titleType="text" />
 
-          <main className="pt-[76px] px-[15px] pb-[20px] xsm:pt-[50px] sm:pt-[37px] md:pb-[168px] md:pt-0 lg:pb-[65px]">
+          <main className="pt-[76px] px-[15px] pb-[20px] xsm:pt-[50px] sm:pt-[37px] md:pb-[0] md:pt-0">
             <div className="h-full flex flex-col justify-between md:justify-center md:relative">
               <div>
                 <h1
@@ -33,12 +33,14 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="hidden xsm:block xsm:mt-[100px] xsm:text-center md:mt-[110px] md:absolute md:bottom-0 md:left-1/2 md:-translate-x-1/2 lg:mt-[150px] xlg:mt-[130px]">
+              <div className="hidden xsm:block xsm:mt-[100px] xsm:text-center md:mt-[110px] md:absolute md:bottom-0 md:left-1/2 md:-translate-x-1/2 lg:mt-[150px] xlg:mt-[130px] md:mb-[168px] lg:mb-[65px]">
                 <AppLink href="/choose-stories">Начать спектакль</AppLink>
               </div>
             </div>
           </main>
         </div>
+
+        <div className="hidden md:block "></div>
 
         <div className="h-[44px] fixed bottom-0 left-0 right-0 xsm:hidden">
           <StickyAppLink href="/choose-stories">Начать спектакль</StickyAppLink>
