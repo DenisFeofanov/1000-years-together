@@ -1,7 +1,6 @@
 import AppLink from "@/components/AppLink";
 import Header from "@/components/Header";
 import LinkHome from "@/components/LinkHome";
-import NavLink from "@/components/NavLink";
 import NoWrap from "@/components/NoWrap";
 import StickyAppLink from "@/components/StickyAppLink";
 import Layout from "@/pages/Layout";
