@@ -11,6 +11,16 @@
   html {
     @apply text-base xl:text-xl;
   }
+
+  .fullscreen-height {
+    min-height: 100vh;
+  }
+
+  @supports (height: 100svh) {
+    .fullscreen-height {
+      min-height: 100svh;
+    }
+  }
 }
 
 @layer components {

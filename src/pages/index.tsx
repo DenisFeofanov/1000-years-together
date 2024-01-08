@@ -14,7 +14,7 @@ export default function Home() {
       </Head>
 
       <Layout>
-        <div className="min-h-screen grid grid-rows-[auto_1fr] xsm:mb-[70px] sm:mb-[0px]">
+        <div className="fullscreen-height grid grid-rows-[auto_1fr] xsm:mb-[70px] sm:mb-[0px]">
           <Header title="Бессмертие" titleType="text" />
 
           <main className="pt-[76px] px-[15px] pb-[20px] xsm:pt-[50px] sm:pt-[37px] md:pb-[0] md:pt-0">
