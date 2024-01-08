@@ -11,7 +11,7 @@ function Navigation({ middleBlock }: Props) {
   const isDesktop = width >= 768;
 
   return (
-    <nav className="flex items-center justify-between h-4/5 gap-1 md:grow">
+    <nav className="flex items-center justify-between h-4/5 gap-[1.25rem] md:grow">
       <NavLink href="/about">О проекте</NavLink>
 
       <div className="flex h-full items-center gap-4">

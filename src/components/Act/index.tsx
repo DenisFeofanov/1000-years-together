@@ -248,7 +248,7 @@ function Act({
                   <div>
                     <div className="mt-[82px]">{audioPlayer}</div>
 
-                    <div className="flex justify-center items-center mx-auto gap-[10px] md:gap-[42px] mt-[42px]">
+                    <div className="flex justify-center items-center mx-auto gap-[2rem] md:gap-[42px] mt-[42px]">
                       {PlayButtonAsText}
 
                       {nextLink}
