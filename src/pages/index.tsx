@@ -28,8 +28,8 @@ export default function Home() {
                   вместе
                 </h1>
                 <p className="mt-[15px] text-blackText text-[0.5625rem] font-semibold uppercase max-w-[80px] md:text-[0.6875rem] md:mt-[25px]">
-                  В рамках <NoWrap>5-й</NoWrap>&nbsp;Уральской биеннале
-                  современного искусства
+                  В рамках <NoWrap>5-й Уральской</NoWrap> биеннале современного
+                  искусства
                 </p>
               </div>
 
