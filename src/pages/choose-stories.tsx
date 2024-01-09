@@ -109,6 +109,7 @@ function ChooseStories({ selectedStories, onClick }: Props) {
               }}
             />
 
+            {/* weird footer on mobile, might be a design mistake, hid it for now */}
             {/* <footer
             className={`text-center flex flex-col items-center justify-center pt-[80px] pb-[38px] px-[15px] bg-gradient-to-b from-0% to-[rgba(255, 255, 255, 0.00)] to-[56%] ${
               isSelectingDone ? "from-[#2EF896]" : "from-grayNum"
