@@ -3,9 +3,10 @@ import NavLink from "./NavLink";
 
 interface Props {
   middleBlock: JSX.Element | null;
+  isArchiveLinkShown?: boolean;
 }
 
-function Navigation({ middleBlock }: Props) {
+function Navigation({ middleBlock, isArchiveLinkShown }: Props) {
   let [width] = useWindowSize();
 
   const isDesktop = width >= 768;
@@ -14,13 +15,17 @@ function Navigation({ middleBlock }: Props) {
     <nav className="flex items-center justify-between h-4/5 gap-[1.25rem] md:grow">
       <NavLink href="/about">О проекте</NavLink>
 
-      <div className="flex h-full items-center gap-4">
+      <div
+        className={`${
+          isArchiveLinkShown ? "flex" : "hidden md:flex"
+        } h-full items-center gap-4`}
+      >
         {middleBlock && (
           <div className="hidden md:flex h-full items-center">
             {middleBlock}
           </div>
         )}
-        <NavLink href="/archive">Архив</NavLink>
+        {isArchiveLinkShown && <NavLink href="/archive">Архив</NavLink>}
       </div>
 
       <NavLink href="/tutorial">{isDesktop ? "Инструкция" : "?"}</NavLink>

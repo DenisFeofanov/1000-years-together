@@ -9,9 +9,14 @@ export type TitleType = "text" | "link";
 interface Props {
   title?: string;
   titleType?: TitleType;
+  isArchiveLinkShown?: boolean;
 }
 
-export default function Header({ title, titleType = "link" }: Props) {
+export default function Header({
+  title,
+  titleType = "link",
+  isArchiveLinkShown = true,
+}: Props) {
   let heading;
   if (title && titleType) {
     switch (titleType) {
@@ -41,7 +46,10 @@ export default function Header({ title, titleType = "link" }: Props) {
       </Link>
 
       <ClientOnly>
-        <Navigation middleBlock={heading} />
+        <Navigation
+          middleBlock={heading}
+          isArchiveLinkShown={isArchiveLinkShown}
+        />
       </ClientOnly>
     </header>
   );

@@ -5,13 +5,18 @@ import { RFDewi } from "@/lib/fonts";
 import { selectedStoriesKey } from "@/shared/Stories";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { Inter } from "next/font/google";
+import { Inter, Inter_Tight } from "next/font/google";
 import NextNProgress from "nextjs-progressbar";
 import { useEffect, useRef, useState } from "react";
 
 type selectedStoriesState = (Story | null)[];
 
 const inter = Inter({ subsets: ["cyrillic"], variable: "--font-inter" });
+
+const interTight = Inter_Tight({
+  subsets: ["cyrillic"],
+  variable: "--font-inter-tight",
+});
 
 const ageGateKey = "isOldEnough";
 
@@ -105,7 +110,9 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <div className={`${inter.className} ${inter.variable} ${RFDewi.variable}`}>
+    <div
+      className={`${inter.className} ${inter.variable} ${interTight.variable} ${RFDewi.variable}`}
+    >
       <AgeGate ref={modalRef} onYes={handleAgeGateYes}>
         <NextNProgress stopDelayMs={20} options={{ showSpinner: false }} />
         <Component

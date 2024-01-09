@@ -26,6 +26,7 @@ const config: Config = {
       fontFamily: {
         mainHeading: ["var(--font-rfdewi)"],
         inter: ["var(--font-inter)"],
+        interTight: ["var(--font-inter-tight)"],
       },
     },
     colors: {
