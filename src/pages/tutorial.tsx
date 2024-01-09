@@ -13,7 +13,7 @@ export default function Tutorial() {
       </Head>
 
       <Layout>
-        <div className="min-h-screen grid grid-rows-[auto_1fr]">
+        <div className="fullscreen-height grid grid-rows-[auto_1fr]">
           <Header title="тысяча лет вместе" titleType="link" />
 
           <div className="pt-[37px] pb-[120px] md:pt-[75px] px-[15px]">

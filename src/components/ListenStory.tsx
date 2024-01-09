@@ -172,7 +172,7 @@ function ListenStory({ story }: Props) {
                   </div>
 
                   <div>
-                    <div className="mt-[82px]">{audioPlayer}</div>
+                    <div>{audioPlayer}</div>
 
                     <div className="flex justify-center items-center mx-auto gap-[2rem] md:gap-[42px] mt-[42px]">
                       {textButtonPlay}

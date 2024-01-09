@@ -11,7 +11,7 @@ function End() {
       </Head>
 
       <Layout>
-        <div className="min-h-screen grid grid-rows-[auto_1fr]">
+        <div className="fullscreen-height grid grid-rows-[auto_1fr]">
           <Header title="тысяча лет вместе" titleType="text" />
 
           <div className="py-[37px] px-[15px] flex flex-col justify-center items-center text-center">

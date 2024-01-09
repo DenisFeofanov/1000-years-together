@@ -66,7 +66,7 @@ function ChooseStories({ selectedStories, onClick }: Props) {
       </Head>
 
       <Layout>
-        <div className="min-h-screen grid grid-rows-[auto_1fr]">
+        <div className="fullscreen-height grid grid-rows-[auto_1fr]">
           <Header />
 
           <div className="flex flex-col justify-between">

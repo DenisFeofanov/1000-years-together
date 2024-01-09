@@ -14,7 +14,7 @@ function Archive() {
       </Head>
 
       <Layout>
-        <div className="min-h-screen grid grid-rows-[auto_1fr] pb-[70px]">
+        <div className="fullscreen-height grid grid-rows-[auto_1fr] pb-[70px]">
           <Header title="Тысяча лет вместе" titleType="link" />
 
           <div className="flex flex-col justify-between">

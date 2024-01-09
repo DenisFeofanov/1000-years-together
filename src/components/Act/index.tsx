@@ -178,7 +178,7 @@ function Act({
         closeModal={() => setIsModalOpen(false)}
       >
         <Layout>
-          <div className="relative min-h-screen grid grid-rows-[auto_1fr]">
+          <div className="relative fullscreen-height grid grid-rows-[auto_1fr]">
             <Header />
 
             <div>
@@ -246,7 +246,7 @@ function Act({
                   </div>
 
                   <div>
-                    <div className="mt-[82px]">{audioPlayer}</div>
+                    <div>{audioPlayer}</div>
 
                     <div className="flex justify-center items-center mx-auto gap-[2rem] md:gap-[42px] mt-[42px]">
                       {PlayButtonAsText}

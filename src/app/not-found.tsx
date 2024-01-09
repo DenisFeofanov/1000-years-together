@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 function NotFound() {
   return (
     <Layout>
-      <div className="min-h-screen grid grid-rows-[auto_1fr]">
+      <div className="fullscreen-height grid grid-rows-[auto_1fr]">
         <Header title="тысяча лет вместе" titleType="text" />
 
         <div className="flex flex-col items-center justify-center p-8 text-center">

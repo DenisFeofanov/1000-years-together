@@ -82,7 +82,7 @@ export default function Feedback() {
       </Head>
 
       <Layout>
-        <div className="min-h-screen grid grid-rows-[auto_1fr]">
+        <div className="fullscreen-height grid grid-rows-[auto_1fr]">
           <Header title="тысяча лет вместе" titleType="link" />
 
           <div
