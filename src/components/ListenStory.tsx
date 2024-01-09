@@ -114,7 +114,7 @@ function ListenStory({ story }: Props) {
         closeModal={() => setIsModalOpen(false)}
       >
         <Layout>
-          <div className="relative min-h-screen grid grid-rows-[auto_1fr]">
+          <div className="relative fullscreen-height grid grid-rows-[auto_1fr]">
             <Header />
 
             <div>
