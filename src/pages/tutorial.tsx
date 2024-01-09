@@ -22,7 +22,7 @@ export default function Tutorial() {
             isArchiveLinkShown={false}
           />
 
-          <div className="pt-[37px] pb-[120px] md:pt-[75px] px-[15px]">
+          <div className="pt-[37px] pb-[120px] md:pt-[75px] px-[15px] md:pb-[13.25rem]">
             <h1
               className={`text-blackHeading text-[1.5rem] xsm:text-[2rem] tracking-[-1px] not-italic font-semibold leading-none md:text-[4rem] md:tracking-[-4.8px] lg:text-[6rem]`}
             >
@@ -59,7 +59,7 @@ export default function Tutorial() {
               </Paragraph>
             </section>
 
-            <ol className="max-w-[45rem] mt-[4.4rem]">
+            <ol className="max-w-[47.5rem] mt-[4.4rem] mx-auto">
               <OrderedItem number={"1"}>
                 Во время лаборатории участники собрали более{" "}
                 <NoWrap>30 историй</NoWrap>. В цифровой версии, как и в
@@ -86,7 +86,7 @@ export default function Tutorial() {
               </OrderedItem>
             </ol>
 
-            <div className="mt-[4.38rem] text-center">
+            <div className="mt-[4.37rem] text-center">
               <AppLink href={"/archive"}>архив Историй</AppLink>
             </div>
           </div>
