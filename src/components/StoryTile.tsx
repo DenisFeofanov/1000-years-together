@@ -4,6 +4,7 @@ interface Props {
   onTileClick?: () => void;
   index: number;
   duration: string;
+  isSelectable?: boolean;
 }
 
 function StoryTile({
@@ -12,6 +13,7 @@ function StoryTile({
   onTileClick,
   index,
   duration,
+  isSelectable = true,
 }: Props) {
   return (
     <button
@@ -22,11 +24,11 @@ function StoryTile({
     >
       <div className={`flex flex-col justify-center items-center`}>
         <span
-          className={`text-grayNum text-[4.75rem] md:text-[5.25rem] not-italic font-medium leading-[1] tracking-[-4.56px] ml-[-4.56px] lg:text-[9rem] lg:tracking-[-11.52px] lg:ml-[-11.52px] ${
+          className={`text-[4.75rem] md:text-[5.25rem] not-italic font-medium leading-[1] tracking-[-4.56px] ml-[-4.56px] lg:text-[9rem] lg:tracking-[-11.52px] lg:ml-[-11.52px] ${
             isSelected
               ? "text-white"
               : "group-hover:group-enabled:fine-pointer:text-grayDark"
-          } `}
+          } ${isSelectable ? "text-grayNum" : "text-grayDark"}`}
         >
           {index}
         </span>

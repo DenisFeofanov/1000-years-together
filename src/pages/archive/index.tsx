@@ -34,7 +34,11 @@ function Archive() {
                 {stories.map((story, index) => {
                   return (
                     <Link href={`/archive/${story.title}`} key={story.title}>
-                      <StoryTile index={index + 1} duration={story.duration} />
+                      <StoryTile
+                        index={index + 1}
+                        duration={story.duration}
+                        isSelectable={false}
+                      />
                     </Link>
                   );
                 })}
