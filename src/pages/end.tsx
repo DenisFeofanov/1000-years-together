@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import Layout from "@/pages/Layout";
 import Head from "next/head";
 
-function End() {
+function End({ clearAllStories }: { clearAllStories: () => void }) {
   return (
     <>
       <Head>
@@ -20,7 +20,7 @@ function End() {
             >
               Спектакль окончен
             </h1>
-            <div className="mt-[42px]">
+            <div className="mt-[42px]" onClick={clearAllStories}>
               <AppLink href="/choose-stories" size="medium">
                 Выбрать другие истории
               </AppLink>

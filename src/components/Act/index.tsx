@@ -14,22 +14,20 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import H5AudioPlayer from "react-h5-audio-player";
 import Header from "../Header";
+import NextLink from "../NextLink";
 import ActButton from "./ActButton";
 import Transcription from "./Modal";
-import NextLink from "../NextLink";
 
 type Props = {
   goBackHref: string;
   goNextHref: string;
   act: Act;
-  clearAllStories?: () => void;
 };
 
 function Act({
   goBackHref,
   goNextHref,
   act: { title, audioSrc: actAudioSrc },
-  clearAllStories,
 }: Props) {
   const router = useRouter();
 
@@ -96,9 +94,6 @@ function Act({
   function handleNext() {
     if (isIntroFinished) {
       router.push(goNextHref);
-      if (goNextHref === "/end") {
-        clearAllStories && clearAllStories();
-      }
     } else {
       setIsIntroFinished(true);
     }
