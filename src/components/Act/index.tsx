@@ -174,7 +174,7 @@ function Act({
       >
         <Layout>
           <div className="relative fullscreen-height grid grid-rows-[auto_1fr]">
-            <Header />
+            <Header title="тысяча лет вместе" titleType="link" />
 
             <div>
               {isDesktop ? (

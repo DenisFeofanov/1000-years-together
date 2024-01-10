@@ -12,7 +12,7 @@ function End({ clearAllStories }: { clearAllStories: () => void }) {
 
       <Layout>
         <div className="fullscreen-height grid grid-rows-[auto_1fr]">
-          <Header title="тысяча лет вместе" titleType="text" />
+          <Header title="тысяча лет вместе" titleType="link" />
 
           <div className="py-[37px] px-[15px] flex flex-col justify-center items-center text-center">
             <h1
