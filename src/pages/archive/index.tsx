@@ -35,7 +35,7 @@ function Archive() {
                   return (
                     <Link href={`/archive/${story.title}`} key={story.title}>
                       <StoryTile
-                        index={index + 1}
+                        index={story.title}
                         duration={story.duration}
                         isSelectable={false}
                       />

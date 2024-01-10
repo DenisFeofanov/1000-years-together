@@ -2,7 +2,7 @@ interface Props {
   isSelected?: boolean;
   isSelectingDone?: boolean;
   onTileClick?: () => void;
-  index: number;
+  index: string;
   duration: string;
   isSelectable?: boolean;
 }

@@ -91,7 +91,7 @@ function ChooseStories({ selectedStories, onClick }: Props) {
                       )}
                       isSelectingDone={isSelectingDone}
                       onTileClick={() => onClick(story)}
-                      index={index + 1}
+                      index={story.title}
                       duration={story.duration}
                     />
                   );
