@@ -12,6 +12,7 @@
     "@emailjs/browser": "^3.11.0",
     "@hookform/resolvers": "^3.3.2",
     "axios": "^1.6.2",
+    "mp3-duration": "^1.1.0",
     "next": "14.0.1",
     "nextjs-progressbar": "^0.0.16",
     "react": "^18",

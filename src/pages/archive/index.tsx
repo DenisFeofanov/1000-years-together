@@ -1,12 +1,21 @@
 import Header from "@/components/Header";
 import Heading from "@/components/Heading";
 import StoryTile from "@/components/StoryTile";
-import { stories } from "@/shared/Stories";
+import { Story } from "@/interfaces/Story";
+import { formatTime } from "@/lib/utils";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "../Layout";
+import fs from "fs";
+import path from "path";
+var mp3Duration = require("mp3-duration");
 
-function Archive() {
+interface Props {
+  stories: Story[];
+}
+
+function Archive({ stories }: Props) {
   return (
     <>
       <Head>
@@ -50,5 +59,39 @@ function Archive() {
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  // get audiopaths
+  const clientPaths = require.context("@/audio/stories/", false, /.mp3$/i);
+  // remove duplicates because apparently require.context always creates them
+  const dedupAudioPaths = [
+    ...new Set(clientPaths.keys().map(clientPaths)),
+  ] as string[];
+
+  // get durations
+  const serverPaths = path.join(process.cwd(), "public/audio/stories");
+  const files = fs.readdirSync(serverPaths);
+  const filesFullpaths = files.map(file => path.join(serverPaths, file));
+
+  // combine together in stories array
+  const stories: Story[] = await Promise.all(
+    filesFullpaths.map(async (file, index) => {
+      // extract number from filename, e.g. "03"
+      const title = String(parseInt(file.replace(/^.*[\\/]/, "")));
+
+      return {
+        audioSrc: dedupAudioPaths[index],
+        title,
+        duration: formatTime(await mp3Duration(file)),
+      };
+    })
+  );
+
+  return {
+    props: {
+      stories,
+    },
+  };
+};
 
 export default Archive;
