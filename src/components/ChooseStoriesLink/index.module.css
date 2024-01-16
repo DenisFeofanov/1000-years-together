@@ -14,7 +14,6 @@
     animation-fill-mode: both;
   }
 
-  /* TODO better property for perfomance */
   @keyframes scale-button {
     from {
       height: var(--animated-btn-height-min);

@@ -35,7 +35,7 @@ export const getStaticPaths: GetStaticPaths<Params> = () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<Props, Params> = async context => {
+export const getStaticProps: GetStaticProps<Props, Params> = context => {
   const currentSlug = context.params!.number;
   const currentStory = stories.find(story => story.title === currentSlug)!;
   currentStory.transcription = getStoryTranscription(currentStory?.title);

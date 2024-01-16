@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import ActModalSubheading from "../ActModalSubheading";
 import ActModalText from "../ActModalText";
+import Markdown from "react-markdown";
 
 interface Props extends React.PropsWithChildren {
   title: string | undefined;
@@ -45,7 +46,7 @@ function Modal({ children, title, isOpen, closeModal, text }: Props) {
             </h2>
           )}
 
-          <p>{text}</p>
+          <Markdown>{text}</Markdown>
 
           {/* <div className="mt-[30px]">
             <ActModalText>
