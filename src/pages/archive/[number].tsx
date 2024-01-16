@@ -1,6 +1,7 @@
 import ClientOnly from "@/components/ClientOnly";
 import ListenStory from "@/components/ListenStory";
 import { Story } from "@/interfaces/Story";
+import { getStoryTranscription } from "@/lib/Stories";
 import { stories } from "@/shared/Stories";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
@@ -36,7 +37,8 @@ export const getStaticPaths: GetStaticPaths<Params> = () => {
 
 export const getStaticProps: GetStaticProps<Props, Params> = async context => {
   const currentSlug = context.params!.number;
-  const currentStory = stories.find(story => story.title === currentSlug);
+  const currentStory = stories.find(story => story.title === currentSlug)!;
+  currentStory.transcription = getStoryTranscription(currentStory?.title);
 
   return {
     props: {

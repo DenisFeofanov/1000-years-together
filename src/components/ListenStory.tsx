@@ -112,6 +112,8 @@ function ListenStory({ story }: Props) {
         title={story?.title}
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
+        // ! because open modal button not showing without transcription
+        text={story?.transcription!}
       >
         <Layout>
           <div className="relative fullscreen-height grid grid-rows-[auto_1fr]">
@@ -127,12 +129,13 @@ function ListenStory({ story }: Props) {
                     <div className="mt-[42px] grid grid-cols-3 justify-items-center gap-[20px]">
                       {textButtonPlay}
 
-                      {/* display only if text present */}
-                      <ActButton onClick={() => setIsModalOpen(true)}>
-                        Текст
-                      </ActButton>
+                      {story?.transcription && (
+                        <ActButton onClick={() => setIsModalOpen(true)}>
+                          Текст
+                        </ActButton>
+                      )}
 
-                      {backButton}
+                      <div className="col-start-3">{backButton}</div>
                     </div>
                   </div>
 
@@ -151,24 +154,25 @@ function ListenStory({ story }: Props) {
                       <span>{storyTitle}</span>
                     </div>
 
-                    {/* hide button if no text present */}
-                    <button
-                      className="flex items-center mt-[16px] gap-[8px]"
-                      type="button"
-                      onClick={() => setIsModalOpen(true)}
-                    >
-                      <div className="w-max rounded-[40px] bg-iconGray p-[8px]">
-                        <Image
-                          src={BookIcon}
-                          width="16"
-                          height="16"
-                          alt="Book icon"
-                        />
-                      </div>
-                      <p className="text-blackText font-mainHeading text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase">
-                        текст
-                      </p>
-                    </button>
+                    {story?.transcription && (
+                      <button
+                        className="flex items-center mt-[16px] gap-[8px]"
+                        type="button"
+                        onClick={() => setIsModalOpen(true)}
+                      >
+                        <div className="w-max rounded-[40px] bg-iconGray p-[8px]">
+                          <Image
+                            src={BookIcon}
+                            width="16"
+                            height="16"
+                            alt="Book icon"
+                          />
+                        </div>
+                        <p className="text-blackText font-mainHeading text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase">
+                          текст
+                        </p>
+                      </button>
+                    )}
                   </div>
 
                   <div>

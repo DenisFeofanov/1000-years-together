@@ -9,9 +9,10 @@ interface Props extends React.PropsWithChildren {
   title: string | undefined;
   isOpen: boolean;
   closeModal: () => void;
+  text: string;
 }
 
-function Modal({ children, title, isOpen, closeModal }: Props) {
+function Modal({ children, title, isOpen, closeModal, text }: Props) {
   const modalRef = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
@@ -44,7 +45,9 @@ function Modal({ children, title, isOpen, closeModal }: Props) {
             </h2>
           )}
 
-          <div className="mt-[30px]">
+          <p>{text}</p>
+
+          {/* <div className="mt-[30px]">
             <ActModalText>
               Величие исторического лица измеряется долговечностью памяти о нем
               — писал в свое время археограф, историк, журналист и общественный
@@ -95,7 +98,7 @@ function Modal({ children, title, isOpen, closeModal }: Props) {
               оставшись до конца дней монархистом, идеалом для которого была
               Россия первого тридцатилетия XIX века.
             </ActModalText>
-          </div>
+          </div> */}
 
           <Image
             className="block mx-auto mt-[52px] lg:mt-[20px]"
