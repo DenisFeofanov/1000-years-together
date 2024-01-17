@@ -113,7 +113,7 @@ function ListenStory({ story }: Props) {
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
         // ! because open modal button not showing without transcription
-        text={story?.transcription!}
+        htmlText={story?.transcription!}
       >
         <Layout>
           <div className="relative fullscreen-height grid grid-rows-[auto_1fr]">

@@ -2,25 +2,35 @@ import fs from "fs";
 import { Story } from "@/interfaces/Story";
 import { selectedStoriesKey } from "@/shared/Stories";
 import path from "path";
+import mammoth from "mammoth";
 
 export function getSelectedStoriesFromLocalStorage(): Story[] {
   return JSON.parse(localStorage.getItem(selectedStoriesKey) || "[]");
 }
 
-export function getStoryTranscription(index: string): string | null {
+export async function getStoryTranscription(
+  index: string
+): Promise<string | null> {
   // find matching transcription file "01" -> "01_any-name.md"
   const dirPath = path.join(process.cwd(), "public/transcriptions");
   const foundTextfile = fs
     .readdirSync(dirPath)
     .find(filename => filename.startsWith(formatIndex(index)));
 
-  // read file's content
+  // convert .docx to html string
   if (foundTextfile) {
     const textfilePath = path.join(dirPath, foundTextfile);
-    const text = fs.readFileSync(textfilePath, "utf-8");
-
-    return text;
-  } else return null;
+    try {
+      const { value, messages } = await mammoth.convertToHtml({
+        path: textfilePath,
+      });
+      if (messages) console.log(messages);
+      return value;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  return null;
 }
 
 export function extractIndex(filepath: string): string {
