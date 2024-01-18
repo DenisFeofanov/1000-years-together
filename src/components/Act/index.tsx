@@ -3,7 +3,7 @@ import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
 import { ACTS } from "@/shared/Act";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import ClientOnly from "../ClientOnly";
 import ListenStory from "../ListenStory";
 
@@ -19,7 +19,7 @@ function Act({
   act: { title, audioSrc: actAudioSrc },
 }: Props) {
   const router = useRouter();
-  const nextAct = useRef<string | null>(null);
+  const [nextAct, setNextAct] = useState<string | null>(null);
 
   // on component mount load new stories from local storage
   useEffect(() => {
@@ -33,7 +33,7 @@ function Act({
         window.location.replace("/choose-stories");
 
       // currentStory.current = selectedStories[storyIndex];
-      nextAct.current = ACTS[storyIndex + 1]?.title || null;
+      setNextAct(ACTS[storyIndex + 1]?.title || null);
     }
 
     router.prefetch(goNextHref);
@@ -51,7 +51,7 @@ function Act({
           audioSrc={actAudioSrc}
           transcription={null}
           proceedLink={goNextHref}
-          nextPageTitle={nextAct.current}
+          nextPageTitle={nextAct}
         />
       </ClientOnly>
     </>
