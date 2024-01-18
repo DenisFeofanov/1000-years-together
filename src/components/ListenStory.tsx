@@ -164,17 +164,17 @@ function ListenStory({
       {isSingleStory ? "вернуться" : "следующая"}
     </ActLink>
   );
-  const hasTranscription = transcription !== null;
+  const hasTranscription = transcription !== null && storyNumber !== undefined;
 
   const proceedLinkWithInfo = nextPageTitle !== undefined &&
     proceedLinkHref && <NextLink next={nextPageTitle} href={proceedLinkHref} />;
 
   return (
     <Modal
-      title={title}
+      // ! because open modal button not showing without storyNumber and transcription
+      title={storyNumber!}
       isOpen={isModalOpen}
       closeModal={() => setIsModalOpen(false)}
-      // ! because open modal button not showing without transcription
       htmlText={transcription!}
     >
       <Layout>

@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import ModalText from "../ModalText";
 
 interface Props extends React.PropsWithChildren {
-  title: string | undefined;
+  title: string;
   isOpen: boolean;
   closeModal: () => void;
   htmlText: string;
