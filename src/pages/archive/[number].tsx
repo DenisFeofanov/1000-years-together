@@ -23,7 +23,7 @@ const ListenStoryPage = ({ story }: Props) => (
 
     <ClientOnly>
       <ListenStory
-        title={story.title}
+        storyNumber={story.title}
         transcription={story.transcription}
         audioSrc={story.audioSrc}
       />

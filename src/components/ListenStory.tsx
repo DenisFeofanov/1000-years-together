@@ -11,13 +11,41 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import H5AudioPlayer from "react-h5-audio-player";
 
-interface Props {
+interface Props1 {
   title: string;
   transcription: string | null;
   audioSrc: string;
 }
 
-function ListenStory({ title, transcription, audioSrc }: Props) {
+interface Props2 {
+  storyNumber: string;
+  transcription: string | null;
+  audioSrc: string;
+}
+
+interface implementationProps {
+  title?: string;
+  storyNumber?: string;
+  transcription: string | null;
+  audioSrc: string;
+}
+
+function ListenStory({
+  title,
+  transcription,
+  audioSrc,
+}: Props1): React.JSX.Element;
+function ListenStory({
+  storyNumber,
+  transcription,
+  audioSrc,
+}: Props2): React.JSX.Element;
+function ListenStory({
+  title,
+  storyNumber,
+  transcription = null,
+  audioSrc,
+}: implementationProps) {
   const playerRef = useRef<H5AudioPlayer>(null);
   const playAnimationRef = useRef<number | null>(null);
   const previousTimeStamp = useRef<number | null>(null);
@@ -75,11 +103,21 @@ function ListenStory({ title, transcription, audioSrc }: Props) {
     }
   }
 
-  const storyTitle = (
-    <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
-      {title}
-    </span>
-  );
+  let storyTitle;
+  if (storyNumber !== undefined) {
+    storyTitle = (
+      <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
+        {storyNumber}
+      </span>
+    );
+  } else if (title !== undefined) {
+    storyTitle = (
+      <span className="inline-block text-grayDark text-[2rem] mt-[10px] lg:text-[7.625rem] lg:mb-[15px] lg:mt-[30px] not-italic font-bold leading-[1] lg:tracking-[-8.54px] uppercase">
+        {title}
+      </span>
+    );
+  }
+
   const audioPlayer = (
     <AudioPlayer
       audioSrc={audioSrc}
