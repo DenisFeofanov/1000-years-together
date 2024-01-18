@@ -4,10 +4,11 @@ import { Story } from "@/interfaces/Story";
 import { getStoryTranscription } from "@/lib/Stories";
 import { stories } from "@/shared/Stories";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
 
 interface Props {
-  story: Story | undefined;
+  story: Story;
 }
 
 interface Params extends ParsedUrlQuery {
@@ -15,9 +16,19 @@ interface Params extends ParsedUrlQuery {
 }
 
 const ListenStoryPage = ({ story }: Props) => (
-  <ClientOnly>
-    <ListenStory story={story} />
-  </ClientOnly>
+  <>
+    <Head>
+      <title>Архив</title>
+    </Head>
+
+    <ClientOnly>
+      <ListenStory
+        title={story.title}
+        transcription={story.transcription}
+        audioSrc={story.audioSrc}
+      />
+    </ClientOnly>
+  </>
 );
 
 export const getStaticPaths: GetStaticPaths<Params> = () => {
