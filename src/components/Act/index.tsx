@@ -1,43 +1,31 @@
 import { Act } from "@/interfaces/Act";
 import { getSelectedStoriesFromLocalStorage } from "@/lib/Stories";
 import { ACTS } from "@/shared/Act";
+import { CHOOSE_STORIES } from "@/shared/SLUGS";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ClientOnly from "../ClientOnly";
 import ListenStory from "../ListenStory";
 
 type Props = {
-  goBackHref: string;
-  goNextHref: string;
   act: Act;
 };
 
-function Act({
-  goBackHref,
-  goNextHref,
-  act: { title, audioSrc: actAudioSrc },
-}: Props) {
-  const router = useRouter();
-  const [nextAct, setNextAct] = useState<string | null>(null);
+function Act({ act: { title, audioSrc: actAudioSrc } }: Props) {
+  const [nextPage, setNextPage] = useState<string | null>(null);
 
   // on component mount load new stories from local storage
   useEffect(() => {
     if (window !== undefined && window.localStorage) {
       const selectedStories = getSelectedStoriesFromLocalStorage();
+      // 301 redirect
+      if (selectedStories.length < 5) window.location.replace(CHOOSE_STORIES);
 
       const storyIndex = ACTS.findIndex(act => act.title === title);
 
-      // 301 redirect
-      if (selectedStories.length < 5)
-        window.location.replace("/choose-stories");
-
-      // currentStory.current = selectedStories[storyIndex];
-      setNextAct(ACTS[storyIndex + 1]?.title || null);
+      setNextPage(selectedStories[storyIndex].title);
     }
-
-    router.prefetch(goNextHref);
-  }, [title, goNextHref, router]);
+  }, [title]);
 
   return (
     <>
@@ -50,8 +38,8 @@ function Act({
           title={title}
           audioSrc={actAudioSrc}
           transcription={null}
-          proceedLink={goNextHref}
-          nextPageTitle={nextAct}
+          proceedLink={`/stories/${nextPage}`}
+          nextPageTitle={nextPage}
         />
       </ClientOnly>
     </>

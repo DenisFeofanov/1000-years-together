@@ -15,12 +15,13 @@ import NextLink from "./NextLink";
 interface baseProps {
   transcription: string | null;
   audioSrc: string;
-  proceedLink: string;
+  proceedLink: string | null;
+  isSingleStory?: boolean;
+  nextPageTitle?: string | null;
 }
 
 interface SingleStoryProps extends baseProps {
   title: string;
-  nextPageTitle: string | null;
 }
 
 interface ChainedStoriesProps extends baseProps {
@@ -30,7 +31,6 @@ interface ChainedStoriesProps extends baseProps {
 interface implementationProps extends baseProps {
   title?: string;
   storyNumber?: string;
-  nextPageTitle?: string | null;
 }
 
 function ListenStory({
@@ -50,6 +50,7 @@ function ListenStory({
   audioSrc,
   proceedLink: proceedLinkHref,
   nextPageTitle,
+  isSingleStory = false,
 }: implementationProps) {
   const playerRef = useRef<H5AudioPlayer>(null);
   const playAnimationRef = useRef<number | null>(null);
@@ -62,7 +63,6 @@ function ListenStory({
 
   const [width] = useWindowSize();
   const isDesktop = width >= 1280;
-  const isSingleStory = storyNumber !== undefined;
 
   // animation for player timer
   function repeat(timeStamp: DOMHighResTimeStamp) {
@@ -112,27 +112,30 @@ function ListenStory({
   // different styles for singleStory and chainedStories
   let storyTitle, heading;
   if (isSingleStory) {
-    storyTitle = (
-      <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
-        {storyNumber}
-      </span>
-    );
     heading = (
       <h1 className="whitespace-pre font-mainHeading text-blackText text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase lg:text-[1rem]">
         {`история\n`}
       </h1>
     );
   } else {
-    storyTitle = (
-      <span className="inline-block text-grayDark text-[2rem] mt-[10px] lg:text-[7.625rem] lg:mb-[15px] lg:mt-[30px] not-italic font-bold leading-[1] lg:tracking-[-8.54px] uppercase">
-        {title}
-      </span>
-    );
-
     heading = (
       <h1 className="whitespace-pre font-mainHeading text-blackText text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase lg:text-[1rem]">
         {`интро к истории\n`}
       </h1>
+    );
+  }
+
+  if (storyNumber !== undefined) {
+    storyTitle = (
+      <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
+        {storyNumber}
+      </span>
+    );
+  } else {
+    storyTitle = (
+      <span className="inline-block text-grayDark text-[2rem] mt-[10px] lg:text-[7.625rem] lg:mb-[15px] lg:mt-[30px] not-italic font-bold leading-[1] lg:tracking-[-8.54px] uppercase">
+        {title}
+      </span>
     );
   }
 
@@ -156,16 +159,15 @@ function ListenStory({
       {isPlaying ? "пауза" : "продолжить"}
     </ActButton>
   );
-  const proceedLink = (
+  const proceedLink = proceedLinkHref && (
     <ActLink href={proceedLinkHref}>
       {isSingleStory ? "вернуться" : "следующая"}
     </ActLink>
   );
   const hasTranscription = transcription !== null;
 
-  const proceedLinkWithInfo = nextPageTitle && (
-    <NextLink next={nextPageTitle} href={proceedLinkHref} />
-  );
+  const proceedLinkWithInfo = nextPageTitle !== undefined &&
+    proceedLinkHref && <NextLink next={nextPageTitle} href={proceedLinkHref} />;
 
   return (
     <Modal
