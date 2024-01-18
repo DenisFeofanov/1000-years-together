@@ -1,7 +1,5 @@
-import DOMPurify from "isomorphic-dompurify";
-
 function ModalText({ htmlText: text }: { htmlText: string }) {
-  const markup = { __html: DOMPurify.sanitize(text) };
+  const markup = { __html: text };
 
   return (
     <div

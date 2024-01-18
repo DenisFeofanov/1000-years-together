@@ -1,6 +1,7 @@
 import { Story } from "@/interfaces/Story";
 import { selectedStoriesKey } from "@/shared/Stories";
 import fs from "fs";
+import DOMPurify from "isomorphic-dompurify";
 import mammoth from "mammoth";
 import path from "path";
 import { formatTime } from "./utils";
@@ -62,12 +63,14 @@ export async function getStories(): Promise<Story[]> {
     filesFullpaths.map(async (file, index) => {
       // extract number from filename, e.g. "03"
       const title = String(parseInt(file.replace(/^.*[\\/]/, "")));
+      let transcription = await getStoryTranscription(title);
+      transcription &&= DOMPurify.sanitize(transcription);
 
       return {
         audioSrc: dedupAudioPaths[index],
         title,
         duration: formatTime(await mp3Duration(file)),
-        transcription: await getStoryTranscription(title),
+        transcription,
       };
     })
   );
