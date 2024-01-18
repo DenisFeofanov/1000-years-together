@@ -26,7 +26,7 @@ export async function getStoryTranscription(
       const { value, messages } = await mammoth.convertToHtml({
         path: textfilePath,
       });
-      if (messages) console.log(messages);
+      if (messages.length > 0) console.log(messages);
       return value;
     } catch (error) {
       console.error(error);
@@ -74,6 +74,17 @@ export async function getStories(): Promise<Story[]> {
       };
     })
   );
+
+  //  adding dummy audio to preserve space
+  const testfilePath = path.join(process.cwd(), "public/audio/test/test.mp3");
+  for (let i = 6; i <= 30; i++) {
+    stories.push({
+      audioSrc: testfilePath,
+      title: String(i),
+      duration: formatTime(await mp3Duration(testfilePath)),
+      transcription: null,
+    });
+  }
 
   return stories;
 }
