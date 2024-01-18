@@ -3,17 +3,20 @@ import Header from "@/components/Header";
 import Heading from "@/components/Heading";
 import StoryTile from "@/components/StoryTile";
 import { Story } from "@/interfaces/Story";
+import { getStories } from "@/lib/Stories";
 import Layout from "@/pages/Layout";
 import { ACTS } from "@/shared/Act";
-import { stories } from "@/shared/Stories";
+import { ACTS_SLUG } from "@/shared/SLUGS";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 
 interface Props {
   selectedStories: Story[];
   onClick: (story: Story) => void;
+  stories: Story[];
 }
 
-function ChooseStories({ selectedStories, onClick }: Props) {
+function ChooseStories({ selectedStories, onClick, stories }: Props) {
   const isSelectingDone =
     selectedStories.length === 5 &&
     selectedStories.every(story => story !== null);
@@ -100,7 +103,7 @@ function ChooseStories({ selectedStories, onClick }: Props) {
             </div>
 
             <ChooseStoriesLink
-              href={`/act/${ACTS[0].slug}`}
+              href={`${ACTS_SLUG}/${ACTS[0].slug}`}
               {...{
                 isSelectingDone,
                 selectedStoriesText,
@@ -137,5 +140,13 @@ function ChooseStories({ selectedStories, onClick }: Props) {
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      stories: await getStories(),
+    },
+  };
+};
 
 export default ChooseStories;
