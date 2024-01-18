@@ -26,6 +26,7 @@ const ListenStoryPage = ({ story }: Props) => (
         storyNumber={story.title}
         transcription={story.transcription}
         audioSrc={story.audioSrc}
+        proceedLink="/archive"
       />
     </ClientOnly>
   </>

@@ -20,15 +20,13 @@ const ActPage: NextPage<Props> = ({ goBackHref, goNextHref, act, ...rest }) => {
   const router = useRouter();
 
   return (
-    <ClientOnly>
-      <Act
-        goBackHref={goBackHref}
-        goNextHref={goNextHref}
-        act={act}
-        key={router.asPath}
-        {...rest}
-      />
-    </ClientOnly>
+    <Act
+      goBackHref={goBackHref}
+      goNextHref={goNextHref}
+      act={act}
+      key={router.asPath}
+      {...rest}
+    />
   );
 };
 

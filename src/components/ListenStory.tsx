@@ -10,41 +10,46 @@ import Layout from "@/pages/Layout";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import H5AudioPlayer from "react-h5-audio-player";
+import NextLink from "./NextLink";
 
-interface Props1 {
+interface baseProps {
+  transcription: string | null;
+  audioSrc: string;
+  proceedLink: string;
+}
+
+interface SingleStoryProps extends baseProps {
   title: string;
-  transcription: string | null;
-  audioSrc: string;
+  nextPageTitle: string | null;
 }
 
-interface Props2 {
+interface ChainedStoriesProps extends baseProps {
   storyNumber: string;
-  transcription: string | null;
-  audioSrc: string;
 }
 
-interface implementationProps {
+interface implementationProps extends baseProps {
   title?: string;
   storyNumber?: string;
-  transcription: string | null;
-  audioSrc: string;
+  nextPageTitle?: string | null;
 }
 
 function ListenStory({
   title,
   transcription,
   audioSrc,
-}: Props1): React.JSX.Element;
+}: SingleStoryProps): React.JSX.Element;
 function ListenStory({
   storyNumber,
   transcription,
   audioSrc,
-}: Props2): React.JSX.Element;
+}: ChainedStoriesProps): React.JSX.Element;
 function ListenStory({
   title,
   storyNumber,
   transcription = null,
   audioSrc,
+  proceedLink: proceedLinkHref,
+  nextPageTitle,
 }: implementationProps) {
   const playerRef = useRef<H5AudioPlayer>(null);
   const playAnimationRef = useRef<number | null>(null);
@@ -57,6 +62,7 @@ function ListenStory({
 
   const [width] = useWindowSize();
   const isDesktop = width >= 1280;
+  const isSingleStory = storyNumber !== undefined;
 
   // animation for player timer
   function repeat(timeStamp: DOMHighResTimeStamp) {
@@ -103,18 +109,30 @@ function ListenStory({
     }
   }
 
-  let storyTitle;
-  if (storyNumber !== undefined) {
+  // different styles for singleStory and chainedStories
+  let storyTitle, heading;
+  if (isSingleStory) {
     storyTitle = (
       <span className="text-[4.75rem] font-bold leading-[1] tracking-[-0.76px] lg:font-inter lg:text-[15.25rem] lg:text-grayDark lg:not-italic lg:font-bold lg:leading-[1] lg:tracking-[-24.4px]">
         {storyNumber}
       </span>
     );
-  } else if (title !== undefined) {
+    heading = (
+      <h1 className="whitespace-pre font-mainHeading text-blackText text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase lg:text-[1rem]">
+        {`история\n`}
+      </h1>
+    );
+  } else {
     storyTitle = (
       <span className="inline-block text-grayDark text-[2rem] mt-[10px] lg:text-[7.625rem] lg:mb-[15px] lg:mt-[30px] not-italic font-bold leading-[1] lg:tracking-[-8.54px] uppercase">
         {title}
       </span>
+    );
+
+    heading = (
+      <h1 className="whitespace-pre font-mainHeading text-blackText text-[0.9375rem] not-italic font-semibold leading-[normal] tracking-[0.3px] uppercase lg:text-[1rem]">
+        {`интро к истории\n`}
+      </h1>
     );
   }
 
@@ -138,8 +156,16 @@ function ListenStory({
       {isPlaying ? "пауза" : "продолжить"}
     </ActButton>
   );
-  const backButton = <ActLink href={"/archive"}>вернуться</ActLink>;
+  const proceedLink = (
+    <ActLink href={proceedLinkHref}>
+      {isSingleStory ? "вернуться" : "следующая"}
+    </ActLink>
+  );
   const hasTranscription = transcription !== null;
+
+  const proceedLinkWithInfo = nextPageTitle && (
+    <NextLink next={nextPageTitle} href={proceedLinkHref} />
+  );
 
   return (
     <Modal
@@ -157,6 +183,9 @@ function ListenStory({
             {isDesktop ? (
               //  desktop layout
               <div className="h-full hidden lg:grid lg:grid-cols-3 lg:grid-rows-3 lg:items-center">
+                {!isSingleStory && heading && (
+                  <div className="ml-[15px] row-start-2">{heading}</div>
+                )}
                 <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 max-w-[32rem]">
                   {audioPlayer}
 
@@ -169,9 +198,15 @@ function ListenStory({
                       </ActButton>
                     )}
 
-                    <div className="col-start-3">{backButton}</div>
+                    <div className="col-start-3">{proceedLink}</div>
                   </div>
                 </div>
+
+                {!isSingleStory && (
+                  <div className="mr-[15px] row-start-2 col-start-3">
+                    {proceedLinkWithInfo}
+                  </div>
+                )}
 
                 <div className="overflow-hidden absolute bottom-0 left-0">
                   {storyTitle}
@@ -185,7 +220,12 @@ function ListenStory({
               <div className="h-full grid grid-rows-[1fr_auto] pt-[56px] px-[15px] pb-[30px] lg:hidden">
                 <div>
                   <div className="flex justify-between items-start">
-                    <span>{storyTitle}</span>
+                    <span>
+                      {heading}
+                      {storyTitle}
+                    </span>
+
+                    {!isSingleStory && proceedLinkWithInfo}
                   </div>
 
                   {hasTranscription && (
@@ -215,7 +255,7 @@ function ListenStory({
                   <div className="flex justify-center items-center mx-auto gap-[2rem] md:gap-[42px] mt-[42px]">
                     {textButtonPlay}
 
-                    {backButton}
+                    {proceedLink}
                   </div>
                 </div>
               </div>
