@@ -45,6 +45,6 @@ const config: Config = {
       iconGray: "#ECECEC",
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-convert-px-to-rem")],
 };
 export default config;
